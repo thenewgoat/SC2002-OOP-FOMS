@@ -8,7 +8,7 @@ import java.io.Serializable;
  * with a branch.
  */
 public class Branch implements Serializable {
-    private int branchID;
+    
     private String branchName;
     private String location;
     private int staffQuota;

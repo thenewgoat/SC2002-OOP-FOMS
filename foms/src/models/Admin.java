@@ -102,7 +102,8 @@ public class Admin extends User{
 
     /**
      * Sets the role of the admin. This implementation allows changing the admin's role,
-     * although typically it remains set to ADMIN.
+     * although typically it should remain set to ADMIN.
+     * 
      * 
      * @param role the new role of this admin
      */
