@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 public class BranchMenuItem implements Serializable {
     private String name;
+    private int itemID;
     private String category;
     private double price;
     private int branchID;
@@ -23,8 +24,9 @@ public class BranchMenuItem implements Serializable {
      * @param description the description of the menu item
      * @param branchID the ID of the branch associated with the menu item
      */
-    public BranchMenuItem(String name, String category, double price, int availability, String description, int branchID) {
+    public BranchMenuItem(String name, int itemID, String category, double price, int availability, String description, int branchID) {
         this.name = name;
+        this.itemID = itemID;
         this.category = category;
         this.price = price;
         this.branchID = branchID;
@@ -39,6 +41,15 @@ public class BranchMenuItem implements Serializable {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Returns the ID of the menu item.
+     * 
+     * @return the ID of the menu item
+     */
+    public int getItemID() {
+        return itemID;
     }
 
     /**
@@ -93,6 +104,16 @@ public class BranchMenuItem implements Serializable {
      */
     public void setName(String name){
         this.name = name;
+    }
+
+    /**
+     * Sets the ID of the menu item.
+     * 
+     * @param itemID the ID of the menu item
+     */
+
+    public void setItemID(int itemID){
+        this.itemID = itemID;
     }
 
     /**
