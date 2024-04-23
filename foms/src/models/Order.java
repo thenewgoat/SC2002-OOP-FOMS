@@ -1,5 +1,6 @@
 package models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -7,7 +8,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class Order {
+import enums.OrderStatus;
+import enums.OrderType;
+
+public class Order implements Serializable {
     private int orderID;
     private int branchID;
     private List<OrderItem> orderItems;

@@ -1,11 +1,13 @@
 package models;
 
+import java.io.Serializable;
+
 /**
  * Represents a branch, including details about the branch's name,
  * location, and staff quota. This class allows for managing the properties associated
  * with a branch.
  */
-public class Branch {
+public class Branch implements Serializable {
     private int branchID;
     private String branchName;
     private String location;

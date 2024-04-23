@@ -1,5 +1,7 @@
 package models;
 
+import java.io.Serializable;
+
 import enums.Gender;
 import enums.Role;
 
@@ -9,7 +11,7 @@ import enums.Role;
  * name, login ID, role, gender, and age. The actual implementation
  * of these properties must be provided by subclasses.
  */
-public abstract class User {
+public abstract class User implements Serializable  {
 
     /**
      * Gets the name of the user.
