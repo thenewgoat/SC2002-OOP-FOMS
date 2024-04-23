@@ -2,6 +2,8 @@ package models;
 
 import java.io.Serializable;
 
+import java.io.Serializable;
+
 import enums.Gender;
 import enums.Role;
 
@@ -15,7 +17,7 @@ import enums.Role;
  * will be used to handle the special case of Admin users. This is because
  * Admin users lack a branch attribute.
  */
-public abstract class User implements Serializable {
+public abstract class User implements Serializable  {
 
     /**
      * Gets the name of the user.
