@@ -9,6 +9,7 @@ import java.io.Serializable;
  */
 public class Branch implements Serializable {
     
+    private int branchID;
     private String branchName;
     private String location;
     private int staffQuota;
@@ -20,12 +21,22 @@ public class Branch implements Serializable {
      * @param location The physical location of the branch.
      * @param staffQuota The maximum number of staff members that can be accommodated at the branch.
      */
-    public Branch(String name, String location, int staffQuota) {
+    public Branch(int branchID, String name, String location, int staffQuota) {
+        this.branchID = branchID;
         this.branchName = name;
         this.location = location;
         this.staffQuota = staffQuota;
     }
 
+    /**
+     * Returns the ID of the branch.
+     * 
+     * @return the ID of the branch
+     */
+    public int getID() {
+        return branchID;
+    }
+    
     /**
      * Returns the name of the branch.
      * 

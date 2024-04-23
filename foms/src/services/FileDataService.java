@@ -2,9 +2,12 @@ package services;
 
 import java.util.Map;
 
+import models.Account;
+import models.Branch;
 import models.BranchMenuItem;
 import models.BranchUser;
 import models.Order;
+import models.PaymentMethod;
 import models.User;
 
 public interface FileDataService {
@@ -25,15 +28,15 @@ public interface FileDataService {
 
     public void exportMenuData();
 
-    public void importPaymentMethodData();
+    public Map<String, PaymentMethod> importPaymentMethodData();
 
     public void exportPaymentMethodData();
 
-    public void importBranchData();
+    public Map<Integer, Branch> importBranchData();
 
     public void exportBranchData();
 
-    public void importPasswordData();
+    public Map<String, Account> importPasswordData();
 
     public void exportPasswordData();
 
