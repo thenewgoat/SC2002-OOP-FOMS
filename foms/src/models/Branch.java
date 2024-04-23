@@ -3,7 +3,7 @@ package models;
 import java.io.Serializable;
 
 /**
- * Represents a branch, including details about the branch's name,
+ * Represents a branch of the fast food chain, including details about the branch's name,
  * location, and staff quota. This class allows for managing the properties associated
  * with a branch.
  */
