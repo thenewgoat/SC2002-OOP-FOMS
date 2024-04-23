@@ -17,31 +17,53 @@ import models.PaymentMethod;
 import models.User;
 import stores.BranchStorage;
 
-public class CSVDataService implements FileDataService{
+/**
+ * Provides services to import and export data from/to CSV files for various data models
+ * including users, menu items, and branches.
+ * 
+ * In this programme, CSV files are only used to import staff_livst.csv, menu_list.csv, and branch_list.csv.
+ * The other irrelevant import methods are not implemented.
+ * 
+ * CSV files are not used to store any data, hence none of the export methods are implemented.
+ * 
+ */
+public class CSVDataService implements FileDataService {
 
-    private final String userFilename = "data/staff_list.csv";
-    private final String menuFilename = "data/menu_list.csv";
-    private final String branchFilename = "data/branch_list.csv";
+    private final String userFilename = "foms/data/staff_list.csv";
+    private final String menuFilename = "foms/data/menu_list.csv";
+    private final String branchFilename = "foms/data/branch_list.csv";
 
-    public HashMap<Integer, Order> importOrderData(){
+    /**
+     * Imports order data from a CSV file.
+     * @return a map of orders indexed by their ID.
+     * @throws UnsupportedOperationException since the method is not implemented.
+     */
+    public HashMap<Integer, Order> importOrderData() {
         throw new UnsupportedOperationException("Not implemented.");
-    };
+    }
 
-    public boolean exportOrderData(HashMap<Integer, Order> HashMap){
+    /**
+     * Exports order data to a CSV file.
+     * @param hashMap the data to export.
+     * @return true if export is successful.
+     * @throws UnsupportedOperationException since the method is not implemented.
+     */
+    public boolean exportOrderData(HashMap<Integer, Order> hashMap) {
         throw new UnsupportedOperationException("Not implemented.");
-    };
+    }
 
-    public HashMap<String, User> importUserData(){
+    /**
+     * Imports user data from a specified CSV file.
+     * @return a HashMap of User objects, keyed by their login IDs.
+     */
+    public HashMap<String, User> importUserData() {
         File file = new File(userFilename);
         if (!file.exists()) {
             System.err.println("Error: The file " + userFilename + " does not exist.");
-            return null; // Stop the method here
+            return null;
         }
 
-        Gender enumGender;
-
         HashMap<String, User> users = new HashMap<>();
-
         try (BufferedReader br = new BufferedReader(new FileReader(userFilename))) {
             String line;
             br.readLine(); // Skip the header row
@@ -49,14 +71,10 @@ public class CSVDataService implements FileDataService{
                 String[] userData = line.split(",");
                 String name = userData[0].trim();
                 String staffLoginID = userData[1].trim();
-                String role = userData[2].trim();                
+                String role = userData[2].trim();
                 String gender = userData[3].trim();
                 int age = Integer.parseInt(userData[4].trim());
-                
-                if ("M".equals(gender)){
-                    enumGender = Gender.MALE;
-                }
-                else enumGender = Gender.FEMALE;
+                Gender enumGender = "M".equals(gender) ? Gender.MALE : Gender.FEMALE;
 
                 User user = null;
                 switch (role) {
@@ -70,7 +88,7 @@ public class CSVDataService implements FileDataService{
                     default:
                         throw new IllegalArgumentException("Unsupported role: " + role);
                 }
-                if (user != null){
+                if (user != null) {
                     users.put(staffLoginID, user);
                 }
             }
@@ -79,28 +97,31 @@ public class CSVDataService implements FileDataService{
             e.printStackTrace();
         }
 
-        return users;        
-    };
+        return users;
+    }
 
-    public boolean exportUserData(HashMap<String, User> HashMap){
+    /**
+     * Exports user data to a CSV file.
+     * @param hashMap the data to export.
+     * @return true if export is successful.
+     * @throws UnsupportedOperationException since the method is not implemented.
+     */
+    public boolean exportUserData(HashMap<String, User> hashMap) {
         throw new UnsupportedOperationException("Not implemented.");
-    };
+    }
 
-    public HashMap<String, BranchUser> importBranchUserData(){
+    /**
+     * Imports BranchUser data from a CSV file.
+     * @return a HashMap of BranchUser objects, keyed by their login IDs.
+     */
+    public HashMap<String, BranchUser> importBranchUserData() {
         File file = new File(userFilename);
         if (!file.exists()) {
             System.err.println("Error: The file " + userFilename + " does not exist.");
-            return null; // Stop the method here
+            return null;
         }
 
-        int branchID;
-        Branch branch;
-        Gender enumGender;
-
-        BranchStorage branchStorage = new BranchStorage();
-
         HashMap<String, BranchUser> branchUsers = new HashMap<>();
-
         try (BufferedReader br = new BufferedReader(new FileReader(userFilename))) {
             String line;
             br.readLine(); // Skip the header row
@@ -108,23 +129,20 @@ public class CSVDataService implements FileDataService{
                 String[] userData = line.split(",");
                 String name = userData[0].trim();
                 String staffLoginID = userData[1].trim();
-                String role = userData[2].trim();                
+                String role = userData[2].trim();
                 String gender = userData[3].trim();
                 int age = Integer.parseInt(userData[4].trim());
-                if (!"A".equals(role)){
-                    String branchName = userData[5].trim();
-                    branch = (Branch) branchStorage.get(branchName);
-                    branchID = branch.getID();
-                }
-                else branchID = -1;
-                
-                if ("M".equals(gender)){
-                    enumGender = Gender.MALE;
-                }
-                else enumGender = Gender.FEMALE;
+                Gender enumGender = "M".equals(gender) ? Gender.MALE : Gender.FEMALE;
 
-                // Create user object based on role
                 User user;
+                int branchID = -1; // default for admin
+                if (!"A".equals(role)) {
+                    String branchName = userData[5].trim();
+                    BranchStorage branchStorage = new BranchStorage();
+                    Branch branch = branchStorage.get(branchName);
+                    branchID = branch != null ? branch.getID() : -1;
+                }
+
                 switch (role) {
                     case "S":
                         user = new BranchUser(name, staffLoginID, Role.STAFF, enumGender, age, branchID);
@@ -138,7 +156,7 @@ public class CSVDataService implements FileDataService{
                     default:
                         throw new IllegalArgumentException("Unsupported role: " + role);
                 }
-                if (user instanceof BranchUser){
+                if (user instanceof BranchUser) {
                     branchUsers.put(staffLoginID, (BranchUser) user);
                 }
             }
@@ -148,28 +166,30 @@ public class CSVDataService implements FileDataService{
         }
 
         return branchUsers;
-    };
+    }
 
-    public boolean exportBranchUserData(HashMap<String, BranchUser> HashMap){
+    /**
+     * Exports BranchUser data to a CSV file.
+     * @param hashMap the data to export.
+     * @return true if export is successful.
+     * @throws UnsupportedOperationException since the method is not implemented.
+     */
+    public boolean exportBranchUserData(HashMap<String, BranchUser> hashMap) {
         throw new UnsupportedOperationException("Not implemented.");
-    };
+    }
 
-    public HashMap<Integer, BranchMenuItem> importMenuData(){
-
+    /**
+     * Imports menu data from a CSV file and returns a map of menu items indexed by item ID.
+     * @return HashMap of menu items.
+     */
+    public HashMap<Integer, BranchMenuItem> importMenuData() {
         HashMap<Integer, BranchMenuItem> menuItems = new HashMap<>();
         try (BufferedReader br = new BufferedReader(new FileReader(menuFilename))) {
             String line;
             br.readLine(); // Skip the header row
-
-            int branchID;
-            Branch branch;
-            BranchStorage branchStorage = new BranchStorage();
-            
-
             int count = 0;
 
             while ((line = br.readLine()) != null) {
-            	if (line.trim().isEmpty()) continue;
                 String[] menuItemData = line.split(",");
                 String itemName = menuItemData[0].trim();
                 double price = Double.parseDouble(menuItemData[1].trim());
@@ -177,36 +197,58 @@ public class CSVDataService implements FileDataService{
                 String category = menuItemData[3].trim();
                 int availability = Integer.parseInt(menuItemData[4].trim());
                 String description = menuItemData[5].trim();
-                
-                branch = (Branch) branchStorage.get(branchName);
-                branchID = branch.getID();
+
+                BranchStorage branchStorage = new BranchStorage();
+                Branch branch = branchStorage.get(branchName);
+                int branchID = branch != null ? branch.getID() : -1;
 
                 count++;
                 BranchMenuItem item = new BranchMenuItem(itemName, count, category, price, availability, description, branchID);
                 menuItems.put(count, item);
-               }
+            }
         } catch (Exception e) {
             System.err.println("Error importing menu: " + e.getMessage());
             e.printStackTrace();
         }
+
         return menuItems;
-    };
+    }
 
-    public boolean exportMenuData(HashMap<Integer, BranchMenuItem> HashMap){
+    /**
+     * Exports menu data to a CSV file.
+     * @param hashMap the data to export.
+     * @return true if export is successful.
+     * @throws UnsupportedOperationException since the method is not implemented.
+     */
+    public boolean exportMenuData(HashMap<Integer, BranchMenuItem> hashMap) {
         throw new UnsupportedOperationException("Not implemented.");
-    };
+    }
 
-    public HashMap<String, PaymentMethod> importPaymentMethodData(){
+    /**
+     * Imports payment method data from a CSV file.
+     * @return a HashMap of PaymentMethod objects.
+     * @throws UnsupportedOperationException since the method is not implemented.
+     */
+    public HashMap<String, PaymentMethod> importPaymentMethodData() {
         throw new UnsupportedOperationException("Not implemented.");
-    };
+    }
 
-    public boolean exportPaymentMethodData(HashMap<String, PaymentMethod> HashMap){
+    /**
+     * Exports payment method data to a CSV file.
+     * @param hashMap the data to export.
+     * @return true if export is successful.
+     * @throws UnsupportedOperationException since the method is not implemented.
+     */
+    public boolean exportPaymentMethodData(HashMap<String, PaymentMethod> hashMap) {
         throw new UnsupportedOperationException("Not implemented.");
-    };
+    }
 
-    public HashMap<Integer, Branch> importBranchData(){
+    /**
+     * Imports branch data from a CSV file and returns a map of Branch objects indexed by their ID.
+     * @return HashMap of Branch objects.
+     */
+    public HashMap<Integer, Branch> importBranchData() {
         HashMap<Integer, Branch> branches = new HashMap<>();
-
         try (BufferedReader br = new BufferedReader(new FileReader(branchFilename))) {
             String line;
             br.readLine(); // Skip the header row
@@ -221,20 +263,38 @@ public class CSVDataService implements FileDataService{
                 branches.put(count, branch);
             }
         } catch (Exception e) {
+            System.err.println("Error loading branch data: " + e.getMessage());
             e.printStackTrace();
         }
         return branches;
-    };
+    }
 
-    public boolean exportBranchData(HashMap<Integer, Branch> HashMap){
+    /**
+     * Exports branch data to a CSV file.
+     * @param hashMap the data to export.
+     * @return true if export is successful.
+     * @throws UnsupportedOperationException since the method is not implemented.
+     */
+    public boolean exportBranchData(HashMap<Integer, Branch> hashMap) {
         throw new UnsupportedOperationException("Not implemented.");
-    };
+    }
 
-    public HashMap<String, Account> importPasswordData(){
+    /**
+     * Imports password data from a CSV file.
+     * @return a HashMap of Account objects.
+     * @throws UnsupportedOperationException since the method is not implemented.
+     */
+    public HashMap<String, Account> importPasswordData() {
         throw new UnsupportedOperationException("Not implemented.");
-    };
+    }
 
-    public boolean exportPasswordData(HashMap<String, Account> HashMap){
+    /**
+     * Exports password data to a CSV file.
+     * @param hashMap the data to export.
+     * @return true if export is successful.
+     * @throws UnsupportedOperationException since the method is not implemented.
+     */
+    public boolean exportPasswordData(HashMap<String, Account> hashMap) {
         throw new UnsupportedOperationException("Not implemented.");
-    };
+    }
 }

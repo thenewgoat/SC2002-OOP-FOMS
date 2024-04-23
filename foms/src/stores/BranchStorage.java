@@ -1,25 +1,32 @@
 package stores;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.HashMap;
-import java.util.Map;
-
 import models.Branch;
 import services.CSVDataService;
+import services.SerialDataService;
 
-public class BranchStorage implements Storage{
-    private Map<Integer, Branch> branches = new HashMap<>();
-    private final String branchDataPath = "data/branches.ser";
+/**
+ * The BranchStorage class is responsible for storing and managing Branch objects.
+ * It implements the Storage interface.
+ */
+public class BranchStorage implements Storage {
+    private HashMap<Integer, Branch> branches = new HashMap<>();
+    private final String branchDataPath = "foms/data/branches.ser";
 
-    public BranchStorage(){
+    /**
+     * Constructs a new BranchStorage object and loads the stored data.
+     */
+    public BranchStorage() {
         load();
     }
 
+    /**
+     * Adds a Branch object to the storage.
+     * 
+     * @param object The Branch object to be added.
+     * @throws IllegalArgumentException if the object is not an instance of Branch.
+     */
     @Override
     public void add(Object object) {
         if (object instanceof Branch) {
@@ -34,6 +41,12 @@ public class BranchStorage implements Storage{
         }
     }
 
+    /**
+     * Removes a Branch object from the storage.
+     * 
+     * @param object The Branch object to be removed.
+     * @throws IllegalArgumentException if the object is not an instance of Branch.
+     */
     @Override
     public void remove(Object object) {
         if (object instanceof Branch) {
@@ -44,6 +57,12 @@ public class BranchStorage implements Storage{
         }
     }
 
+    /**
+     * Updates a Branch object in the storage.
+     * 
+     * @param object The Branch object to be updated.
+     * @throws IllegalArgumentException if the object is not an instance of Branch.
+     */
     @Override
     public void update(Object object) {
         if (object instanceof Branch) {
@@ -58,13 +77,25 @@ public class BranchStorage implements Storage{
         }
     }
 
+    /**
+     * Retrieves a Branch object from the storage based on the branch ID.
+     * 
+     * @param branchID The ID of the branch to retrieve.
+     * @return The Branch object with the specified ID, or null if not found.
+     */
     @Override
-    public Object get(int branchID) {
+    public Branch get(int branchID) {
         return branches.get(branchID);
     }
 
+    /**
+     * Retrieves a Branch object from the storage based on the branch name.
+     * 
+     * @param branchName The name of the branch to retrieve.
+     * @return The Branch object with the specified name, or null if not found.
+     */
     @Override
-    public Object get(String branchName) {
+    public Branch get(String branchName) {
         for (Branch branch : branches.values()) {
             if (branch.getName().equals(branchName)) {
                 return branch;
@@ -73,31 +104,35 @@ public class BranchStorage implements Storage{
         return null;
     }
 
+    /**
+     * Retrieves all Branch objects from the storage.
+     * 
+     * @return An array of all Branch objects in the storage.
+     */
     @Override
-    public Object[] getAll() {
+    public Branch[] getAll() {
         return branches.values().toArray(new Branch[0]);
     }
 
+    /**
+     * Saves the current state of the storage to a file.
+     */
     @Override
     public void save() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(branchDataPath))) {
-            oos.writeObject(branches);
-        } catch (IOException e) {
-            System.out.println("Error saving order storage: " + e.getMessage());
-        }
+        SerialDataService serialDataService = new SerialDataService();
+        serialDataService.exportBranchData(branches);
     }
 
-    @SuppressWarnings("unchecked")
+    /**
+     * Loads the stored data from a file, or initializes a new storage if the file does not exist.
+     */
     @Override
     public void load() {
         File file = new File(branchDataPath);
         if (file.exists()) {
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-                branches = (HashMap<Integer, Branch>) ois.readObject();
-            } catch (IOException | ClassNotFoundException e) {
-                System.out.println("Error loading PaymentMethod storage: " + e.getMessage());
-            }
-        }else{
+            SerialDataService serialDataService = new SerialDataService();
+            branches = serialDataService.importBranchData();
+        } else {
             branches = new HashMap<>();
             CSVDataService csvDataService = new CSVDataService();
             branches = csvDataService.importBranchData();
@@ -105,6 +140,9 @@ public class BranchStorage implements Storage{
         }
     }
 
+    /**
+     * Clears all Branch objects from the storage.
+     */
     @Override
     public void clear() {
         branches.clear();
