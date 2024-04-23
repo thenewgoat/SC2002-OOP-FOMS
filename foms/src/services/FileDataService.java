@@ -2,6 +2,7 @@ package services;
 
 import java.util.Map;
 
+import models.BranchUser;
 import models.Order;
 import models.User;
 
@@ -15,9 +16,9 @@ public interface FileDataService {
 
     public boolean exportUserData();
 
-    public void importBranchUserData();
+    public Map<String, BranchUser> importBranchUserData();
 
-    public void exportBranchUserData();
+    public boolean exportBranchUserData();
 
     public void importMenuData();
 
