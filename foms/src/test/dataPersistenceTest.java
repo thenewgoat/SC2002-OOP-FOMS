@@ -30,8 +30,7 @@ public class dataPersistenceTest {
         System.out.println("Current working directory: " + System.getProperty("user.dir"));
 
         Scanner sc = new Scanner(System.in);
-        BranchStorage branchStorage = new BranchStorage();
-        Branch[] branches = branchStorage.getAll();
+        Branch[] branches = BranchStorage.getAll();
         System.out.println("Branches:");
         System.out.println("-------------------------------");
         for (Branch branch : branches) {
@@ -44,8 +43,7 @@ public class dataPersistenceTest {
 
         sc.nextLine();
 
-        PaymentMethodStorage paymentMethodStorage = new PaymentMethodStorage();
-        PaymentMethod[] paymentMethods = paymentMethodStorage.getAll();
+        PaymentMethod[] paymentMethods = PaymentMethodStorage.getAll();
         System.out.println("Payment Methods:");
         System.out.println("-------------------------------");
         for (PaymentMethod paymentMethod : paymentMethods) {
@@ -55,8 +53,7 @@ public class dataPersistenceTest {
         
         sc.nextLine();
 
-        BranchMenuItemStorage branchMenuItemStorage = new BranchMenuItemStorage();
-        BranchMenuItem[] branchMenuItems = branchMenuItemStorage.getAll();
+        BranchMenuItem[] branchMenuItems = BranchMenuItemStorage.getAll();
         System.out.println("Branch Menu Items:");
         System.out.println("-------------------------------");
         for (BranchMenuItem branchMenuItem : branchMenuItems) {
@@ -68,8 +65,7 @@ public class dataPersistenceTest {
         
         sc.nextLine();
         
-        BranchUserStorage branchUserStorage = new BranchUserStorage();
-        BranchUser[] branchUsers = branchUserStorage.getAll();
+        BranchUser[] branchUsers = BranchUserStorage.getAll();
         System.out.println("Branch Users:");
         System.out.println("Number of Branch Users: " + branchUsers.length);
         System.out.println("-------------------------------");
@@ -83,8 +79,7 @@ public class dataPersistenceTest {
         sc.nextLine();
 
 
-        UserStorage userStorage = new UserStorage();
-        User[] users = userStorage.getAll();
+        User[] users = UserStorage.getAll();
         System.out.println("Users:");
         System.out.println("Number of Users: " + users.length);
         System.out.println("-------------------------------");
@@ -96,8 +91,7 @@ public class dataPersistenceTest {
 
         sc.nextLine();
 
-        OrderStorage orderStorage = new OrderStorage();
-        Order[] orders = orderStorage.getAll();
+        Order[] orders = OrderStorage.getAll();
         System.out.println("Orders:");
         System.out.println("Number of Orders: " + orders.length);
         System.out.println("-------------------------------");
@@ -111,8 +105,7 @@ public class dataPersistenceTest {
 
         sc.nextLine();
 
-        PasswordStorage passwordStorage = new PasswordStorage();
-        Account[] accounts = passwordStorage.getAll();
+        Account[] accounts = PasswordStorage.getAll();
         System.out.println("Accounts:");
         System.out.println("Number of Accounts: " + accounts.length);
         System.out.println("-------------------------------");
@@ -123,6 +116,7 @@ public class dataPersistenceTest {
         }
 
         sc.nextLine();
+        sc.close();
 
         FileCleanupUtility.deleteSerFiles("foms/data"); // Used to delete all .ser files in the data directory, delete before submission or when testing persistence
 

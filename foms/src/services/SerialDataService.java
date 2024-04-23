@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
+import interfaces.IFileDataService;
 import models.Account;
 import models.Branch;
 import models.BranchMenuItem;
@@ -20,7 +21,7 @@ import models.User;
  * This class supports operations for orders, users, branch users, menu items, payment methods,
  * branches, and password data.
  */
-public class SerialDataService implements FileDataService{
+public class SerialDataService implements IFileDataService{
 
     private final String orderDataPath = "foms/data/orders.ser";
     private final String userDataPath = "foms/data/users.ser";

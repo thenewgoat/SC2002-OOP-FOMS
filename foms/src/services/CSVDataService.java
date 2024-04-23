@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import enums.Gender;
 import enums.Role;
+import interfaces.IFileDataService;
 import models.Account;
 import models.Admin;
 import models.Branch;
@@ -27,7 +28,7 @@ import stores.BranchStorage;
  * CSV files are not used to store any data, hence none of the export methods are implemented.
  * 
  */
-public class CSVDataService implements FileDataService {
+public class CSVDataService implements IFileDataService {
 
     private final String userFilename = "foms/data/staff_list.csv";
     private final String menuFilename = "foms/data/menu_list.csv";
@@ -138,8 +139,7 @@ public class CSVDataService implements FileDataService {
                 int branchID = -1; // default for admin
                 if (!"A".equals(role)) {
                     String branchName = userData[5].trim();
-                    BranchStorage branchStorage = new BranchStorage();
-                    Branch branch = branchStorage.get(branchName);
+                    Branch branch = BranchStorage.get(branchName);
                     branchID = branch != null ? branch.getID() : -1;
                 }
 
@@ -198,8 +198,7 @@ public class CSVDataService implements FileDataService {
                 int availability = Integer.parseInt(menuItemData[4].trim());
                 String description = menuItemData[5].trim();
 
-                BranchStorage branchStorage = new BranchStorage();
-                Branch branch = branchStorage.get(branchName);
+                Branch branch = BranchStorage.get(branchName);
                 int branchID = branch != null ? branch.getID() : -1;
 
                 count++;

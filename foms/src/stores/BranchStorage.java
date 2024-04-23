@@ -2,78 +2,65 @@ package stores;
 
 import java.io.File;
 import java.util.HashMap;
+
 import models.Branch;
 import services.CSVDataService;
 import services.SerialDataService;
 
 /**
  * The BranchStorage class is responsible for storing and managing Branch objects.
- * It implements the Storage interface.
+ * It implements the Storage interface. All methods and fields are static.
  */
-public class BranchStorage implements Storage {
-    private HashMap<Integer, Branch> branches = new HashMap<>();
-    private final String branchDataPath = "foms/data/branches.ser";
+public class BranchStorage {
+    private static HashMap<Integer, Branch> branches = new HashMap<>();
+    private static final String branchDataPath = "foms/data/branches.ser";
 
-    /**
-     * Constructs a new BranchStorage object and loads the stored data.
-     */
-    public BranchStorage() {
+    // Static initializer to load the data when the class is first loaded
+    static {
         load();
     }
 
     /**
      * Adds a Branch object to the storage.
      * 
-     * @param object The Branch object to be added.
-     * @throws IllegalArgumentException if the object is not an instance of Branch.
+     * @param branch The Branch object to be added.
+     * @throws IllegalArgumentException if the branch is null or if a branch with the same ID already exists.
      */
-    @Override
-    public void add(Object object) {
-        if (object instanceof Branch) {
-            Branch branch = (Branch) object;
+    public static void add(Branch branch) {
+        if (branch != null) {
             if (!branches.containsKey(branch.getID())) {
                 branches.put(branch.getID(), branch);
             } else {
                 throw new IllegalArgumentException("Branch with ID " + branch.getID() + " already exists.");
             }
         } else {
-            throw new IllegalArgumentException("Object must be an instance of Branch.");
+            throw new IllegalArgumentException("Parameter must be a non-null Branch.");
         }
     }
 
     /**
      * Removes a Branch object from the storage.
      * 
-     * @param object The Branch object to be removed.
-     * @throws IllegalArgumentException if the object is not an instance of Branch.
+     * @param branch The Branch object to be removed.
      */
-    @Override
-    public void remove(Object object) {
-        if (object instanceof Branch) {
-            Branch branch = (Branch) object;
+    public static void remove(Branch branch) {
+        if (branch != null) {
             branches.remove(branch.getID());
         } else {
-            throw new IllegalArgumentException("Object must be an instance of Branch.");
+            throw new IllegalArgumentException("Parameter must be a non-null Branch.");
         }
     }
 
     /**
      * Updates a Branch object in the storage.
      * 
-     * @param object The Branch object to be updated.
-     * @throws IllegalArgumentException if the object is not an instance of Branch.
+     * @param branch The Branch object to be updated.
      */
-    @Override
-    public void update(Object object) {
-        if (object instanceof Branch) {
-            Branch branch = (Branch) object;
-            if (branches.containsKey(branch.getID())) {
-                branches.put(branch.getID(), branch);
-            } else {
-                throw new IllegalArgumentException("Cannot update non-existing branch.");
-            }
+    public static void update(Branch branch) {
+        if (branch != null && branches.containsKey(branch.getID())) {
+            branches.put(branch.getID(), branch);
         } else {
-            throw new IllegalArgumentException("Object must be an instance of Branch.");
+            throw new IllegalArgumentException("Cannot update non-existing or null Branch.");
         }
     }
 
@@ -83,8 +70,7 @@ public class BranchStorage implements Storage {
      * @param branchID The ID of the branch to retrieve.
      * @return The Branch object with the specified ID, or null if not found.
      */
-    @Override
-    public Branch get(int branchID) {
+    public static Branch get(int branchID) {
         return branches.get(branchID);
     }
 
@@ -94,8 +80,7 @@ public class BranchStorage implements Storage {
      * @param branchName The name of the branch to retrieve.
      * @return The Branch object with the specified name, or null if not found.
      */
-    @Override
-    public Branch get(String branchName) {
+    public static Branch get(String branchName) {
         for (Branch branch : branches.values()) {
             if (branch.getName().equals(branchName)) {
                 return branch;
@@ -109,16 +94,14 @@ public class BranchStorage implements Storage {
      * 
      * @return An array of all Branch objects in the storage.
      */
-    @Override
-    public Branch[] getAll() {
+    public static Branch[] getAll() {
         return branches.values().toArray(new Branch[0]);
     }
 
     /**
      * Saves the current state of the storage to a file.
      */
-    @Override
-    public void save() {
+    public static void save() {
         SerialDataService serialDataService = new SerialDataService();
         serialDataService.exportBranchData(branches);
     }
@@ -126,8 +109,7 @@ public class BranchStorage implements Storage {
     /**
      * Loads the stored data from a file, or initializes a new storage if the file does not exist.
      */
-    @Override
-    public void load() {
+    public static void load() {
         File file = new File(branchDataPath);
         if (file.exists()) {
             SerialDataService serialDataService = new SerialDataService();
@@ -143,8 +125,7 @@ public class BranchStorage implements Storage {
     /**
      * Clears all Branch objects from the storage.
      */
-    @Override
-    public void clear() {
+    public static void clear() {
         branches.clear();
     }
 }

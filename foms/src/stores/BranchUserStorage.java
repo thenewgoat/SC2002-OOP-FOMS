@@ -2,39 +2,34 @@ package stores;
 
 import java.io.File;
 import java.util.HashMap;
+
 import models.BranchUser;
 import services.CSVDataService;
 import services.SerialDataService;
 
 /**
- * Manages the storage of {@code BranchUser} objects using serialization.
- * Provides methods to add, remove, update, and retrieve users as well as save and load
+ * Manages the storage of {@code BranchUser} objects using serialization with static access.
+ * Provides static methods to add, remove, update, and retrieve users as well as save and load
  * the users from a file.
  */
-public class BranchUserStorage implements Storage {
+public class BranchUserStorage {
 
-    private HashMap<String, BranchUser> branchUsers = new HashMap<>();
-    private final String userFilename = "foms/data/branchUsers.ser";
+    private static HashMap<String, BranchUser> branchUsers = new HashMap<>();
+    private static final String userFilename = "foms/data/branchUsers.ser";
 
-    /**
-     * Constructs a new {@code BranchUserStorage} instance and initializes it by loading stored users
-     * or creating new storage if no stored data exists.
-     */
-    public BranchUserStorage() {
+    // Static initializer to load the data when the class is first loaded
+    static {
         load();
     }
 
     /**
      * Adds a {@code BranchUser} to the storage.
      *
-     * @param object the {@code BranchUser} to add
-     * @throws IllegalArgumentException if the object is not an instance of {@code BranchUser}
-     * or if a user with the same login ID already exists
+     * @param branchUser the {@code BranchUser} to add
+     * @throws IllegalArgumentException if branchUser is null or if a user with the same login ID already exists
      */
-    @Override
-    public void add(Object object) {
-        if (object instanceof BranchUser) {
-            BranchUser branchUser = (BranchUser) object;
+    public static void add(BranchUser branchUser) {
+        if (branchUser != null) {
             String loginID = branchUser.getLoginID();
             if (!branchUsers.containsKey(loginID)) {
                 branchUsers.put(loginID, branchUser);
@@ -42,51 +37,34 @@ public class BranchUserStorage implements Storage {
                 throw new IllegalArgumentException("BranchUser with login ID " + loginID + " already exists.");
             }
         } else {
-            throw new IllegalArgumentException("Object must be an instance of BranchUser.");
+            throw new IllegalArgumentException("Parameter must be a non-null BranchUser.");
         }
     }
 
     /**
      * Removes a {@code BranchUser} from the storage.
      *
-     * @param object the {@code BranchUser} to remove
-     * @throws IllegalArgumentException if the object is not an instance of {@code BranchUser}
+     * @param branchUser the {@code BranchUser} to remove
      */
-    @Override
-    public void remove(Object object) {
-        if (object instanceof BranchUser) {
-            BranchUser user = (BranchUser) object;
-            branchUsers.remove(user.getLoginID());
+    public static void remove(BranchUser branchUser) {
+        if (branchUser != null) {
+            branchUsers.remove(branchUser.getLoginID());
         } else {
-            throw new IllegalArgumentException("Object must be an instance of BranchUser.");
+            throw new IllegalArgumentException("Parameter must be a non-null BranchUser.");
         }
     }
 
     /**
      * Updates an existing {@code BranchUser} in the storage.
      *
-     * @param object the {@code BranchUser} to update
-     * @throws IllegalArgumentException if the object is not an instance of {@code BranchUser}
+     * @param branchUser the {@code BranchUser} to update
      */
-    @Override
-    public void update(Object object) {
-        if (object instanceof BranchUser) {
-            BranchUser user = (BranchUser) object;
-            branchUsers.put(user.getLoginID(), user);
+    public static void update(BranchUser branchUser) {
+        if (branchUser != null) {
+            branchUsers.put(branchUser.getLoginID(), branchUser);
         } else {
-            throw new IllegalArgumentException("Object must be an instance of BranchUser.");
+            throw new IllegalArgumentException("Parameter must be a non-null BranchUser.");
         }
-    }
-
-    /**
-     * Unsupported operation for getting a user by numerical ID.
-     * 
-     * @param id the ID of the user
-     * @throws UnsupportedOperationException always
-     */
-    @Override
-    public Object get(int id) {
-        throw new UnsupportedOperationException("Use get(String loginID) for retrieving branchUsers.");
     }
 
     /**
@@ -95,8 +73,7 @@ public class BranchUserStorage implements Storage {
      * @param loginID the login ID of the branch user
      * @return the {@code BranchUser} if found, or null if not
      */
-    @Override
-    public BranchUser get(String loginID) {
+    public static BranchUser get(String loginID) {
         return branchUsers.get(loginID);
     }
 
@@ -105,16 +82,14 @@ public class BranchUserStorage implements Storage {
      *
      * @return an array of all stored {@code BranchUser} objects
      */
-    @Override
-    public BranchUser[] getAll() {
+    public static BranchUser[] getAll() {
         return branchUsers.values().toArray(new BranchUser[0]);
     }
 
     /**
      * Saves all {@code BranchUser} objects to a file.
      */
-    @Override
-    public void save() {
+    public static void save() {
         SerialDataService serialDataService = new SerialDataService();
         serialDataService.exportBranchUserData(branchUsers);
     }
@@ -122,8 +97,7 @@ public class BranchUserStorage implements Storage {
     /**
      * Loads {@code BranchUser} objects from a file, or initializes new storage if the file does not exist.
      */
-    @Override
-    public void load() {
+    public static void load() {
         File file = new File(userFilename);
         if (file.exists()) {
             SerialDataService serialDataService = new SerialDataService();
@@ -139,8 +113,7 @@ public class BranchUserStorage implements Storage {
     /**
      * Clears all entries from the storage.
      */
-    @Override
-    public void clear() {
+    public static void clear() {
         branchUsers.clear();
     }
 }

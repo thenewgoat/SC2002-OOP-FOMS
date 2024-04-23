@@ -2,92 +2,65 @@ package stores;
 
 import java.io.File;
 import java.util.HashMap;
+
 import models.PaymentMethod;
 import services.SerialDataService;
 
 /**
  * The PaymentMethodStorage class is responsible for storing and managing payment methods.
- * It implements the Storage interface and provides methods for adding, removing, updating,
- * and retrieving payment methods.
+ * All methods and fields are static.
  */
-public class PaymentMethodStorage implements Storage{
-    private final String paymentMethodDataPath = "foms/data/paymentMethods.ser";
-    private HashMap<String, PaymentMethod> PaymentMethods = new HashMap<>();
+public class PaymentMethodStorage {
+    private static final String paymentMethodDataPath = "foms/data/paymentMethods.ser";
+    private static HashMap<String, PaymentMethod> paymentMethods = new HashMap<>();
 
-    /**
-     * Constructs a new PaymentMethodStorage object and loads the payment methods from storage.
-     */
-    public PaymentMethodStorage(){
+    // Static initializer to load the payment methods when the class is first loaded
+    static {
         load();
     }
 
     /**
      * Adds a payment method to the storage.
      * 
-     * @param object The payment method to be added.
-     * @throws IllegalArgumentException if the object is not an instance of PaymentMethod.
-     * @throws IllegalArgumentException if a payment method with the same name already exists.
+     * @param paymentMethod The payment method to be added.
+     * @throws IllegalArgumentException if the paymentMethod is null or if a payment method with the same name already exists.
      */
-    @Override
-    public void add(Object object) {
-        if (object instanceof PaymentMethod) {
-            PaymentMethod PaymentMethod = (PaymentMethod) object;
-            if (!PaymentMethods.containsKey(PaymentMethod.getPaymentMethod())) {
-                PaymentMethods.put(PaymentMethod.getPaymentMethod(), PaymentMethod);
+    public static void add(PaymentMethod paymentMethod) {
+        if (paymentMethod != null) {
+            if (!paymentMethods.containsKey(paymentMethod.getPaymentMethod())) {
+                paymentMethods.put(paymentMethod.getPaymentMethod(), paymentMethod);
             } else {
-                throw new IllegalArgumentException("PaymentMethod with name " + PaymentMethod.getPaymentMethod() + " already exists.");
+                throw new IllegalArgumentException("Payment method with name " + paymentMethod.getPaymentMethod() + " already exists.");
             }
         } else {
-            throw new IllegalArgumentException("Object must be an instance of PaymentMethod.");
+            throw new IllegalArgumentException("Parameter must be a non-null PaymentMethod.");
         }
     }
 
     /**
      * Removes a payment method from the storage.
      * 
-     * @param object The payment method to be removed.
-     * @throws IllegalArgumentException if the object is not an instance of PaymentMethod.
+     * @param paymentMethod The payment method to be removed.
      */
-    @Override
-    public void remove(Object object) {
-        if (object instanceof PaymentMethod) {
-            PaymentMethod PaymentMethod = (PaymentMethod) object;
-            PaymentMethods.remove(PaymentMethod.getPaymentMethod());
+    public static void remove(PaymentMethod paymentMethod) {
+        if (paymentMethod != null) {
+            paymentMethods.remove(paymentMethod.getPaymentMethod());
         } else {
-            throw new IllegalArgumentException("Object must be an instance of PaymentMethod.");
+            throw new IllegalArgumentException("Parameter must be a non-null PaymentMethod.");
         }
     }
 
     /**
      * Updates a payment method in the storage.
      * 
-     * @param object The payment method to be updated.
-     * @throws IllegalArgumentException if the object is not an instance of PaymentMethod.
-     * @throws IllegalArgumentException if the payment method does not exist in the storage.
+     * @param paymentMethod The payment method to be updated.
      */
-    @Override
-    public void update(Object object) {
-        if (object instanceof PaymentMethod) {
-            PaymentMethod PaymentMethod = (PaymentMethod) object;
-            if (PaymentMethods.containsKey(PaymentMethod.getPaymentMethod())) {
-                PaymentMethods.put(PaymentMethod.getPaymentMethod(), PaymentMethod);
-            } else {
-                throw new IllegalArgumentException("Cannot update non-existing PaymentMethod.");
-            }
+    public static void update(PaymentMethod paymentMethod) {
+        if (paymentMethod != null && paymentMethods.containsKey(paymentMethod.getPaymentMethod())) {
+            paymentMethods.put(paymentMethod.getPaymentMethod(), paymentMethod);
         } else {
-            throw new IllegalArgumentException("Object must be an instance of PaymentMethod.");
+            throw new IllegalArgumentException("Cannot update non-existing or null PaymentMethod.");
         }
-    }
-
-    /**
-     * Unsupported operation for getting a payment method by numerical ID.
-     * 
-     * @param PaymentMethodID the ID of the payment method.
-     * @throws UnsupportedOperationException always.
-     */
-    @Override
-    public PaymentMethod get(int PaymentMethodID) {
-        throw new UnsupportedOperationException("Use get(String PaymentMethodID) for retrieving PaymentMethods.");
     }
 
     /**
@@ -96,9 +69,8 @@ public class PaymentMethodStorage implements Storage{
      * @param name The name of the payment method.
      * @return The payment method with the specified name, or null if not found.
      */
-    @Override
-    public PaymentMethod get(String name) {
-        return PaymentMethods.get(name);
+    public static PaymentMethod get(String name) {
+        return paymentMethods.get(name);
     }
 
     /**
@@ -106,35 +78,32 @@ public class PaymentMethodStorage implements Storage{
      * 
      * @return An array of all payment methods in the storage.
      */
-    @Override
-    public PaymentMethod[] getAll() {
-        return PaymentMethods.values().toArray(new PaymentMethod[0]);
+    public static PaymentMethod[] getAll() {
+        return paymentMethods.values().toArray(new PaymentMethod[0]);
     }
 
     /**
      * Saves the payment methods to the storage.
      */
-    @Override
-    public void save() {
+    public static void save() {
         SerialDataService serialDataService = new SerialDataService();
-        serialDataService.exportPaymentMethodData(PaymentMethods);
+        serialDataService.exportPaymentMethodData(paymentMethods);
     }
 
     /**
      * Loads the payment methods from the storage.
      * If the storage file does not exist, creates a new storage with default payment methods.
      */
-    @Override
-    public void load() {
+    public static void load() {
         File file = new File(paymentMethodDataPath);
         if (file.exists()) {
             SerialDataService serialDataService = new SerialDataService();
-            PaymentMethods = serialDataService.importPaymentMethodData();
-        }else{
-            PaymentMethods = new HashMap<>();
-            System.out.println("PaymentMethod storage file not found. Creating new storage.");
-            PaymentMethods.put("Credit/Debit Card", new PaymentMethod("Credit/Debit Card"));
-            PaymentMethods.put("PayPal", new PaymentMethod("PayPal"));
+            paymentMethods = serialDataService.importPaymentMethodData();
+        } else {
+            paymentMethods = new HashMap<>();
+            System.out.println("Payment method storage file not found. Creating new storage.");
+            paymentMethods.put("Credit/Debit Card", new PaymentMethod("Credit/Debit Card"));
+            paymentMethods.put("PayPal", new PaymentMethod("PayPal"));
             save();
         }
     }
@@ -142,8 +111,7 @@ public class PaymentMethodStorage implements Storage{
     /**
      * Clears all payment methods from the storage.
      */
-    @Override
-    public void clear() {
-        PaymentMethods.clear();
+    public static void clear() {
+        paymentMethods.clear();
     }
 }

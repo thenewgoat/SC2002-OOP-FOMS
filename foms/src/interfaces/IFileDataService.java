@@ -1,4 +1,4 @@
-package services;
+package interfaces;
 
 import java.util.HashMap;
 
@@ -13,7 +13,7 @@ import models.User;
 /**
  * The FileDataService interface provides methods for importing and exporting data from/to files.
  */
-public interface FileDataService {
+public interface IFileDataService {
     
     /**
      * Imports order data from a file and returns it as a HashMap.
