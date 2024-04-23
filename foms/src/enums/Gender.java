@@ -1,4 +1,4 @@
-package foms.models.enums;
+package enums;
 
 public enum Gender {
     MALE,

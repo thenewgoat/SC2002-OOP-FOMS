@@ -1,7 +1,7 @@
 package models;
 
 /**
- * Represents a branch of an organization, including details about the branch's name,
+ * Represents a branch, including details about the branch's name,
  * location, and staff quota. This class allows for managing the properties associated
  * with a branch.
  */

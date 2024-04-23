@@ -1,4 +1,4 @@
-package foms.models;
+package models;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
-import foms.services.BranchManager;
 
 public class Order {
     private int orderID;

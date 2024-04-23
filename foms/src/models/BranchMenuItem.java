@@ -1,4 +1,4 @@
-package foms.models;
+package models;
 
 public class BranchMenuItem extends MenuItem {
     private double price;

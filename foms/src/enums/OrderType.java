@@ -1,4 +1,4 @@
-package foms.models;
+package enums;
 
 public enum OrderType {
     DINE_IN,

@@ -1,4 +1,4 @@
-package foms.models;
+package models;
 
 public class OrderItem {
     private String itemName;

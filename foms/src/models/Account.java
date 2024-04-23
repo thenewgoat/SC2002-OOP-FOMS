@@ -1,4 +1,4 @@
-package foms.models;
+package models;
 
 import java.io.Serializable;
 
