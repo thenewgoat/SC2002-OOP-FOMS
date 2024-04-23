@@ -1,6 +1,6 @@
 package services;
 
-import java.util.Map;
+import java.util.HashMap;
 
 import models.Account;
 import models.Branch;
@@ -12,32 +12,32 @@ import models.User;
 
 public interface FileDataService {
     
-    public Map<Integer, Order> importOrderData();
+    public HashMap<Integer, Order> importOrderData();
 
-    public boolean exportOrderData(Map<Integer, Order> map);
+    public boolean exportOrderData(HashMap<Integer, Order> HashMap);
 
-    public Map<String, User> importUserData();
+    public HashMap<String, User> importUserData();
 
-    public boolean exportUserData(Map<String, User> map);
+    public boolean exportUserData(HashMap<String, User> HashMap);
 
-    public Map<String, BranchUser> importBranchUserData();
+    public HashMap<String, BranchUser> importBranchUserData();
 
-    public boolean exportBranchUserData(Map<String, BranchUser> map);
+    public boolean exportBranchUserData(HashMap<String, BranchUser> HashMap);
 
-    public Map<Integer, BranchMenuItem> importMenuData();
+    public HashMap<Integer, BranchMenuItem> importMenuData();
 
-    public boolean exportMenuData(Map<Integer, BranchMenuItem> map);
+    public boolean exportMenuData(HashMap<Integer, BranchMenuItem> HashMap);
 
-    public Map<String, PaymentMethod> importPaymentMethodData();
+    public HashMap<String, PaymentMethod> importPaymentMethodData();
 
-    public boolean exportPaymentMethodData(Map<String, PaymentMethod> map);
+    public boolean exportPaymentMethodData(HashMap<String, PaymentMethod> HashMap);
 
-    public Map<Integer, Branch> importBranchData();
+    public HashMap<Integer, Branch> importBranchData();
 
-    public boolean exportBranchData(Map<Integer, Branch> map);
+    public boolean exportBranchData(HashMap<Integer, Branch> HashMap);
 
-    public Map<String, Account> importPasswordData();
+    public HashMap<String, Account> importPasswordData();
 
-    public boolean exportPasswordData(Map<String, Account> map);
+    public boolean exportPasswordData(HashMap<String, Account> HashMap);
 
 }

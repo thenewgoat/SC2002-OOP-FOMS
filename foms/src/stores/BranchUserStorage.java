@@ -1,12 +1,20 @@
 package stores;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import models.BranchUser;
+import services.CSVDataService;
 
 public class BranchUserStorage implements Storage{
     private Map<String, BranchUser> branchUsers = new HashMap<>();
+    private final String userFilename = "data/staff_list.csv";
 
     public BranchUserStorage(){
         load();
@@ -64,17 +72,31 @@ public class BranchUserStorage implements Storage{
 
     @Override
     public void save() {
-        // Implementation depends on the persistence mechanism (e.g., serialization, database)
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(userFilename))) {
+            oos.writeObject(branchUsers);
+        } catch (IOException e) {
+            System.out.println("Error saving order storage: " + e.getMessage());
+        }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void load() {
-        // Implementation depends on the persistence mechanism
+        File file = new File(userFilename);
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+                branchUsers = (Map<String, BranchUser>) ois.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                System.out.println("Error loading PaymentMethod storage: " + e.getMessage());
+            }
+        }else{
+            branchUsers = new HashMap<>();
+            CSVDataService csvDataService = new CSVDataService();
+            branchUsers = csvDataService.importBranchUserData();
+            save();
+        }
     }
 
-    public void init() {
-        
-    }
 
     @Override
     public void clear() {

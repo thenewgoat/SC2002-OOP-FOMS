@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.HashMap;
-import java.util.Map;
 
 import enums.Gender;
 import enums.Role;
@@ -17,24 +16,22 @@ import models.Order;
 import models.PaymentMethod;
 import models.User;
 import stores.BranchStorage;
-import stores.UserStorage;
 
 public class CSVDataService implements FileDataService{
 
     private final String userFilename = "data/staff_list.csv";
-    private final String branchUserFilename = "data/staff_list.csv";
     private final String menuFilename = "data/menu_list.csv";
     private final String branchFilename = "data/branch_list.csv";
 
-    public Map<Integer, Order> importOrderData(){
+    public HashMap<Integer, Order> importOrderData(){
         throw new UnsupportedOperationException("Not implemented.");
     };
 
-    public boolean exportOrderData(Map<Integer, Order> map){
+    public boolean exportOrderData(HashMap<Integer, Order> HashMap){
         throw new UnsupportedOperationException("Not implemented.");
     };
 
-    public Map<String, User> importUserData(){
+    public HashMap<String, User> importUserData(){
         File file = new File(userFilename);
         if (!file.exists()) {
             System.err.println("Error: The file " + userFilename + " does not exist.");
@@ -43,7 +40,7 @@ public class CSVDataService implements FileDataService{
 
         Gender enumGender;
 
-        Map<String, User> users = new HashMap<>();
+        HashMap<String, User> users = new HashMap<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(userFilename))) {
             String line;
@@ -85,11 +82,11 @@ public class CSVDataService implements FileDataService{
         return users;        
     };
 
-    public boolean exportUserData(Map<String, User> map){
+    public boolean exportUserData(HashMap<String, User> HashMap){
         throw new UnsupportedOperationException("Not implemented.");
     };
 
-    public Map<String, BranchUser> importBranchUserData(){
+    public HashMap<String, BranchUser> importBranchUserData(){
         File file = new File(userFilename);
         if (!file.exists()) {
             System.err.println("Error: The file " + userFilename + " does not exist.");
@@ -102,7 +99,7 @@ public class CSVDataService implements FileDataService{
 
         BranchStorage branchStorage = new BranchStorage();
 
-        Map<String, BranchUser> branchUsers = new HashMap<>();
+        HashMap<String, BranchUser> branchUsers = new HashMap<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(userFilename))) {
             String line;
@@ -153,13 +150,13 @@ public class CSVDataService implements FileDataService{
         return branchUsers;
     };
 
-    public boolean exportBranchUserData(Map<String, BranchUser> map){
+    public boolean exportBranchUserData(HashMap<String, BranchUser> HashMap){
         throw new UnsupportedOperationException("Not implemented.");
     };
 
-    public Map<Integer, BranchMenuItem> importMenuData(){
+    public HashMap<Integer, BranchMenuItem> importMenuData(){
 
-        Map<Integer, BranchMenuItem> menuItems = new HashMap<>();
+        HashMap<Integer, BranchMenuItem> menuItems = new HashMap<>();
         try (BufferedReader br = new BufferedReader(new FileReader(menuFilename))) {
             String line;
             br.readLine(); // Skip the header row
@@ -195,20 +192,20 @@ public class CSVDataService implements FileDataService{
         return menuItems;
     };
 
-    public boolean exportMenuData(Map<Integer, BranchMenuItem> map){
+    public boolean exportMenuData(HashMap<Integer, BranchMenuItem> HashMap){
         throw new UnsupportedOperationException("Not implemented.");
     };
 
-    public Map<String, PaymentMethod> importPaymentMethodData(){
+    public HashMap<String, PaymentMethod> importPaymentMethodData(){
         throw new UnsupportedOperationException("Not implemented.");
     };
 
-    public boolean exportPaymentMethodData(Map<String, PaymentMethod> map){
+    public boolean exportPaymentMethodData(HashMap<String, PaymentMethod> HashMap){
         throw new UnsupportedOperationException("Not implemented.");
     };
 
-    public Map<Integer, Branch> importBranchData(){
-        Map<Integer, Branch> branches = new HashMap<>();
+    public HashMap<Integer, Branch> importBranchData(){
+        HashMap<Integer, Branch> branches = new HashMap<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(branchFilename))) {
             String line;
@@ -229,15 +226,15 @@ public class CSVDataService implements FileDataService{
         return branches;
     };
 
-    public boolean exportBranchData(Map<Integer, Branch> map){
+    public boolean exportBranchData(HashMap<Integer, Branch> HashMap){
         throw new UnsupportedOperationException("Not implemented.");
     };
 
-    public Map<String, Account> importPasswordData(){
+    public HashMap<String, Account> importPasswordData(){
         throw new UnsupportedOperationException("Not implemented.");
     };
 
-    public boolean exportPasswordData(Map<String, Account> map){
+    public boolean exportPasswordData(HashMap<String, Account> HashMap){
         throw new UnsupportedOperationException("Not implemented.");
     };
 }

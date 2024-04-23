@@ -1,15 +1,23 @@
 package stores;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import models.BranchMenuItem;
+import services.CSVDataService;
 
 public class BranchMenuItemStorage implements Storage{
     private Map<Integer, BranchMenuItem> branchMenuItems = new HashMap<>();
     private List<String> categories = new ArrayList<>();
+    private final String menuFilename = "data/menu_list.csv";
 
     public BranchMenuItemStorage(){
         load();
@@ -70,12 +78,29 @@ public class BranchMenuItemStorage implements Storage{
 
     @Override
     public void save() {
-        // Implement based on your persistence mechanism, e.g., serialization or database storage
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(menuFilename))) {
+            oos.writeObject(branchMenuItems);
+        } catch (IOException e) {
+            System.out.println("Error saving order storage: " + e.getMessage());
+        }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void load() {
-        // Implement loading logic based on your persistence mechanism
+        File file = new File(menuFilename);
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+                branchMenuItems = (HashMap<Integer, BranchMenuItem>) ois.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                System.out.println("Error loading PaymentMethod storage: " + e.getMessage());
+            }
+        }else{
+            branchMenuItems = new HashMap<>();
+            CSVDataService csvDataService = new CSVDataService();
+            branchMenuItems = csvDataService.importMenuData();
+            save();
+        }
     }
 
     @Override

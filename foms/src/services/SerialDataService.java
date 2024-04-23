@@ -5,7 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Map;
+import java.util.HashMap;
 
 import models.Account;
 import models.Branch;
@@ -27,73 +27,73 @@ public class SerialDataService implements FileDataService{
 
 
     @SuppressWarnings("unchecked")
-    public Map<Integer, Order> importOrderData(){
-        return (Map<Integer, Order>) importHelper(orderDataPath);
+    public HashMap<Integer, Order> importOrderData(){
+        return (HashMap<Integer, Order>) importHelper(orderDataPath);
     };
 
-    public boolean exportOrderData(Map<Integer, Order> map){
-        return exportHelper(orderDataPath, map);
-    };
-
-    @SuppressWarnings("unchecked")
-    public Map<String, User> importUserData(){
-        return (Map<String, User>) importHelper(userDataPath);
-    };
-
-    public boolean exportUserData(Map<String, User> map){
-        return exportHelper(userDataPath, map);
+    public boolean exportOrderData(HashMap<Integer, Order> HashMap){
+        return exportHelper(orderDataPath, HashMap);
     };
 
     @SuppressWarnings("unchecked")
-    public Map<String, BranchUser> importBranchUserData(){
-        return (Map<String, BranchUser>) importHelper(branchUserDataPath);
+    public HashMap<String, User> importUserData(){
+        return (HashMap<String, User>) importHelper(userDataPath);
     };
 
-    public boolean exportBranchUserData(Map<String, BranchUser> map){
-        return exportHelper(branchUserDataPath, map);
-    };
-
-    @SuppressWarnings("unchecked")
-    public Map<Integer, BranchMenuItem> importMenuData(){
-        return (Map<Integer, BranchMenuItem>) importHelper(menuDataPath);
-    };
-
-    public boolean exportMenuData(Map<Integer, BranchMenuItem> map){
-        return exportHelper(menuDataPath, map);
+    public boolean exportUserData(HashMap<String, User> HashMap){
+        return exportHelper(userDataPath, HashMap);
     };
 
     @SuppressWarnings("unchecked")
-    public Map<String, PaymentMethod> importPaymentMethodData(){
-        return (Map<String, PaymentMethod>) importHelper(paymentMethodDataPath);
+    public HashMap<String, BranchUser> importBranchUserData(){
+        return (HashMap<String, BranchUser>) importHelper(branchUserDataPath);
     };
 
-    public boolean exportPaymentMethodData(Map<String, PaymentMethod> map){
-        return exportHelper(paymentMethodDataPath, map);
-    };
-
-    @SuppressWarnings("unchecked")
-    public Map<Integer, Branch> importBranchData(){
-        return (Map<Integer, Branch>) importHelper(branchDataPath);
-    };
-
-    public boolean exportBranchData(Map<Integer, Branch> map){
-        return exportHelper(branchDataPath, map);
+    public boolean exportBranchUserData(HashMap<String, BranchUser> HashMap){
+        return exportHelper(branchUserDataPath, HashMap);
     };
 
     @SuppressWarnings("unchecked")
-    public Map<String, Account> importPasswordData(){
-        return (Map<String, Account>) importHelper(passwordDataPath);
+    public HashMap<Integer, BranchMenuItem> importMenuData(){
+        return (HashMap<Integer, BranchMenuItem>) importHelper(menuDataPath);
     };
 
-    public boolean exportPasswordData(Map<String, Account> map){
-        return exportHelper(passwordDataPath, map);
+    public boolean exportMenuData(HashMap<Integer, BranchMenuItem> HashMap){
+        return exportHelper(menuDataPath, HashMap);
+    };
+
+    @SuppressWarnings("unchecked")
+    public HashMap<String, PaymentMethod> importPaymentMethodData(){
+        return (HashMap<String, PaymentMethod>) importHelper(paymentMethodDataPath);
+    };
+
+    public boolean exportPaymentMethodData(HashMap<String, PaymentMethod> HashMap){
+        return exportHelper(paymentMethodDataPath, HashMap);
+    };
+
+    @SuppressWarnings("unchecked")
+    public HashMap<Integer, Branch> importBranchData(){
+        return (HashMap<Integer, Branch>) importHelper(branchDataPath);
+    };
+
+    public boolean exportBranchData(HashMap<Integer, Branch> HashMap){
+        return exportHelper(branchDataPath, HashMap);
+    };
+
+    @SuppressWarnings("unchecked")
+    public HashMap<String, Account> importPasswordData(){
+        return (HashMap<String, Account>) importHelper(passwordDataPath);
+    };
+
+    public boolean exportPasswordData(HashMap<String, Account> HashMap){
+        return exportHelper(passwordDataPath, HashMap);
     };
 
 
 
-    private Map<?,?> importHelper(String importPathString){
+    private HashMap<?,?> importHelper(String importPathString){
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(importPathString))) {
-            return (Map<?,?>) ois.readObject();
+            return (HashMap<?,?>) ois.readObject();
         } catch (IOException e) {
             System.out.println("Error reading user data: " + e.getMessage());
         } catch (ClassNotFoundException e) {
@@ -102,9 +102,9 @@ public class SerialDataService implements FileDataService{
         return null;
     };
 
-    private boolean exportHelper(String exportPathString, Map<?, ?> map){
+    private boolean exportHelper(String exportPathString, HashMap<?, ?> HashMap){
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(exportPathString))) {
-            oos.writeObject(map);
+            oos.writeObject(HashMap);
             return true;
         } catch (IOException e) {
             System.out.println("Error saving user data: " + e.getMessage());
