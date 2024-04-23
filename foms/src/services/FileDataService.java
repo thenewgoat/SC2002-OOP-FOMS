@@ -2,6 +2,7 @@ package services;
 
 import java.util.Map;
 
+import models.BranchMenuItem;
 import models.BranchUser;
 import models.Order;
 import models.User;
@@ -20,7 +21,7 @@ public interface FileDataService {
 
     public boolean exportBranchUserData();
 
-    public void importMenuData();
+    public Map<Integer, BranchMenuItem> importMenuData();
 
     public void exportMenuData();
 
