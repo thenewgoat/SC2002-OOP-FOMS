@@ -1,7 +1,7 @@
 package models;
 
-import foms.models.enums.Gender;
-import foms.models.enums.Role;
+import enums.Gender;
+import enums.Role;
 
 public class BranchUser extends User{
     private String name;
