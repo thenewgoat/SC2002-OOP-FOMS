@@ -3,17 +3,21 @@ package services;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.HashMap;
 import java.util.Map;
 
 import enums.Gender;
+import enums.Role;
 import models.Account;
+import models.Admin;
 import models.Branch;
 import models.BranchMenuItem;
 import models.BranchUser;
 import models.Order;
 import models.PaymentMethod;
 import models.User;
-import stores.BranchUserStorage;
+import stores.BranchStorage;
+import stores.UserStorage;
 
 public class CSVDataService implements FileDataService{
 
@@ -37,9 +41,68 @@ public class CSVDataService implements FileDataService{
             return null; // Stop the method here
         }
 
-        int branchID;
         Gender enumGender;
-        BranchUserStorage branchUserStorage = new BranchUserStorage();
+
+        Map<String, User> users = new HashMap<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(userFilename))) {
+            String line;
+            br.readLine(); // Skip the header row
+            while ((line = br.readLine()) != null) {
+                String[] userData = line.split(",");
+                String name = userData[0].trim();
+                String staffLoginID = userData[1].trim();
+                String role = userData[2].trim();                
+                String gender = userData[3].trim();
+                int age = Integer.parseInt(userData[4].trim());
+                
+                if ("M".equals(gender)){
+                    enumGender = Gender.MALE;
+                }
+                else enumGender = Gender.FEMALE;
+
+                User user = null;
+                switch (role) {
+                    case "S":
+                        break;
+                    case "M":
+                        break;
+                    case "A":
+                        user = new Admin(name, staffLoginID, enumGender, age);
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Unsupported role: " + role);
+                }
+                if (user != null){
+                    users.put(staffLoginID, user);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error importing employees: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return users;        
+    };
+
+    public boolean exportUserData(Map<String, User> map){
+        
+    };
+
+    public Map<String, BranchUser> importBranchUserData(){
+        File file = new File(userFilename);
+        if (!file.exists()) {
+            System.err.println("Error: The file " + userFilename + " does not exist.");
+            return null; // Stop the method here
+        }
+
+        int branchID;
+        Branch branch;
+        Gender enumGender;
+
+        BranchStorage branchStorage = new BranchStorage();
+
+        Map<String, BranchUser> branchUsers = new HashMap<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(userFilename))) {
             String line;
@@ -52,8 +115,9 @@ public class CSVDataService implements FileDataService{
                 String gender = userData[3].trim();
                 int age = Integer.parseInt(userData[4].trim());
                 if (!"A".equals(role)){
-                    String branch = userData[5].trim();
-                    branchID = branchUserStorage.findBranchByName(branch).getBranchID();
+                    String branchName = userData[5].trim();
+                    branch = (Branch) branchStorage.get(branchName);
+                    branchID = branch.getID();
                 }
                 else branchID = -1;
                 
@@ -78,10 +142,7 @@ public class CSVDataService implements FileDataService{
                         throw new IllegalArgumentException("Unsupported role: " + role);
                 }
                 if (user instanceof BranchUser){
-                    userManager.addBranchUser((BranchUser) user);
-                }
-                else {
-                    userManager.addUser(user);
+                    branchUsers.put(staffLoginID, (BranchUser) user);
                 }
             }
         } catch (Exception e) {
@@ -89,13 +150,12 @@ public class CSVDataService implements FileDataService{
             e.printStackTrace();
         }
 
+        return branchUsers;
     };
 
-    public boolean exportUserData(Map<String, User> map);
-
-    public Map<String, BranchUser> importBranchUserData();
-
-    public boolean exportBranchUserData(Map<String, BranchUser> map);
+    public boolean exportBranchUserData(Map<String, BranchUser> map){
+        throw new UnsupportedOperationException("Not implemented.");
+    };
 
     public Map<Integer, BranchMenuItem> importMenuData();
 
