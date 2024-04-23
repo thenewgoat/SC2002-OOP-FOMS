@@ -1,12 +1,23 @@
 package stores;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import models.PaymentMethod;
 
 public class PaymentMethodStorage implements Storage{
+    private final String paymentMethodDataPath = "data/paymentMethods.ser";
     private Map<String, PaymentMethod> PaymentMethods = new HashMap<>();
+
+    public PaymentMethodStorage(){
+        load();
+    }
 
     @Override
     public void add(Object object) {
@@ -63,12 +74,29 @@ public class PaymentMethodStorage implements Storage{
 
     @Override
     public void save() {
-        // Implement based on your persistence mechanism, e.g., serialization or database storage
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(paymentMethodDataPath))) {
+            oos.writeObject(PaymentMethods);
+        } catch (IOException e) {
+            System.out.println("Error saving PaymentMethod storage: " + e.getMessage());
+        }
     }
 
     @Override
     public void load() {
-        // Implement loading logic based on your persistence mechanism
+        File file = new File(paymentMethodDataPath);
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+                PaymentMethods = (HashMap<String, PaymentMethod>) ois.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                System.out.println("Error loading PaymentMethod storage: " + e.getMessage());
+            }
+        }else{
+            PaymentMethods = new HashMap<>();
+            System.out.println("PaymentMethod storage file not found. Creating new storage.");
+            PaymentMethods.put("Credit/Debit Card", new PaymentMethod("Credit/Debit Card"));
+            PaymentMethods.put("PayPal", new PaymentMethod("PayPal"));
+            save();
+        }
     }
 
     @Override

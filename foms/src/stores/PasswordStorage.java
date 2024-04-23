@@ -1,11 +1,25 @@
 package stores;
 
 import models.Account;
+import models.User;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PasswordStorage implements Storage {
+    private final String passwordDataPath = "data/passwords.ser";
     private Map<String, Account> accounts = new HashMap<>();
+
+    public PasswordStorage() {
+        load();
+    }
 
     @Override
     public void add(Object object) {
@@ -57,12 +71,32 @@ public class PasswordStorage implements Storage {
 
     @Override
     public void save() {
-        // Implement based on your persistence mechanism, e.g., serialization or database storage
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(passwordDataPath))) {
+            oos.writeObject(accounts);
+        } catch (IOException e) {
+            System.out.println("Error saving password storage: " + e.getMessage());
+        }
     }
 
     @Override
     public void load() {
-        // Implement loading logic based on your persistence mechanism
+        File file = new File(passwordDataPath);
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+                accounts = (HashMap<String, Account>) ois.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                System.out.println("Error loading password storage: " + e.getMessage());
+            }
+        } else {
+            accounts = new HashMap<>();
+            System.out.println("No password storage found. Creating a new storage.");
+            UserStorage userStorage = new UserStorage();
+            User[] users = userStorage.getAll();
+            for (User user : users) {
+                accounts.put(user.getLoginID(), new Account(user.getLoginID(), "password"));
+            }
+            save();
+        }
     }
 
     @Override

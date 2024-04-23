@@ -1,12 +1,23 @@
 package stores;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import models.Order;
 
 public class OrderStorage implements Storage {
+    private final String orderDataPath = "data/orders.ser";
     private Map<Integer, Order> orders = new HashMap<>();
+
+    public OrderStorage() {
+        load();
+    }
 
     @Override
     public void add(Object object) {
@@ -63,12 +74,27 @@ public class OrderStorage implements Storage {
 
     @Override
     public void save() {
-        // Implementation depends on the persistence mechanism (e.g., serialization, database)
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(orderDataPath))) {
+            oos.writeObject(orders);
+        } catch (IOException e) {
+            System.out.println("Error saving order storage: " + e.getMessage());
+        }
     }
 
     @Override
     public void load() {
-        // Implementation depends on the persistence mechanism
+        File file = new File(orderDataPath);
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(orderDataPath))) {
+                orders = (Map<Integer, Order>) ois.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                System.out.println("Error loading order storage: " + e.getMessage());
+            }
+        }else{
+            orders = new HashMap<>();
+            System.out.println("Order storage file not found.");
+            save();
+        }
     }
 
     @Override

@@ -8,6 +8,10 @@ import models.User;
 public class UserStorage implements Storage {
     private Map<String, User> users = new HashMap<>();
 
+    public UserStorage() {
+        load();
+    }
+
     @Override
     public void add(Object object) {
         if (object instanceof User) {

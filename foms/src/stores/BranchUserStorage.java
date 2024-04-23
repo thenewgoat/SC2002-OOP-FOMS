@@ -8,6 +8,10 @@ import models.BranchUser;
 public class BranchUserStorage implements Storage{
     private Map<String, BranchUser> branchUsers = new HashMap<>();
 
+    public BranchUserStorage(){
+        load();
+    }
+
     @Override
     public void add(Object object) {
         if (object instanceof BranchUser) {

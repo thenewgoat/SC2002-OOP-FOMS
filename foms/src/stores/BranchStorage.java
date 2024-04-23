@@ -8,6 +8,10 @@ import models.Branch;
 public class BranchStorage implements Storage{
     private Map<Integer, Branch> branches = new HashMap<>();
 
+    public BranchStorage(){
+        load();
+    }
+
     @Override
     public void add(Object object) {
         if (object instanceof Branch) {

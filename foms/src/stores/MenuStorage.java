@@ -1,12 +1,19 @@
 package stores;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import models.BranchMenuItem;
 
 public class MenuStorage implements Storage{
     private Map<Integer, BranchMenuItem> branchMenuItems = new HashMap<>();
+    private List<String> categories = new ArrayList<>();
+
+    public MenuStorage(){
+        load();
+    }
 
     @Override
     public void add(Object object) {
