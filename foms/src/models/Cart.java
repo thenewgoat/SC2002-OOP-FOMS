@@ -3,8 +3,6 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-import foms.utils.DefaultPrints;
-
 public class Cart {
     private List<OrderItem> orderItems;
     private double totalPrice;
@@ -62,14 +60,12 @@ public class Cart {
 
     public void displayItems() {
         for(OrderItem item : this.orderItems) {
-            System.out.println(DefaultPrints.header);
             System.out.println("Item Name: " + item.getItemName());
             System.out.println("Item Category: " + item.getCategory());
             System.out.println("Item Price: " + item.getPrice());
             System.out.println("Item Quantity: " + item.getQuantity());
             System.out.println("Price of " + item.getQuantity() + " " + item.getItemName() + " is " + item.getPrice() * item.getQuantity());
         }
-        System.out.println(DefaultPrints.header);
         calculateTotalPrice();
         System.out.println("Total Price of Items: " + this.totalPrice);
     }
