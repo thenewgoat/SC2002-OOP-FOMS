@@ -7,11 +7,11 @@ import java.util.Map;
 
 import models.BranchMenuItem;
 
-public class MenuStorage implements Storage{
+public class BranchMenuItemStorage implements Storage{
     private Map<Integer, BranchMenuItem> branchMenuItems = new HashMap<>();
     private List<String> categories = new ArrayList<>();
 
-    public MenuStorage(){
+    public BranchMenuItemStorage(){
         load();
     }
 
