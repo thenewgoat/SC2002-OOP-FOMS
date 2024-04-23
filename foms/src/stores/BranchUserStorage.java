@@ -72,6 +72,10 @@ public class BranchUserStorage implements Storage{
         // Implementation depends on the persistence mechanism
     }
 
+    public void init() {
+        
+    }
+
     @Override
     public void clear() {
         branchUsers.clear();

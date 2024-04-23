@@ -56,8 +56,13 @@ public class BranchStorage implements Storage{
     }
 
     @Override
-    public Object get(String name) {
-        throw new UnsupportedOperationException("Use get(int branchID) for retrieving branches.");
+    public Object get(String branchName) {
+        for (Branch branch : branches.values()) {
+            if (branch.getName().equals(branchName)) {
+                return branch;
+            }
+        }
+        return null;
     }
 
     @Override
