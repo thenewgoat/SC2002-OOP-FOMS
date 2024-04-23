@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Generate Javadoc",
+            "type": "shell",
+            "command": "javadoc",
+            "args": [
+                "-d", "docs",  // Output directory
+                "-sourcepath", "src",  // Path to source files
+                "-subpackages", "controllers:enums:interfaces:main:models:services:stores:utils:views",
+                "-private"  // Include private members
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}
