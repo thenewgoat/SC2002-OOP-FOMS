@@ -2,7 +2,6 @@ package models;
 
 import java.io.Serializable;
 
-
 import enums.Gender;
 import enums.Role;
 

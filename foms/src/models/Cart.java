@@ -3,19 +3,35 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Cart class represents a shopping cart that holds a collection of order items.
+ * It provides methods to add, remove, and edit items in the cart, as well as calculate the total price of the items.
+ */
 public class Cart {
     private List<OrderItem> orderItems;
     private double totalPrice;
 
+    /**
+     * Constructs an empty Cart object.
+     */
     public Cart() {
         this.orderItems = new ArrayList<>();
         this.totalPrice = 0;
     }
 
+    /**
+     * Returns the list of order items in the cart.
+     *
+     * @return the list of order items
+     */
     public List<OrderItem> getOrderItems() {
         return orderItems;
     }
 
+    /**
+     * Calculates the total price of all items in the cart.
+     * The total price is stored in the totalPrice field.
+     */
     public void calculateTotalPrice() {
         totalPrice = 0; 
         for (OrderItem item : orderItems) {
@@ -23,14 +39,30 @@ public class Cart {
         }
     }
 
+    /**
+     * Returns the total price of all items in the cart.
+     *
+     * @return the total price of all items
+     */
     public double getTotalPrice() {
         return totalPrice;
     }
 
+    /**
+     * Adds an order item to the cart.
+     *
+     * @param item the order item to be added
+     */
     public void addItem(OrderItem item) {
         this.orderItems.add(item);
     }
 
+    /**
+     * Returns the order item with the specified item name.
+     *
+     * @param itemName the name of the item to search for
+     * @return the order item with the specified item name, or null if not found
+     */
     public OrderItem getItem(String itemName) {
         for (OrderItem item : orderItems) {
             if (item.getItemName().equals(itemName)) {
@@ -40,6 +72,12 @@ public class Cart {
         return null;
     }
 
+    /**
+     * Edits the quantity of the order item with the specified item name.
+     *
+     * @param itemName the name of the item to edit
+     * @param quantity the new quantity of the item
+     */
     public void editItem(String itemName, int quantity) {
         for (OrderItem orderItem : this.getOrderItems()) {
             if (orderItem.getItemName().equals(itemName)) {
@@ -49,6 +87,11 @@ public class Cart {
         }
     }
 
+    /**
+     * Removes the order item with the specified item name from the cart.
+     *
+     * @param itemName the name of the item to remove
+     */
     public void removeItem(String itemName) {
         for (OrderItem item : orderItems) {
             if (item.getItemName().equals(itemName)) {
@@ -58,6 +101,9 @@ public class Cart {
         }
     }
 
+    /**
+     * Displays the details of all items in the cart.
+     */
     public void displayItems() {
         for(OrderItem item : this.orderItems) {
             System.out.println("Item Name: " + item.getItemName());
@@ -65,8 +111,10 @@ public class Cart {
             System.out.println("Item Price: " + item.getPrice());
             System.out.println("Item Quantity: " + item.getQuantity());
             System.out.println("Price of " + item.getQuantity() + " " + item.getItemName() + " is " + item.getPrice() * item.getQuantity());
+            System.out.println("--------------------------------------------------");
+            calculateTotalPrice();
+            System.out.println("Total Price of Items: " + this.totalPrice);
         }
-        calculateTotalPrice();
-        System.out.println("Total Price of Items: " + this.totalPrice);
     }
 }
+
