@@ -158,13 +158,18 @@ public class CSVDataService implements FileDataService{
     };
 
     public Map<Integer, BranchMenuItem> importMenuData(){
+
+        Map<Integer, BranchMenuItem> menuItems = new HashMap<>();
         try (BufferedReader br = new BufferedReader(new FileReader(menuFilename))) {
             String line;
             br.readLine(); // Skip the header row
 
             int branchID;
             Branch branch;
-            Map<String, BranchMenuItem> menuItems = new HashMap<>();
+            BranchStorage branchStorage = new BranchStorage();
+            
+
+            int count = 0;
 
             while ((line = br.readLine()) != null) {
             	if (line.trim().isEmpty()) continue;
@@ -179,27 +184,60 @@ public class CSVDataService implements FileDataService{
                 branch = (Branch) branchStorage.get(branchName);
                 branchID = branch.getID();
 
-
-            }
+                count++;
+                BranchMenuItem item = new BranchMenuItem(itemName, count, category, price, availability, description, branchID);
+                menuItems.put(count, item);
+               }
         } catch (Exception e) {
             System.err.println("Error importing menu: " + e.getMessage());
             e.printStackTrace();
         }
+        return menuItems;
     };
 
     public boolean exportMenuData(Map<Integer, BranchMenuItem> map){
         throw new UnsupportedOperationException("Not implemented.");
     };
 
-    public Map<String, PaymentMethod> importPaymentMethodData();
+    public Map<String, PaymentMethod> importPaymentMethodData(){
+        throw new UnsupportedOperationException("Not implemented.");
+    };
 
-    public boolean exportPaymentMethodData(Map<String, PaymentMethod> map);
+    public boolean exportPaymentMethodData(Map<String, PaymentMethod> map){
+        throw new UnsupportedOperationException("Not implemented.");
+    };
 
-    public Map<Integer, Branch> importBranchData();
+    public Map<Integer, Branch> importBranchData(){
+        Map<Integer, Branch> branches = new HashMap<>();
 
-    public boolean exportBranchData(Map<Integer, Branch> map);
+        try (BufferedReader br = new BufferedReader(new FileReader(branchFilename))) {
+            String line;
+            br.readLine(); // Skip the header row
+            int count = 0;
+            while ((line = br.readLine()) != null) {
+                String[] branchData = line.split(",");
+                String name = branchData[0].trim();
+                String location = branchData[1].trim();
+                int staffQuota = Integer.parseInt(branchData[2].trim());
+                count++;
+                Branch branch = new Branch(count, name, location, staffQuota);
+                branches.put(count, branch);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return branches;
+    };
 
-    public Map<String, Account> importPasswordData();
+    public boolean exportBranchData(Map<Integer, Branch> map){
+        throw new UnsupportedOperationException("Not implemented.");
+    };
 
-    public boolean exportPasswordData(Map<String, Account> map);
+    public Map<String, Account> importPasswordData(){
+        throw new UnsupportedOperationException("Not implemented.");
+    };
+
+    public boolean exportPasswordData(Map<String, Account> map){
+        throw new UnsupportedOperationException("Not implemented.");
+    };
 }
