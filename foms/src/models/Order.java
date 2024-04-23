@@ -51,11 +51,6 @@ public class Order implements Serializable {
 
     public void setOrderStatus(OrderStatus status) {
         this.orderStatus = status;
-        Branch branch = BranchManager.getInstance().findBranchById(branchID);
-        branch.getBranchOrderList().removeFromAllLists(this);
-
-        branch.getBranchOrderList().addOrder(this);
-        
         if (status == OrderStatus.READY) {
             scheduleCancellation();
         }
