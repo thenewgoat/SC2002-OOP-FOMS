@@ -7,6 +7,13 @@ import models.Branch;
 import utils.ChangePage;
 import utils.exceptions.PageBackException;
 import services.AdminService;
+import stores.BranchMenuItemStorage;
+import stores.BranchStorage;
+import stores.BranchUserStorage;
+import stores.OrderStorage;
+import stores.PasswordStorage;
+import stores.PaymentMethodStorage;
+import stores.UserStorage;
 
 public class Welcome {
 
@@ -20,6 +27,22 @@ public class Welcome {
         
 		try {
 			while (flag == 0) {
+                BranchUserStorage.save();
+                BranchStorage.save();
+                UserStorage.save();
+                OrderStorage.save();
+                PasswordStorage.save();
+                PaymentMethodStorage.save();
+                BranchMenuItemStorage.save();
+                BranchUserStorage.load();
+                BranchStorage.load();
+                UserStorage.load();
+                OrderStorage.load();
+                PasswordStorage.load();
+                PaymentMethodStorage.load();
+                BranchMenuItemStorage.load();
+
+                
                 ChangePage.changePage();
                 System.out.println("Welcome to the Fastfood ordering and management System (FOMS)! \n");
                 System.out.println("Please enter your choice to continue.");
@@ -29,10 +52,18 @@ public class Welcome {
 				System.out.println("");
 				System.out.println("Enter your choice: ");
 				Scanner sc = new Scanner(System.in);
-				choice = sc.nextInt();
+				try {
+                    choice = sc.nextInt();
+                } catch (Exception e) {
+                    System.out.println("Invalid input. Press <enter> to try again.");
+                    sc.nextLine();
+                    sc.nextLine();
+                    continue;
+                }
 				sc.nextLine();
 				switch (choice) {
 					case 1:
+                        ChangePage.changePage();
                         System.out.println("Select Branch: ");
                         int count = 1;
                         int branchID;
@@ -53,7 +84,8 @@ public class Welcome {
                             sc.nextLine();
                         }
 						break;
-					case 2:						
+					case 2:
+                        ChangePage.changePage();						
 						LoginController.login();
 						break;
 					case 3:

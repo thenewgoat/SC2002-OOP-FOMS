@@ -28,7 +28,7 @@ public class LoginController {
                 handlePostLogin(account);
                 return;
             }
-            System.out.println("Login failed. Please try again or type 'exit' to quit.");
+            System.out.println("Login failed. Press <enter> to try again or type 'exit' to quit.");
             if ("exit".equalsIgnoreCase(scanner.nextLine())) {
                 return;
             }

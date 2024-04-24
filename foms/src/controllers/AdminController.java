@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 import enums.Gender;
 import enums.Role;
-import models.Account;
 import models.Admin;
 import models.Branch;
 import models.BranchUser;
@@ -14,7 +13,6 @@ import services.AdminService;
 import utils.ChangePage;
 import utils.exceptions.AccountNotFoundException;
 import utils.exceptions.PageBackException;
-import utils.exceptions.PasswordIncorrectException;
 import utils.exceptions.PasswordMismatchException;
 import utils.exceptions.PasswordValidationException;
 import views.StaffListView;
@@ -41,28 +39,43 @@ public class AdminController {
             System.out.print("Please enter your choice: ");
 
             Scanner sc = new Scanner(System.in);
-            int choice = sc.nextInt();
+            int choice;
+            try {
+                choice = sc.nextInt();
+            } catch (InputMismatchException ime) {
+                System.out.println("Invalid input. Press <enter> to continue.");
+                sc.nextLine();
+                sc.nextLine();
+                AdminController.start(user);
+                return;
+            }
             sc.nextLine();
 
             try {
                 switch (choice) {
                     case 1:
                         getStaffList();
+                        AdminController.start(user);
                         break;
                     case 2: 
                         manageStaff();
+                        AdminController.start(user);
                         break;
                     case 3:
                         promoteStaff();
+                        AdminController.start(user);
                         break;
                     case 4:
                         transferStaff();
+                        AdminController.start(user);
                         break;
                     case 5:
                         managePayments();
+                        AdminController.start(user);
                         break;
                     case 6:
                         branchManagement();
+                        AdminController.start(user);
                         break;
                     case 7:
                         changePassword(user);
@@ -72,7 +85,6 @@ public class AdminController {
                         System.out.println("Logged out successfully.");
                         System.out.println("Press <enter> to continue.");
                         new Scanner(System.in).nextLine();
-                        //Welcome.welcome();
                         break;
                     default:
                         System.out.println("Invalid choice. Please press <enter> to try again.");
@@ -100,6 +112,8 @@ public class AdminController {
 
         try {
             adminService.changePassword(user, oldPassword, newPassword);
+            System.out.println("Password changed successfully. Press <enter> to log in again.");
+            scanner.nextLine();
         } catch (AccountNotFoundException | PasswordMismatchException | PasswordValidationException e) {
             System.out.println("Error changing password: " + e.getMessage());
             System.out.println("Press <enter> to continue.");
@@ -110,9 +124,48 @@ public class AdminController {
         
     }
 
-    private static void branchManagement() {
+    private static void branchManagement() throws PageBackException {
+        System.out.println("Selection action: ");
+        System.out.println("\t1. Add Branch");
+        System.out.println("\t2. Close Branch");
+        System.out.print("Enter your choice: ");
+
+        Scanner sc = new Scanner(System.in);
+        int choice;
+        try {
+            choice = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to try again.");
+            sc.nextLine();
+            sc.nextLine();
+            branchManagement();
+            return;
+        }
+        sc.nextLine();
+
+        switch (choice) {
+            case 1:
+                addBranch();
+                break;
+            case 2:
+                closeBranch();
+                break;
+            default:
+                System.out.println("Invalid choice. Press Enter to go back to the previous page.");
+                sc.nextLine();
+                throw new PageBackException();
+        }
+
+    }
+
+    private static void addBranch() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'branchManagement'");
+        throw new UnsupportedOperationException("Unimplemented method 'addBranch'");
+    }
+
+    private static void closeBranch() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'closeBranch'");
     }
 
     private static void managePayments() {
@@ -134,7 +187,7 @@ public class AdminController {
             throw new PageBackException();
         }
     
-        System.out.print("Select Branch to transfer to: ");
+        System.out.println("Select Branch to transfer to: ");
         int count = 1;
         Branch[] branches = adminService.getBranchList();
         for (Branch branch : branches) {
@@ -142,7 +195,15 @@ public class AdminController {
             count++;
         }
         System.out.print("Enter your choice: ");
-        int choice = sc.nextInt();
+        int choice;
+        try {
+            choice = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to return to previous page.");
+            sc.nextLine();
+            sc.nextLine();
+            throw new PageBackException();
+        }
         sc.nextLine();
         if (choice > 0 && choice <= branches.length) {
             Branch newBranch = branches[choice - 1];
@@ -173,7 +234,13 @@ public class AdminController {
             sc.nextLine();
             throw new PageBackException();
         } else {
-            adminService.promoteStaff(staff);
+            if (adminService.promoteStaff(staff)){
+                System.out.println("Staff successfully promoted to manager. Press <enter> to continue.");
+            }
+            else {
+                System.out.println("Press <enter> to continue.");
+            }
+            sc.nextLine();
         }
     }
     
@@ -190,7 +257,16 @@ public class AdminController {
         System.out.print("Enter your choice: ");
 
         Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
+        int choice;
+        try {
+            choice = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to try again.");
+            sc.nextLine();
+            sc.nextLine();
+            manageStaff();
+            return;
+        }
         sc.nextLine();
 
         switch (choice) {
@@ -334,7 +410,15 @@ public class AdminController {
         System.out.println("\t1. Branch Manager");
         System.out.println("\t2. Staff");
         System.out.print("Enter here: ");
-        int rolechoice = sc.nextInt();
+        int rolechoice;
+        try {
+            rolechoice = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to return to previous page.");
+            sc.nextLine();
+            sc.nextLine();
+            throw new PageBackException();
+        }
         sc.nextLine();
         Role role;
         switch (rolechoice) {
@@ -354,7 +438,15 @@ public class AdminController {
         System.out.println("\t1. Male");
         System.out.println("\t2. Female");
         System.out.print("Enter here: ");
-        int genderchoice = sc.nextInt();
+        int genderchoice;
+        try {
+            genderchoice = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to return to previous page.");
+            sc.nextLine();
+            sc.nextLine();
+            throw new PageBackException();
+        }
         sc.nextLine();
         Gender gender;
         switch (genderchoice) {
@@ -401,7 +493,15 @@ public class AdminController {
         }
         System.out.print("Enter your choice: ");
 
-        int choice = sc.nextInt();
+        int choice;
+        try {
+            choice = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to return to previous page.");
+            sc.nextLine();
+            sc.nextLine();
+            throw new PageBackException();
+        }    
         sc.nextLine();
         Branch selectedBranch = null;
         int branchID = -3;
@@ -441,27 +541,43 @@ public class AdminController {
         System.out.print("Enter your choice: ");
 
         Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
-        sc.nextLine();
-        
+        int choice;
+        try {
+            choice = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to return to previous page.");
+            sc.nextLine();
+            sc.nextLine();
+            throw new PageBackException();
+        }     
+        sc.nextLine();   
 
         switch (choice) {
             case 1:
                 staffListView.display(adminService.getStaffList(), adminService.getBranchList());
+                System.out.println("Press Enter to return.");
+                sc.nextLine();
                 break;
             case 2:
                 
                 int count = 1;
                 Branch[] branches = adminService.getBranchList(); 
 
-                System.out.print("Select Branch to filter by: ");
+                System.out.println("Select Branch to filter by: ");
                 for (Branch branch : branches){
                     System.out.println("\t" + count + ". " + branch.getName());
                     count++;
                 }
                 System.out.print("Enter your choice: ");
 
-                choice = sc.nextInt();
+                try {
+                    choice = sc.nextInt();
+                } catch (InputMismatchException ime) {
+                    System.out.println("Invalid input. Press <enter> to return to previous page.");
+                    sc.nextLine();
+                    sc.nextLine();
+                    throw new PageBackException();
+                }
                 sc.nextLine();
                 Branch selectedBranch = null;
                 if (choice > 0 && choice <= branches.length) {
@@ -474,6 +590,8 @@ public class AdminController {
                 }
                 if (selectedBranch != null){
                     staffListView.display(adminService.getStaffList(selectedBranch), adminService.getBranchList());
+                    System.out.println("Press Enter to return.");
+                    sc.nextLine();
                 }
                 break;
 
@@ -482,13 +600,24 @@ public class AdminController {
                 System.out.println("\t1. STAFF");
                 System.out.println("\t2. MANAGER");
                 System.out.print("Enter your choice: ");
-                choice = sc.nextInt();
+                try {
+                    choice = sc.nextInt();
+                } catch (InputMismatchException ime) {
+                    System.out.println("Invalid input. Press <enter> to return to previous page.");
+                    sc.nextLine();
+                    sc.nextLine();
+                    throw new PageBackException();
+                }
                 sc.nextLine();
 
                 if (choice == 1){
                     staffListView.display(adminService.getStaffList(Role.STAFF), adminService.getBranchList());
+                    System.out.println("Press Enter to return.");
+                    sc.nextLine();
                 } else if (choice == 2){
                     staffListView.display(adminService.getStaffList(Role.BRANCHMANAGER), adminService.getBranchList());
+                    System.out.println("Press Enter to return.");
+                    sc.nextLine();
                 } else {
                     System.out.println("Invalid choice. Please press <enter> to return.");
                     sc.nextLine();
@@ -501,13 +630,24 @@ public class AdminController {
                 System.out.println("\t1. Male");
                 System.out.println("\t2. Female");
                 System.out.print("Enter your choice: ");
-                choice = sc.nextInt();
+                try {
+                    choice = sc.nextInt();
+                } catch (InputMismatchException ime) {
+                    System.out.println("Invalid input. Press <enter> to return to previous page.");
+                    sc.nextLine();
+                    sc.nextLine();
+                    throw new PageBackException();
+                }
                 sc.nextLine();
 
                 if (choice == 1){
                     staffListView.display(adminService.getStaffList(Gender.MALE), adminService.getBranchList());
+                    System.out.println("Press Enter to return.");
+                    sc.nextLine();
                 } else if (choice == 2){
                     staffListView.display(adminService.getStaffList(Gender.FEMALE), adminService.getBranchList());
+                    System.out.println("Press Enter to return.");
+                    sc.nextLine();
                 } else {
                     System.out.println("Invalid choice. Please press <enter> to return.");
                     sc.nextLine();
@@ -531,9 +671,11 @@ public class AdminController {
                     throw new PageBackException();
                 } else {
                     staffListView.display(adminService.getStaffList(age), adminService.getBranchList());
+                    System.out.println("Press Enter to return.");
+                    sc.nextLine();
                 }
             } catch (InputMismatchException ime) {
-                System.out.println("Invalid input. Press <enter> to return.");
+                System.out.println("Invalid input. Press <enter> to return to previous page.");
                 sc.nextLine();
                 throw new PageBackException();
             } catch (Exception e) {

@@ -97,8 +97,7 @@ public class CustomerController {
                     System.out.println("Press <enter> to return to the main page.");
                     sc.nextLine();
                     ChangePage.changePage();
-                    Welcome.welcome();
-                    break;
+                    return;
                 default:
                     System.out.println("Invalid choice. Press <enter> to try again.");
                     sc.nextLine();

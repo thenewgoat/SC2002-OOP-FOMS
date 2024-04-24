@@ -187,6 +187,11 @@ public class AdminService implements IAdminService{
     @Override
     public boolean promoteStaff(BranchUser staff){
 
+        if (staff.getRole() == Role.BRANCHMANAGER){
+            System.out.println("Staff is already a manager.");
+            return false;
+        }
+
         int staffCount = 0;
         int managerCount = 0;
         Branch branch = BranchStorage.get(staff.getBranchID());
@@ -207,10 +212,10 @@ public class AdminService implements IAdminService{
             staff.setRole(Role.BRANCHMANAGER);
             return true;
         } catch (TooFewManagersException e) {
-            System.out.println("Promotion blocked as there will be insufficient staff in the branch." + e.getMessage());
+            System.out.println("Promotion blocked as there will be insufficient staff in the branch.");
             return false;
         } catch (TooManyManagersException e) {
-            System.out.println("Promotion blocked as there will be too many managers in the branch." + e.getMessage());
+            System.out.println("Promotion blocked as there will be too many managers in the branch.");
             return false;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
