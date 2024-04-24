@@ -16,4 +16,10 @@ public interface ICustomerService {
     public Boolean collectOrder(int OrderID);
 
     public int getNextOrderID();
+
+    public String getBranchName(int branchID);
+
+    public void updateBranchMenuItem(BranchMenuItem item);
+
+    public BranchMenuItem getBranchMenuItem(int branchID, String itemName);
 }

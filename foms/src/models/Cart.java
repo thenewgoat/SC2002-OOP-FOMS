@@ -50,11 +50,13 @@ public class Cart {
 
     /**
      * Adds an order item to the cart.
+     * The total price of the cart is recalculated after adding the item.
      *
      * @param item the order item to be added
      */
     public void addItem(OrderItem item) {
         this.orderItems.add(item);
+        calculateTotalPrice();
     }
 
     /**
@@ -74,6 +76,7 @@ public class Cart {
 
     /**
      * Edits the quantity of the order item with the specified item name.
+     * The total price of the cart is recalculated after editing the item.
      *
      * @param itemName the name of the item to edit
      * @param quantity the new quantity of the item
@@ -85,10 +88,12 @@ public class Cart {
                 break;
             }
         }
+        calculateTotalPrice();
     }
 
     /**
      * Removes the order item with the specified item name from the cart.
+     * The total price of the cart is recalculated after removing the item.
      *
      * @param itemName the name of the item to remove
      */
@@ -99,6 +104,7 @@ public class Cart {
                 break;
             }
         }
+        calculateTotalPrice();
     }
 
     /**

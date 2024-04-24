@@ -4,5 +4,5 @@ import models.BranchMenuItem;
 
 public interface IBranchMenuItemView {
 
-    public void displayBranchMenuItem(BranchMenuItem item);
+    public void displayBranchMenuItem(BranchMenuItem item, int index);
 }
