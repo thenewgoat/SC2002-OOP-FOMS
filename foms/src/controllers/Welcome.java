@@ -30,7 +30,7 @@ public class Welcome {
 				sc.nextLine();
 				switch (choice) {
 					case 1:
-                        System.out.print("Select Branch to transfer to: ");
+                        System.out.println("Select Branch: ");
                         int count = 1;
                         int branchID;
                         Branch[] branches = adminService.getBranchList();
@@ -50,7 +50,7 @@ public class Welcome {
                         }
 						break;
 					case 2:						
-						LoginController.login();
+						//LoginController.login();
 						break;
 					case 3:
 						flag = 1;
@@ -62,8 +62,8 @@ public class Welcome {
 						break;
 				}
 			}
-		} catch (PageBackException e) {
-            welcome();
+		} finally {
+            System.out.println("Thank you for using FOMS. Goodbye!");
         }
 	}
 }
