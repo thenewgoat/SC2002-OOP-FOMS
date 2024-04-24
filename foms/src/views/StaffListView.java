@@ -2,11 +2,10 @@ package views;
 
 import models.Branch;
 import models.BranchUser;
-import stores.BranchStorage;
 
 public class StaffListView implements IStaffView{
 
-    public static void display(BranchUser[] StaffList, Branch[] BranchList){
+    public void display(BranchUser[] StaffList, Branch[] BranchList){
         System.out.println("======= Staff List =======");
         System.out.println("No. of Staff: " + StaffList.length);
         System.out.println("-------------------------------");

@@ -25,18 +25,16 @@ public class AdminService implements IAdminService{
         return BranchUserStorage.getAll();
     }
 
-    public BranchUser[] getStaffList(int dataType, int data) {
-        if (dataType == 0){ // Interpret as Age
-            return Arrays.stream(BranchUserStorage.getAll())
-                         .filter(user -> user.getAge() == data)
+    public BranchUser[] getStaffList(int Age){
+        return Arrays.stream(BranchUserStorage.getAll())
+                     .filter(user -> user.getAge() == Age)
+                     .toArray(BranchUser[]::new);
+    }
+
+    public BranchUser[] getStaffList(Branch branch) {
+        return Arrays.stream(BranchUserStorage.getAll())
+                         .filter(user -> user.getBranchID() == branch.getID())
                          .toArray(BranchUser[]::new);
-        }
-        else if (dataType == 1){ // Interprete as Branch ID
-            return Arrays.stream(BranchUserStorage.getAll())
-                         .filter(user -> user.getBranchID() == data)
-                         .toArray(BranchUser[]::new);
-        }
-        throw new IllegalArgumentException("Invalid data type. Must be 0 (age) or 1 (branch ID).");
     }
 
     public BranchUser[] getStaffList(Role role) {
