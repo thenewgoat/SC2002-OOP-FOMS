@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import enums.OrderStatus;
 import interfaces.IOrderView;
-import interfaces.IStaffService;
+import interfaces.IBranchUserService;
 import models.BranchUser;
 import models.Order;
 import models.User;
@@ -17,7 +17,7 @@ public class StaffController {
 
     private static final Scanner sc = new Scanner(System.in);
 
-    protected static final IStaffService staffService = new StaffService();
+    protected static final IBranchUserService staffService = new StaffService();
 
     protected static IOrderView orderView;
 
