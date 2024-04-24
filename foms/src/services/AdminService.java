@@ -358,4 +358,22 @@ public class AdminService implements IAdminService{
         return false;
     }
 
+    public BranchUser findStaffByLoginID(String staffLoginID) {
+        for (BranchUser staff : getStaffList()) {
+            if (staff.getLoginID().equals(staffLoginID)) {
+                return staff;
+            }
+        }
+        return null;
+    }
+
+    public Branch findBranchById(int branchID) {
+        for (Branch branch : getBranchList()) {
+            if (branch.getID() == branchID) {
+                return branch;
+            }
+        }
+        return null;
+    }
+
 }

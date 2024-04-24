@@ -105,53 +105,39 @@ public class AdminController {
         Scanner sc = new Scanner(System.in);
     
         System.out.print("Enter Staff Login ID of staff to transfer: ");
-        BranchUser staff = null;
         String staffLoginId = sc.nextLine();
-        for (BranchUser staffs : adminService.getStaffList()) {
-            if (staffs.getLoginID().equals(staffLoginId)) {
-                staff = staffs;
-                break;
-            }
-        }
+        BranchUser staff = adminService.findStaffByLoginID(staffLoginId);
+    
         if (staff == null) {
             System.out.println("No staff member found with that Login ID. Press Enter to continue.");
             sc.nextLine();
             throw new PageBackException();
         }
-        
+    
         System.out.print("Select Branch to transfer to: ");
         int count = 1;
         Branch[] branches = adminService.getBranchList();
-        for (Branch branch : branches){
+        for (Branch branch : branches) {
             System.out.println("\t" + count + ". " + branch.getName());
             count++;
         }
         System.out.print("Enter your choice: ");
-
         int choice = sc.nextInt();
         sc.nextLine();
-        Branch newBranch = null;
-        int branchID = -3;
         if (choice > 0 && choice <= branches.length) {
-            newBranch = branches[choice - 1];
+            Branch newBranch = branches[choice - 1];
+            Branch oldBranch = adminService.findBranchById(staff.getBranchID());
+            if (oldBranch != null) {
+                adminService.transferStaff(staff, oldBranch, newBranch);
+                System.out.println("Staff transferred successfully. Press Enter to continue.");
+                sc.nextLine();
+            }
         } else {
             System.out.println("Invalid choice. Please select a number between 1 and " + branches.length);
             System.out.println("Press <enter> to return.");
             sc.nextLine();
             throw new PageBackException();
         }
-        Branch oldBranch = null;
-        for (Branch branch : branches){
-            if (branch.getID() == staff.getBranchID()){
-                oldBranch = branch;
-            }
-        }
-        if (newBranch != null && oldBranch != null){
-            adminService.transferStaff(staff, oldBranch, newBranch);
-            System.out.println("Staff transferred successfully. Press Enter to continue.");
-            sc.nextLine();
-            throw new PageBackException();
-        } 
     }
 
     private static void promoteStaff() throws PageBackException {
