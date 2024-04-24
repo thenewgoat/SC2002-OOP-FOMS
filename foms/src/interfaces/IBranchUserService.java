@@ -2,7 +2,12 @@ package interfaces;
 
 import java.util.List;
 
+import models.Account;
 import models.Order;
+import models.User;
+import utils.exceptions.AccountNotFoundException;
+import utils.exceptions.PasswordMismatchException;
+import utils.exceptions.PasswordValidationException;
 
 public interface IBranchUserService {
 
@@ -12,5 +17,7 @@ public interface IBranchUserService {
 
     public Boolean updateOrderStatus(int orderID);
 
-    public 
+    public Account findAccountByLoginID(String loginID);
+
+    public void changePassword(User user, String oldPassword, String newPassword) throws AccountNotFoundException, PasswordMismatchException, PasswordValidationException;
 }

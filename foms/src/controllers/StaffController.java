@@ -11,7 +11,10 @@ import models.Order;
 import models.User;
 import services.StaffService;
 import utils.ChangePage;
+import utils.exceptions.AccountNotFoundException;
 import utils.exceptions.PageBackException;
+import utils.exceptions.PasswordMismatchException;
+import utils.exceptions.PasswordValidationException;
 
 public class StaffController {
 
@@ -51,7 +54,7 @@ public class StaffController {
                         processOrder();
                         break;
                     case 4:
-                        // changePassword();
+                        changePassword(user);
                         break;
                     case 5:
                         exit = true;
@@ -120,5 +123,25 @@ public class StaffController {
             sc.nextLine();
             return;
         }
+    }
+
+    private static void changePassword(User user) throws PageBackException {
+        System.out.println("Enter old password:");
+        String oldPassword = sc.nextLine();
+        System.out.println("Enter new password:");
+        String newPassword = sc.nextLine();
+
+        try {
+            staffService.changePassword(user, oldPassword, newPassword);
+            System.out.println("Password changed successfully. Press <enter> to log in again.");
+            sc.nextLine();
+        } catch (AccountNotFoundException | PasswordMismatchException | PasswordValidationException e) {
+            System.out.println("Error changing password: " + e.getMessage());
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            throw new PageBackException();
+        }
+        return;
+        
     }
 }
