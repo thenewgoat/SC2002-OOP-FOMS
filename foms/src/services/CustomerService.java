@@ -55,4 +55,9 @@ public class CustomerService implements ICustomerService{
             return false;
         }
     }
+
+    @Override
+    public int getNextOrderID() {
+        return OrderStorage.getAll().length + 1;
+    }
 }
