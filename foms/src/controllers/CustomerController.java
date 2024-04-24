@@ -29,7 +29,7 @@ public class CustomerController {
     public CustomerController() {
     }
 
-    public void customerMainPage(int branchID) {
+    public static void customerMainPage(int branchID) {
         ChangePage.changePage();
         int choice;
 
@@ -63,7 +63,7 @@ public class CustomerController {
         }
     }
 
-    private void checkOrderStatus(){
+    private static void checkOrderStatus(){
         System.out.println("Please enter your Order ID: ");
         int orderID = sc.nextInt();
         Order order = customerService.getOrder(orderID);
@@ -71,7 +71,7 @@ public class CustomerController {
         orderView.displayOrderDetails(order);
     }
 
-    private void customerOrderPage(int branchID){
+    private static void customerOrderPage(int branchID){
         ChangePage.changePage();
         OrderType orderType = null;
         System.out.println("Welcome to " + customerService.getBranchName(branchID) + "branch Order Page!");
@@ -101,7 +101,7 @@ public class CustomerController {
         manageCart(branchID, orderType, cart);
     }
 
-    private void manageCart(int branchID, OrderType orderType, Cart cart){
+    private static void manageCart(int branchID, OrderType orderType, Cart cart){
         Boolean exit = false;
         do {
             ChangePage.changePage();
@@ -142,7 +142,7 @@ public class CustomerController {
         
     }
 
-    private void addItemToCart(Cart cart, int branchID){
+    private static void addItemToCart(Cart cart, int branchID){
         ChangePage.changePage();
         List<BranchMenuItem> branchMenuItems = customerService.getBranchMenuItemList(branchID);
         int index = 1;
@@ -173,7 +173,7 @@ public class CustomerController {
         cart.addItem(orderItem);
     }
 
-    private void editCart(Cart cart, int branchID){
+    private static void editCart(Cart cart, int branchID){
         ChangePage.changePage();
         cart.displayItems();
         System.out.println("Please enter the name of the item you would like to edit: ");
@@ -200,7 +200,7 @@ public class CustomerController {
         TimeDelay.delay(2000);
     }
 
-    private void removeItemFromCart(Cart cart, int branchID){
+    private static void removeItemFromCart(Cart cart, int branchID){
         ChangePage.changePage();
         cart.displayItems();
         System.out.println("Please enter the name of the item you would like to remove: ");
@@ -218,7 +218,7 @@ public class CustomerController {
         TimeDelay.delay(2000);
     }
 
-    private void checkoutCart(int branchID, OrderType orderType, Cart cart){
+    private static void checkoutCart(int branchID, OrderType orderType, Cart cart){
         ChangePage.changePage();
         if(cart.getOrderItems().isEmpty()){
             System.out.println("Your cart is empty. Please add items to your cart before checking out.");
@@ -227,7 +227,7 @@ public class CustomerController {
         // do once payment is implemented
     }
 
-    private void cancelOrder(Cart cart, int branchID){
+    private static void cancelOrder(Cart cart, int branchID){
         ChangePage.changePage();
         for (OrderItem item : cart.getOrderItems()) {
             BranchMenuItem branchMenuItem = customerService.getBranchMenuItem(branchID, item.getItemName());
