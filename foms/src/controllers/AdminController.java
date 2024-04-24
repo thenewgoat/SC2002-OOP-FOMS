@@ -158,15 +158,94 @@ public class AdminController {
 
     }
 
-    private static void addBranch() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addBranch'");
+    private static void addBranch() throws PageBackException {
+        Scanner sc = new Scanner(System.in);
+        AdminService adminService = new AdminService();
+
+        System.out.println("Adding new branch...");
+        System.out.print("Enter branch name: ");
+        String branchName = sc.nextLine();
+        if (branchName == null || branchName.isEmpty()) {
+            System.out.println("Branch name cannot be empty. Press Enter to continue.");
+            sc.nextLine();
+            throw new PageBackException();
+        }
+        System.out.print("Enter branch location: ");
+        String branchLocation = sc.nextLine();
+        if (branchLocation == null || branchLocation.isEmpty()) {
+            System.out.println("Branch location cannot be empty. Press Enter to continue.");
+            sc.nextLine();
+            throw new PageBackException();
+        }
+        System.out.print("Set Staff Quota: ");
+        int staffQuota;
+        try {
+            staffQuota = sc.nextInt();
+            sc.nextLine();
+            if (staffQuota <= 0) {
+                System.out.println("Staff quota must be a positive integer. Press Enter to continue.");
+                sc.nextLine();
+                throw new PageBackException();
+            }
+            if (staffQuota > 15){
+                System.out.println("Staff quota cannot exceed 15. Press Enter to continue.");
+                sc.nextLine();
+                throw new PageBackException();
+            }
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press Enter to continue.");
+            sc.nextLine();
+            throw new PageBackException();
+        }
+
+        if (adminService.createBranch(branchName, branchLocation, staffQuota)){
+            System.out.println("Branch created successfully. Press Enter to continue.");
+            sc.nextLine();
+        } else {
+            System.out.println("Branch could not be created. Press Enter to continue.");
+            sc.nextLine();
+        }
+        
     }
 
     private static void closeBranch() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'closeBranch'");
+        AdminService adminService = new AdminService();
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Select Branch to close: ");
+        int count = 1;
+        Branch[] branches = adminService.getBranchList();
+        for (Branch branch : branches) {
+            System.out.println("\t" + count + ". " + branch.getName());
+            count++;
+        }
+        System.out.print("Enter your choice: ");
+        int choice;
+        try {
+            choice = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to return to previous page.");
+            sc.nextLine();
+            sc.nextLine();
+            return;
+        }
+        sc.nextLine();
+        if (choice > 0 && choice <= branches.length) {
+            Branch branch = branches[choice - 1];
+            if (adminService.removeBranch(branch)) {
+                System.out.println("Branch closed successfully. Press Enter to continue.");
+                sc.nextLine();
+            } else {
+                System.out.println("Branch could not be closed. Press Enter to continue.");
+                sc.nextLine();
+            }
+        } else {
+            System.out.println("Invalid choice. Please select a number between 1 and " + branches.length);
+            System.out.println("Press <enter> to return.");
+            sc.nextLine();
+        }
     }
+
 
     private static void managePayments() {
         // TODO Auto-generated method stub

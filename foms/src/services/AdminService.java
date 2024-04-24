@@ -332,6 +332,12 @@ public class AdminService implements IAdminService{
 
     @Override
     public boolean removeBranch(Branch branch){
+        for (BranchUser branchuser : getStaffList()){
+            if (branchuser.getBranchID() == branch.getID()){
+                System.out.println("Branch still has staff. Remove all staff before closing branch.");
+                return false;
+            }
+        }
         for(Branch curBranch : BranchStorage.getAll()){
             if (curBranch.getID() == branch.getID()){
                 BranchStorage.remove(branch);
@@ -409,5 +415,17 @@ public class AdminService implements IAdminService{
     
         account.setPassword(newPassword);
         PasswordStorage.update(account);
+    }
+
+    public boolean createBranch(String branchName, String branchLocation, int staffQuota) {
+        Branch[] branches = getBranchList();
+        int temp = 0;
+        for (Branch branch : branches) {
+            if (branch.getID() > temp){
+                temp = branch.getID();
+            }
+        }
+        Branch branch = new Branch(temp + 1, branchName, branchLocation, staffQuota);
+        return addBranch(branch);
     }
 }
