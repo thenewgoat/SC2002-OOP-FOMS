@@ -10,21 +10,17 @@ public interface IAdminService {
 
     public boolean addStaff(BranchUser staff);
 
-    public boolean removeStaff(String staffID);
+    public boolean removeStaff(BranchUser staff);
 
     public boolean updateStaff(BranchUser staff);
 
-    public boolean promoteStaff(String staffID);
-
-    public boolean transferStaff(String staffID, int branchID);
-
     public boolean addBranch(Branch branch);
 
-    public boolean removeBranch(int branchID);
+    public boolean removeBranch(Branch branch);
 
     public boolean addPaymentMethod(PaymentMethod paymentMethod);
 
-    public boolean removePaymentMethod(String paymentMethodName);   
+    public boolean removePaymentMethod(PaymentMethod paymentMethod);   
 
 
 }
