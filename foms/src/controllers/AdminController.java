@@ -86,8 +86,20 @@ public class AdminController {
     }
 
     private static void changePassword() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'changePassword'");
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter new password: ");
+        String newPassword = sc.nextLine();
+        
+        try {
+            if (UserService.changePassword(user.getLoginID(), user.getPassword(), newPassword)) {
+                System.out.println("Password changed successfully.");
+            } else {
+                System.out.println("Password change failed. Please try again.");
+            }
+        } catch (PasswordIncorrectException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Password change failed. Please try again.");
+        }
     }
 
     private static void branchManagement() {
