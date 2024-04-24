@@ -11,7 +11,7 @@ public class StaffUpdateChecker {
     // To close branch, remove all staff, then remove the final manager.
     // To open branch, add one manager first, then add staff.
 
-    public boolean check(int staffCount, int managerCount, Branch branch){
+    public static boolean check(int staffCount, int managerCount, Branch branch){
 
         if (staffCount < 0 || managerCount < 0) {
             throw new IllegalArgumentException("Staff and manager counts must be non-negative. Provided staffCount: " + staffCount + ", managerCount: " + managerCount);
