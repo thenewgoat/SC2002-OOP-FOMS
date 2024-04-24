@@ -1,14 +1,17 @@
 package interfaces;
 
+import java.util.List;
+
+import models.BranchMenuItem;
 import models.Order;
 
 public interface ICustomerService {
 
-    public void checkOrderStatus(int OrderID);
+    public Order getOrder(int OrderID);
 
-    public void newOrder(Order order, int BranchID);
+    public void newOrder(Order order);
 
-    public void getBranchMenuItemList(int BranchID);
+    public List<BranchMenuItem> getBranchMenuItemList(int BranchID);
 
-    public void collectOrder(int OrderID);
+    public Boolean collectOrder(int OrderID);
 }
