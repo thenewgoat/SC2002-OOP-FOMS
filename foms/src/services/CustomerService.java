@@ -8,6 +8,7 @@ import interfaces.ICustomerService;
 import models.BranchMenuItem;
 import models.Order;
 import stores.BranchMenuItemStorage;
+import stores.BranchStorage;
 import stores.OrderStorage;
 
 public class CustomerService implements ICustomerService{
@@ -59,5 +60,25 @@ public class CustomerService implements ICustomerService{
     @Override
     public int getNextOrderID() {
         return OrderStorage.getAll().length + 1;
+    }
+
+    @Override
+    public String getBranchName(int branchID) {
+        return BranchStorage.get(branchID).getName();
+    }
+
+    @Override
+    public void updateBranchMenuItem(BranchMenuItem item) {
+        BranchMenuItemStorage.update(item);
+    }
+
+    public BranchMenuItem getBranchMenuItem(int branchID, String itemName){
+        List<BranchMenuItem> items = getBranchMenuItemList(branchID);
+        for (BranchMenuItem item : items) {
+            if(item.getName().equals(itemName)){
+                return item;
+            }
+        }
+        return null;
     }
 }

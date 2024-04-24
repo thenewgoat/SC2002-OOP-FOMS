@@ -9,8 +9,9 @@ public class BranchMenuItemView implements IBranchMenuItemView{
     }
     
     @Override
-    public void displayBranchMenuItem(BranchMenuItem item) {
+    public void displayBranchMenuItem(BranchMenuItem item, int index) {
         System.out.println("--------------------------------------------------");
+        System.out.println("Item Number: " + index);
         System.out.println("Item Name: " + item.getName());
         System.out.println("Category: " + item.getCategory());
         System.out.println("Price: " + item.getPrice());
