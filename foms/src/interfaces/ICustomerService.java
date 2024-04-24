@@ -14,4 +14,6 @@ public interface ICustomerService {
     public List<BranchMenuItem> getBranchMenuItemList(int BranchID);
 
     public Boolean collectOrder(int OrderID);
+
+    public int getNextOrderID();
 }
