@@ -126,4 +126,14 @@ public class Order implements Serializable {
     public int getOrderID() {
         return this.orderID;
     }
+
+    /**
+     * Gets the ID of the branch.
+     *
+     * @return the ID of the branch
+     */
+
+    public int getBranchID() {
+        return this.branchID;
+    }
 }
