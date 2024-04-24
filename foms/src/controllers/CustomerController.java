@@ -38,8 +38,7 @@ public class CustomerController {
         System.out.println("Please select your choice: ");
         System.out.println("\t1. Check Order Status");
         System.out.println("\t2. Make a New Order");
-        System.out.println("\t3. Change Branch");
-        System.out.println("\t4. Exit");
+        System.out.println("\t3. Exit");
         choice = sc.nextInt();
         sc.nextLine();
         try {
@@ -52,14 +51,11 @@ public class CustomerController {
                     customerOrderPage(branchID);
                     break;
                 case 3:
-                    // page back exception
-                    break;
-                case 4:
                     System.out.println("Thank you for visiting " + customerService.getBranchName(branchID) + "!");
-                    TimeDelay.delay(3000);
+                    System.out.println("Press <enter> to return to the main page.");
+                    sc.nextLine();
                     ChangePage.changePage();
                     Welcome.welcome();
-                    // send back to starting page
                     break;
                 default:
                     System.out.println("Invalid choice. Press <enter> to try again.");
@@ -67,8 +63,6 @@ public class CustomerController {
                     throw new PageBackException();
             }
         } catch (PageBackException e) {
-            // System.out.println("Invalid choice. Press <enter> to go back.");
-            // sc.nextLine();
             customerMainPage(branchID);
         }
         
@@ -91,22 +85,28 @@ public class CustomerController {
         System.out.println("\t2. Take Out");
         System.out.println("\t3. Exit");
         int choice = sc.nextInt();
-        switch(choice){
-            case 1:
-                orderType = OrderType.DINE_IN;
-                break;
-            case 2:
-                orderType = OrderType.TAKEAWAY;
-                break;
-            case 3:
-                System.out.println("Thank you for using FOMS. Goodbye!");
-                TimeDelay.delay(3000);
-                ChangePage.changePage();
-                //Welcome.welcome();
-                break;
-            default:
-                System.out.println("Invalid choice. Please try again.");
-                break;
+        try {
+            switch(choice){
+                case 1:
+                    orderType = OrderType.DINE_IN;
+                    break;
+                case 2:
+                    orderType = OrderType.TAKEAWAY;
+                    break;
+                case 3:
+                    System.out.println("Thank you for using FOMS. Goodbye!");
+                    System.out.println("Press <enter> to return to the main page.");
+                    sc.nextLine();
+                    ChangePage.changePage();
+                    Welcome.welcome();
+                    break;
+                default:
+                    System.out.println("Invalid choice. Press <enter> to try again.");
+                    sc.nextLine();
+                    throw new PageBackException();
+            }
+        } catch (PageBackException e) {
+            customerOrderPage(branchID);
         }
         Cart cart = new Cart();
         manageCart(branchID, orderType, cart);
@@ -125,6 +125,7 @@ public class CustomerController {
             System.out.println("\t6. Cancel Order");
             System.out.print("Please enter your choice: ");
             int choice = sc.nextInt();
+            sc.nextLine();
             switch (choice) {
                 case 1:
                     addItemToCart(cart, branchID);
@@ -136,7 +137,7 @@ public class CustomerController {
                     removeItemFromCart(cart, branchID);
                     break;
                 case 4:
-                    cart.displayItems();
+                    displayCart(cart);
                     break;
                 case 5:
                     checkoutCart(branchID, orderType, cart);
@@ -164,77 +165,118 @@ public class CustomerController {
         }
         System.out.println("Please enter the item number you would like to add to your cart: ");
         int choice = sc.nextInt();
-        if(choice < 1 || choice > branchMenuItems.size()){
-            System.out.println("Invalid choice. Please try again.");
-            // page back exception
+        try {
+            if(choice < 1 || choice > branchMenuItems.size()){
+                System.out.println("Invalid choice. Press <enter> to try again.");
+                sc.nextLine();
+                throw new PageBackException();
+            }
+        } catch (PageBackException e) {
+            addItemToCart(cart, branchID);
         }
         choice--;
         BranchMenuItem item = branchMenuItems.get(choice);
         System.out.println("Please enter the quantity you would like to order: ");
         int quantity = sc.nextInt();
-        if(quantity > item.getAvailability()){
-            System.out.println("Sorry, the quantity you have entered exceeds our stock.");
-            // page back exception
-        }else if (quantity < 1){
-            System.out.println("Invalid quantity. Please try again.");
-            // page back exception
+        try {
+            if(quantity > item.getAvailability()){
+                System.out.println("Sorry, the quantity you have entered exceeds our stock.");
+                System.out.println("Press <enter> to try again.");
+                sc.nextLine();
+                throw new PageBackException();
+            }else if (quantity < 1){
+                System.out.println("Invalid quantity. Please try again.");
+                System.out.println("Press <enter> to try again.");
+                sc.nextLine();
+                throw new PageBackException();
+            }
+        } catch (PageBackException e) {
+            addItemToCart(cart, branchID);
         }
         item.setAvailability(item.getAvailability()-quantity);
         customerService.updateBranchMenuItem(item);
         OrderItem orderItem = new OrderItem(item.getName(), item.getCategory(), quantity, item.getPrice());
         cart.addItem(orderItem);
+        System.out.println("Item added to cart successfully.");
+        System.out.println("Press <enter> to continue.");
+        sc.nextLine();
     }
 
     private static void editCart(Cart cart, int branchID){
         ChangePage.changePage();
         cart.displayItems();
         System.out.println("Please enter the name of the item you would like to edit: ");
-        String itemName = sc.next();
+        String itemName = sc.nextLine();
         OrderItem item = cart.getItem(itemName);
-        if(item == null){
-            System.out.println("Item not found in cart.");
-            // page back exception
+        try {
+            if(item == null){
+                System.out.println("Item not found in cart.");
+                System.out.println("Press <enter> to try again.");
+                sc.nextLine();
+                throw new PageBackException();
+            }
+        } catch (PageBackException e) {
+            editCart(cart, branchID);
         }
         BranchMenuItem branchMenuItem = customerService.getBranchMenuItem(branchID, itemName);
         int oldQuantity = item.getQuantity();
         System.out.println("Please enter the new quantity: ");
         int quantity = sc.nextInt();
-        if(quantity < 1){
-            System.out.println("Invalid quantity. Please try again.");
-            // page back exception
-        }else if(quantity > branchMenuItem.getAvailability() + item.getQuantity()) {
-            System.out.println("Sorry, the quantity you have entered exceeds the quantity in your cart.");
+        try {
+            if(quantity < 1){
+                System.out.println("Invalid quantity. Please try again.");
+                System.out.println("Press <enter> to try again.");
+                sc.nextLine();
+                throw new PageBackException();
+            }else if(quantity > branchMenuItem.getAvailability() + item.getQuantity()) {
+                System.out.println("Sorry, the quantity you have entered exceeds the quantity in your cart.");
+                System.out.println("Press <enter> to try again.");
+                sc.nextLine();
+                throw new PageBackException();
+            }
+        } catch (PageBackException e) {
+            editCart(cart, branchID);
         }
         cart.editItem(itemName, quantity);
         branchMenuItem.setAvailability(branchMenuItem.getAvailability() + oldQuantity - quantity);
         customerService.updateBranchMenuItem(branchMenuItem);
         System.out.println("Item quantity updated successfully.");
-        TimeDelay.delay(2000);
+        System.out.println("Press <enter> to continue.");
+        sc.nextLine();
     }
 
     private static void removeItemFromCart(Cart cart, int branchID){
         ChangePage.changePage();
         cart.displayItems();
         System.out.println("Please enter the name of the item you would like to remove: ");
-        String itemName = sc.next();
+        String itemName = sc.nextLine();
         OrderItem item = cart.getItem(itemName);
-        if(item == null){
-            System.out.println("Item not found in cart.");
-            // page back exception
+        try {
+            if(item == null){
+                System.out.println("Item not found in cart.");
+                System.out.println("Press <enter> to try again.");
+                sc.nextLine();
+                throw new PageBackException();
+            }
+        } catch (PageBackException e) {
+            removeItemFromCart(cart, branchID);
         }
         BranchMenuItem branchMenuItem = customerService.getBranchMenuItem(branchID, itemName);
         cart.removeItem(itemName);
         branchMenuItem.setAvailability(branchMenuItem.getAvailability() + item.getQuantity());
         customerService.updateBranchMenuItem(branchMenuItem);
         System.out.println("Item removed successfully.");
-        TimeDelay.delay(2000);
+        System.out.println("Press <enter> to continue.");
+        sc.nextLine();
     }
 
     private static void checkoutCart(int branchID, OrderType orderType, Cart cart){
         ChangePage.changePage();
         if(cart.getOrderItems().isEmpty()){
             System.out.println("Your cart is empty. Please add items to your cart before checking out.");
-            // page back exception
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return;
         }
         // do once payment is implemented
     }
@@ -248,5 +290,12 @@ public class CustomerController {
         }
         cart.getOrderItems().clear();
         System.out.println("Order cancelled successfully.");
+    }
+
+    private static void displayCart(Cart cart){
+        ChangePage.changePage();
+        cart.displayItems();
+        System.out.println("Press <enter> to continue.");
+        sc.nextLine();
     }
 }
