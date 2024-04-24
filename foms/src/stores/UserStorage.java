@@ -99,15 +99,24 @@ public class UserStorage {
      */
     public static void load() {
         File file = new File(userFilename);
+        BranchUser[] branchUsers = BranchUserStorage.getAll();
         if (file.exists()) {
             SerialDataService serialDataService = new SerialDataService();
             users = serialDataService.importUserData();
+            for (BranchUser branchUser : branchUsers) {
+                for (User user : users.values()) {
+                    if (user.getLoginID().equals(branchUser.getLoginID())) {
+                        users.remove(user.getLoginID());
+                        users.put(branchUser.getLoginID(), branchUser);
+                        break;
+                    }
+                }             
+            }
+
         } else {
             users = new HashMap<>();
             CSVDataService csvDataService = new CSVDataService();
-            users = csvDataService.importUserData();
-            // Assume BranchUserStorage is also static
-            BranchUser[] branchUsers = BranchUserStorage.getAll();
+            users = csvDataService.importUserData();      
             for (BranchUser branchUser : branchUsers) {
                 users.put(branchUser.getLoginID(), branchUser);
             }

@@ -116,8 +116,22 @@ public class dataPersistenceTest {
         }
 
         sc.nextLine();
+
+        // Object test
+
+        for (BranchUser branchUser : branchUsers) {
+            for (User user : users) {
+                if (branchUser == user) {
+                    System.out.println("The BranchUser and User with key " + user.getLoginID() + " are the same object.");
+                }
+            }
+        }
+
+        sc.nextLine();
+
         sc.close();
 
+        
         FileCleanupUtility.deleteSerFiles("foms/data"); // Used to delete all .ser files in the data directory, delete before submission or when testing persistence
 
     }
