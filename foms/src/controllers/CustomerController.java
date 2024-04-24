@@ -13,6 +13,7 @@ import models.OrderItem;
 import services.CustomerService;
 import utils.ChangePage;
 import utils.TimeDelay;
+import utils.exceptions.PageBackException;
 import views.BranchMenuItemView;
 import views.OrderStatusView;
 
@@ -40,27 +41,37 @@ public class CustomerController {
         System.out.println("\t3. Change Branch");
         System.out.println("\t4. Exit");
         choice = sc.nextInt();
-        switch(choice){
-            case 1:
-                ChangePage.changePage();
-                checkOrderStatus();
-                break;
-            case 2:
-                customerOrderPage(branchID);
-                break;
-            case 3:
-                // page back exception
-                break;
-            case 4:
-                System.out.println("Thank you for visiting " + customerService.getBranchName(branchID) + "!");
-                TimeDelay.delay(3000);
-                ChangePage.changePage();
-                // send back to starting page
-                break;
-            default:
-                System.out.println("Invalid choice. Please try again.");
-                break;
+        sc.nextLine();
+        try {
+            switch(choice){
+                case 1:
+                    ChangePage.changePage();
+                    checkOrderStatus();
+                    break;
+                case 2:
+                    customerOrderPage(branchID);
+                    break;
+                case 3:
+                    // page back exception
+                    break;
+                case 4:
+                    System.out.println("Thank you for visiting " + customerService.getBranchName(branchID) + "!");
+                    TimeDelay.delay(3000);
+                    ChangePage.changePage();
+                    Welcome.welcome();
+                    // send back to starting page
+                    break;
+                default:
+                    System.out.println("Invalid choice. Press <enter> to try again.");
+                    sc.nextLine();
+                    throw new PageBackException();
+            }
+        } catch (PageBackException e) {
+            // System.out.println("Invalid choice. Press <enter> to go back.");
+            // sc.nextLine();
+            customerMainPage(branchID);
         }
+        
     }
 
     private static void checkOrderStatus(){

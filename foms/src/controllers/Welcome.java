@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import models.Admin;
 import models.Branch;
+import utils.ChangePage;
 import utils.exceptions.PageBackException;
 import services.AdminService;
 
@@ -15,14 +16,16 @@ public class Welcome {
 
         AdminService adminService = new AdminService();
 		
-		System.out.println("Welcome to the Fastfood ordering and management System (FOMS)! \n");
-        System.out.println("Please enter your choice to continue.");
-        System.out.println("\t1. Customer");
-        System.out.println("\t2. Staff");
-        System.out.println("\t3. Exit");
+		
         
 		try {
 			while (flag == 0) {
+                ChangePage.changePage();
+                System.out.println("Welcome to the Fastfood ordering and management System (FOMS)! \n");
+                System.out.println("Please enter your choice to continue.");
+                System.out.println("\t1. Customer");
+                System.out.println("\t2. Staff");
+                System.out.println("\t3. Exit");
 				System.out.println("");
 				System.out.println("Enter your choice: ");
 				Scanner sc = new Scanner(System.in);
@@ -46,7 +49,8 @@ public class Welcome {
                             branchID = newBranch.getID();
                             CustomerController.customerMainPage(branchID);
                         } else {
-                            System.out.println("Invalid choice. Please try again.");
+                            System.out.println("Invalid choice. Press <enter> to go back.");
+                            sc.nextLine();
                         }
 						break;
 					case 2:						
