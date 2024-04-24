@@ -1,65 +1,58 @@
 package services;
 
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 import enums.OrderStatus;
 import interfaces.ICustomerService;
-import models.Cart;
+import models.BranchMenuItem;
 import models.Order;
-import models.OrderItem;
+import stores.BranchMenuItemStorage;
 import stores.OrderStorage;
-import utils.ChangePage;
 
 public class CustomerService implements ICustomerService{
+    
 
     @Override
-    public void checkOrderStatus(int OrderID) {
+    public Order getOrder(int OrderID) {
+        Order order = OrderStorage.get(OrderID);
+        return order;
+    }
+
+    @Override
+    public void newOrder(Order order) {
+        OrderStorage.add(order);
+    }
+
+    @Override
+    public List<BranchMenuItem> getBranchMenuItemList(int BranchID) {
+        BranchMenuItem[] items = BranchMenuItemStorage.getAll();
+        List<BranchMenuItem> branchItems = new ArrayList<>(); 
+        if (items != null) {
+            for (BranchMenuItem item : items) {
+                if(item.getBranchID() == BranchID){
+                    branchItems.add(item);
+                }
+            }
+            return branchItems;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean collectOrder(int OrderID) {
         Order order = OrderStorage.get(OrderID);
         if (order != null) {
-            System.out.println("Order ID: " + order.getOrderID());
-            System.out.println("Order Status: " + order.getOrderStatus());
-        } else {
-            System.out.println("Order not found.");
-        }
-    }
-
-    @Override
-    public void newOrder(Order order, int BranchID) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public void getBranchMenuItemList(int BranchID) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public void collectOrder(int OrderID) {
-        Order order = OrderStorage.get(OrderID);
-        if (order != null){
             OrderStatus status = order.getOrderStatus();
-            switch(status){
-                case PREPARING:
-                    System.out.println("Order is still being prepared.");
-                    break;
-                case READY:
-                    order.completeOrder();
-                    System.out.println("Order collected successfully.");
-                    break;
-                case COMPLETED:
-                    System.out.println("Order has already been collected.");
-                    break;
-                case CANCELLED:
-                    System.out.println("Order has been cancelled as it was not collected in time.");
-                    break;
-                default:
-                    System.out.println("Invalid order status.");
-                    break;
+            if (status == OrderStatus.READY) {
+                order.completeOrder();
+                return true;
+            } else {
+                return false;
             }
-        }
-        else{
-            System.out.println("Order not found.");
-            // add page back exception
+        } else {
+            return false;
         }
     }
 }
