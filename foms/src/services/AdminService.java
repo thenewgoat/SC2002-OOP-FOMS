@@ -376,4 +376,12 @@ public class AdminService implements IAdminService{
         return null;
     }
 
+    public Account findAccountByLoginID(String loginID) {
+        for (Account account : PasswordStorage.getAll()) {
+            if (account.getLoginID().equals(loginID)) {
+                return account;
+            }
+        }
+        return null;
+    }
 }

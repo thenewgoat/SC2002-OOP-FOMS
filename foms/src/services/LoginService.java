@@ -4,7 +4,10 @@ import java.util.NoSuchElementException;
 
 import interfaces.IAuthorisationService;
 import models.Account;
+import models.User;
 import stores.PasswordStorage;
+import stores.UserStorage;
+import utils.exceptions.PasswordIncorrectException;
 
 
 /**
@@ -43,4 +46,24 @@ public class AuthorisationService implements IAuthorisationService {
         }
         return user.getPassword().equals(password);
     }
+
+    public boolean changePassword(String loginID, String oldPassword, String newPassword) throws PasswordIncorrectException {
+        Account account = PasswordStorage.get(loginID);
+        if (account != null && account.getPassword().equals(oldPassword)) {
+            account.setPassword(newPassword);
+            PasswordStorage.update(account); // Assume a method to update the account in storage
+            return true;
+        } else {
+            throw new PasswordIncorrectException("Old password is incorrect.");
+        }
+    }
+
+    public User getUser(String loginID) {
+        return UserStorage.get(loginID);
+    }
+
+    public Account getAccount(String loginID) {
+        return PasswordStorage.get(loginID);
+    }
+
 }

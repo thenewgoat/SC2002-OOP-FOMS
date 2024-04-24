@@ -5,13 +5,16 @@ import java.util.Scanner;
 
 import enums.Gender;
 import enums.Role;
+import models.Account;
 import models.Admin;
 import models.Branch;
 import models.BranchUser;
 import models.User;
 import services.AdminService;
+import services.UserService;
 import utils.ChangePage;
 import utils.exceptions.PageBackException;
+import utils.exceptions.PasswordIncorrectException;
 import views.StaffListView;
 
 public class AdminController {
@@ -60,14 +63,14 @@ public class AdminController {
                         branchManagement();
                         break;
                     case 7:
-                        changePassword();
+                        changePassword(user);
                         break;
                     case 8:
                         System.out.println("Logging out...");
                         System.out.println("Logged out successfully.");
                         System.out.println("Press <enter> to continue.");
                         new Scanner(System.in).nextLine();
-                        Welcome.welcome();
+                        //Welcome.welcome();
                         break;
                     default:
                         System.out.println("Invalid choice. Please press <enter> to try again.");
@@ -85,9 +88,25 @@ public class AdminController {
         }
     }
 
-    private static void changePassword() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'changePassword'");
+    private static void changePassword(User user) {
+
+        AdminService adminService = new AdminService();
+        UserService userService = new UserService();
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter new password: ");
+        String newPassword = sc.nextLine();
+        Account account = adminService.findAccountByLoginID(user.getLoginID());
+        try {
+            if (userService.changePassword(account.getLoginID(), account.getPassword(), newPassword)) {
+                System.out.println("Password changed successfully.");
+            } else {
+                System.out.println("Password change failed. Please try again.");
+            }
+        } catch (PasswordIncorrectException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Password change failed. Please try again.");
+        }
     }
 
     private static void branchManagement() {
