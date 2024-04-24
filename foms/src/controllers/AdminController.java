@@ -145,28 +145,20 @@ public class AdminController {
         Scanner sc = new Scanner(System.in);
     
         System.out.print("Enter Staff Login ID of staff to promote: ");
-        BranchUser staff = null;
         String staffLoginId = sc.nextLine();
-        for (BranchUser staffs : adminService.getStaffList()) {
-            if (staffs.getLoginID().equals(staffLoginId)) {
-                staff = staffs;
-                break;
-            }
-        }
+        BranchUser staff = adminService.findStaffByLoginID(staffLoginId);
+    
         if (staff == null) {
             System.out.println("No staff member found with that Login ID. Press Enter to continue.");
             sc.nextLine();
             throw new PageBackException();
-        }
-        else {
+        } else {
             adminService.promoteStaff(staff);
         }
     }
+    
 
     private static void manageStaff() throws PageBackException {
-
-        AdminService adminService = new AdminService();
-        StaffListView staffListView = new StaffListView();
 
         ChangePage.changePage();
         System.out.println("Action to be taken:");
@@ -202,19 +194,14 @@ public class AdminController {
 
     }
 
-    private static void removeStaff() {
+    private static void removeStaff() throws PageBackException {
         AdminService adminService = new AdminService();
         Scanner sc = new Scanner(System.in);
     
         System.out.print("Enter Staff Login ID to remove: ");
-        BranchUser staff = null;
         String staffLoginId = sc.nextLine();
-        for (BranchUser staffs : adminService.getStaffList()) {
-            if (staffs.getLoginID().equals(staffLoginId)) {
-                staff = staffs;
-                break;
-            }
-        }
+        BranchUser staff = adminService.findStaffByLoginID(staffLoginId);
+    
         if (staff == null) {
             System.out.println("No staff member found with that Login ID. Press Enter to continue.");
             sc.nextLine();
@@ -224,11 +211,10 @@ public class AdminController {
         System.out.print("Are you sure you want to remove " + staff.getName() + "? (Y/N): ");
         String choice = sc.nextLine();
         if (choice.equalsIgnoreCase("Y")) {
-            if (adminService.removeStaff(staff)){
+            if (adminService.removeStaff(staff)) {
                 System.out.println("Staff removed successfully. Press Enter to continue.");
                 sc.nextLine();
-            }
-            else {
+            } else {
                 System.out.println("Staff could not be removed. Press Enter to continue.");
                 sc.nextLine();
             }
@@ -236,22 +222,17 @@ public class AdminController {
             System.out.println("Staff not removed. Press Enter to continue.");
             sc.nextLine();
         }
-        return;
     }
+    
 
     private static void editStaff() throws PageBackException {
         AdminService adminService = new AdminService();
         Scanner sc = new Scanner(System.in);
     
         System.out.print("Enter Staff Login ID to edit: ");
-        BranchUser staff = null;
         String staffLoginId = sc.nextLine();
-        for (BranchUser staffs : adminService.getStaffList()) {
-            if (staffs.getLoginID().equals(staffLoginId)) {
-                staff = staffs;
-                break;
-            }
-        }
+        BranchUser staff = adminService.findStaffByLoginID(staffLoginId);
+    
         if (staff == null) {
             System.out.println("No staff member found with that Login ID. Press Enter to continue.");
             sc.nextLine();
@@ -269,12 +250,8 @@ public class AdminController {
         if (!ageInput.isEmpty()) {
             try {
                 int age = Integer.parseInt(ageInput);
-                if (age <= 0) {
-                    System.out.println("Age must be a positive integer. Press Enter to continue.");
-                    sc.nextLine();
-                    throw new PageBackException();
-                } else if (age < 18) {
-                    System.out.println("They are underage. We can't have them as staff. Press Enter to continue.");
+                if (age < 18) {
+                    System.out.println("Invalid age. Must be at least 18. Press Enter to continue.");
                     sc.nextLine();
                     throw new PageBackException();
                 } else {
@@ -311,7 +288,7 @@ public class AdminController {
         System.out.println("Staff details updated successfully. Press Enter to continue.");
         sc.nextLine();
     }
-
+    
     private static void addStaff() throws PageBackException {
 
         AdminService adminService = new AdminService();
