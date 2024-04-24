@@ -2,6 +2,7 @@ package controllers;
 import java.util.List;
 import java.util.Scanner;
 
+import enums.OrderStatus;
 import enums.OrderType;
 import interfaces.IBranchMenuItemView;
 import interfaces.ICustomerService;
@@ -70,8 +71,34 @@ public class CustomerController {
         System.out.println("Please enter your Order ID: ");
         int orderID = sc.nextInt();
         Order order = customerService.getOrder(orderID);
+        if(order == null){
+            System.out.println("Order not found.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return;
+        }
         orderView = new OrderStatusView();
         orderView.displayOrderDetails(order);
+        if (order.getOrderStatus() == OrderStatus.READY) {
+            System.out.println("Would you like to collect your order?");
+            System.out.println("\t1. Yes");
+            System.out.println("\t2. No");
+            int choice = sc.nextInt();
+            if (choice == 1) {
+                customerService.collectOrder(orderID);
+                System.out.println("Order collected successfully.");
+                System.out.println("Press <enter> to continue.");
+                sc.nextLine();
+                return;
+            }
+            else{
+                System.out.println("Order not collected.");
+                System.out.println("Please be sure to collect your order before it is cancelled.");
+                System.out.println("Press <enter> to continue.");
+                sc.nextLine();
+                return;
+            }
+        }
     }
 
     private static void customerOrderPage(int branchID){

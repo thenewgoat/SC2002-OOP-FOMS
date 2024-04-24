@@ -25,6 +25,7 @@ public class OrderStatusView implements IOrderView{
                     break;
                 case CANCELLED:
                     System.out.println("Order has been cancelled as it was not collected in time.");
+                    System.out.println("Please contact the branch for further assistance.");
                     break;
                 default:
                     System.out.println("Invalid order status.");
