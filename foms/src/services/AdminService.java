@@ -15,20 +15,12 @@ import utils.exceptions.TooManyManagersException;
 public class AdminService implements IAdminService{
 
     @Override
-    public void getStaffList(){
-        System.out.println("======= Staff List =======");
-        System.out.println("No. of Staff: " + BranchUserStorage.getAll().length);
-        System.out.println("-------------------------------");
-        for (BranchUser branchUser : BranchUserStorage.getAll()){
-            System.out.println("Name: " + branchUser.getName());
-            System.out.println("Login ID: " + branchUser.getLoginID());
-            System.out.println("Role: " + branchUser.getRole());
-            System.out.println("Branch ID: " + branchUser.getBranchID());
-            System.out.println("Branch Name: " + BranchStorage.get(branchUser.getBranchID()).getName());
-            System.out.println("Age: " + branchUser.getAge());
-            System.out.println("Gender: " + branchUser.getGender());
-            System.out.println("-------------------------------");
-        }
+    public BranchUser[] getStaffList(){
+        return BranchUserStorage.getAll();
+    };
+
+    public Branch[] getBranchList(){
+        return BranchStorage.getAll();
     };
 
     @Override
@@ -298,6 +290,7 @@ public class AdminService implements IAdminService{
 
     @Override
     public boolean addPaymentMethod(PaymentMethod paymentMethod){
+        
         for (PaymentMethod curPaymentMethod : PaymentMethodStorage.getAll()){
             if (curPaymentMethod.getPaymentMethod().equals(paymentMethod.getPaymentMethod())){
                 System.out.println("Payment method already exists.");

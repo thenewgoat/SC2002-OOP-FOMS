@@ -6,7 +6,9 @@ import models.PaymentMethod;
 
 public interface IAdminService {
 
-    public void getStaffList();
+    public BranchUser[] getStaffList();
+
+    public Branch[] getBranchList();
 
     public boolean addStaff(BranchUser staff);
 
