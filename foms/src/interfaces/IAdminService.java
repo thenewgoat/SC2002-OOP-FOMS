@@ -1,12 +1,14 @@
 package interfaces;
 
+import java.util.HashMap;
+
 import models.Branch;
 import models.BranchUser;
 import models.PaymentMethod;
-
 public interface IAdminService {
+    
+    BranchUser[] getStaffList(HashMap<FilterType, String> filters);
 
-    public BranchUser[] getStaffList();
 
     public Branch[] getBranchList();
 

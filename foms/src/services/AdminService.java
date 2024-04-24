@@ -1,5 +1,8 @@
 package services;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import enums.Role;
 import interfaces.IAdminService;
 import models.Branch;
@@ -14,10 +17,24 @@ import utils.exceptions.TooManyManagersException;
 
 public class AdminService implements IAdminService{
 
-    @Override
-    public BranchUser[] getStaffList(){
-        return BranchUserStorage.getAll();
-    };
+    public BranchUser[] getStaffList(HashMap<FilterType, String> filters) {
+        BranchUser[] allUsers = BranchUserStorage.getAll();
+        if (filters == null || filters.isEmpty()) {
+            return allUsers;
+        }
+
+        ArrayList<BranchUser> filteredUsers = new ArrayList<>();
+        for (BranchUser user : allUsers) {
+            if (matchesFilters(user, filters)) {
+                filteredUsers.add(user);
+            }
+        }
+        return filteredUsers.toArray(new BranchUser[0]);
+    }
+
+    
+
+    
 
     public Branch[] getBranchList(){
         return BranchStorage.getAll();
