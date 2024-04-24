@@ -7,6 +7,7 @@ import enums.Gender;
 import enums.Role;
 import models.Admin;
 import models.Branch;
+import models.BranchUser;
 import models.User;
 import services.AdminService;
 import utils.ChangePage;
@@ -44,22 +45,22 @@ public class AdminController {
                         getStaffList();
                         break;
                     case 2: 
-                        StaffEditor.manageStaff(user);
+                        manageStaff();
                         break;
                     case 3:
-                        StaffPromoter.promoteStaff(user);
+                        promoteStaff();
                         break;
                     case 4:
-                        StaffTransfer.transferStaff(user);
+                        transferStaff();
                         break;
                     case 5:
-                        PaymentEditor.managePayments(user);
+                        managePayments();
                         break;
                     case 6:
-                        BranchManagement.branchManagement(user);
+                        branchManagement();
                         break;
                     case 7:
-                        PasswordChangerPage.changePassword(user);
+                        changePassword();
                         break;
                     case 8:
                         System.out.println("Logging out...");
@@ -82,6 +83,364 @@ public class AdminController {
             System.out.println("You are not authorized to access this page.");
             throw new PageBackException();
         }
+    }
+
+    private static void changePassword() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'changePassword'");
+    }
+
+    private static void branchManagement() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'branchManagement'");
+    }
+
+    private static void managePayments() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'managePayments'");
+    }
+
+    private static void transferStaff() throws PageBackException {
+        AdminService adminService = new AdminService();
+        Scanner sc = new Scanner(System.in);
+    
+        System.out.print("Enter Staff Login ID of staff to transfer: ");
+        BranchUser staff = null;
+        String staffLoginId = sc.nextLine();
+        for (BranchUser staffs : adminService.getStaffList()) {
+            if (staffs.getLoginID().equals(staffLoginId)) {
+                staff = staffs;
+                break;
+            }
+        }
+        if (staff == null) {
+            System.out.println("No staff member found with that Login ID. Press Enter to continue.");
+            sc.nextLine();
+            throw new PageBackException();
+        }
+        
+        System.out.print("Select Branch to transfer to: ");
+        int count = 1;
+        Branch[] branches = adminService.getBranchList();
+        for (Branch branch : branches){
+            System.out.println("\t" + count + ". " + branch.getName());
+            count++;
+        }
+        System.out.print("Enter your choice: ");
+
+        int choice = sc.nextInt();
+        sc.nextLine();
+        Branch newBranch = null;
+        int branchID = -3;
+        if (choice > 0 && choice <= branches.length) {
+            newBranch = branches[choice - 1];
+        } else {
+            System.out.println("Invalid choice. Please select a number between 1 and " + branches.length);
+            System.out.println("Press <enter> to return.");
+            sc.nextLine();
+            throw new PageBackException();
+        }
+        Branch oldBranch = null;
+        for (Branch branch : branches){
+            if (branch.getID() == staff.getBranchID()){
+                oldBranch = branch;
+            }
+        }
+        if (newBranch != null && oldBranch != null){
+            adminService.transferStaff(staff, oldBranch, newBranch);
+            System.out.println("Staff transferred successfully. Press Enter to continue.");
+            sc.nextLine();
+            throw new PageBackException();
+        } 
+    }
+
+    private static void promoteStaff() throws PageBackException {
+        AdminService adminService = new AdminService();
+        Scanner sc = new Scanner(System.in);
+    
+        System.out.print("Enter Staff Login ID of staff to promote: ");
+        BranchUser staff = null;
+        String staffLoginId = sc.nextLine();
+        for (BranchUser staffs : adminService.getStaffList()) {
+            if (staffs.getLoginID().equals(staffLoginId)) {
+                staff = staffs;
+                break;
+            }
+        }
+        if (staff == null) {
+            System.out.println("No staff member found with that Login ID. Press Enter to continue.");
+            sc.nextLine();
+            throw new PageBackException();
+        }
+        else {
+            adminService.promoteStaff(staff);
+        }
+    }
+
+    private static void manageStaff() throws PageBackException {
+
+        AdminService adminService = new AdminService();
+        StaffListView staffListView = new StaffListView();
+
+        ChangePage.changePage();
+        System.out.println("Action to be taken:");
+        System.out.println("\t1. Add Staff");
+        System.out.println("\t2. Edit Staff");
+        System.out.println("\t3. Remove Staff");
+        System.out.println("\t4. Back");
+
+        System.out.print("Enter your choice: ");
+
+        Scanner sc = new Scanner(System.in);
+        int choice = sc.nextInt();
+        sc.nextLine();
+
+        switch (choice) {
+            case 1:
+                addStaff();
+                break;
+            case 2:
+                editStaff();
+                break;
+            case 3:
+                removeStaff();
+                break;
+            case 4:
+                throw new PageBackException();
+            default:
+                System.out.println("Invalid choice.");
+                System.out.println("Press Enter to go back to the previous page.");
+                sc.nextLine();
+                throw new PageBackException();
+        }
+
+    }
+
+    private static void removeStaff() {
+        AdminService adminService = new AdminService();
+        Scanner sc = new Scanner(System.in);
+    
+        System.out.print("Enter Staff Login ID to remove: ");
+        BranchUser staff = null;
+        String staffLoginId = sc.nextLine();
+        for (BranchUser staffs : adminService.getStaffList()) {
+            if (staffs.getLoginID().equals(staffLoginId)) {
+                staff = staffs;
+                break;
+            }
+        }
+        if (staff == null) {
+            System.out.println("No staff member found with that Login ID. Press Enter to continue.");
+            sc.nextLine();
+            return;
+        }
+    
+        System.out.print("Are you sure you want to remove " + staff.getName() + "? (Y/N): ");
+        String choice = sc.nextLine();
+        if (choice.equalsIgnoreCase("Y")) {
+            if (adminService.removeStaff(staff)){
+                System.out.println("Staff removed successfully. Press Enter to continue.");
+                sc.nextLine();
+            }
+            else {
+                System.out.println("Staff could not be removed. Press Enter to continue.");
+                sc.nextLine();
+            }
+        } else {
+            System.out.println("Staff not removed. Press Enter to continue.");
+            sc.nextLine();
+        }
+        return;
+    }
+
+    private static void editStaff() throws PageBackException {
+        AdminService adminService = new AdminService();
+        Scanner sc = new Scanner(System.in);
+    
+        System.out.print("Enter Staff Login ID to edit: ");
+        BranchUser staff = null;
+        String staffLoginId = sc.nextLine();
+        for (BranchUser staffs : adminService.getStaffList()) {
+            if (staffs.getLoginID().equals(staffLoginId)) {
+                staff = staffs;
+                break;
+            }
+        }
+        if (staff == null) {
+            System.out.println("No staff member found with that Login ID. Press Enter to continue.");
+            sc.nextLine();
+            throw new PageBackException();
+        }
+    
+        System.out.print("Enter new name or press Enter to keep [" + staff.getName() + "]: ");
+        String name = sc.nextLine();
+        if (!name.isEmpty()) {
+            staff.setName(name);
+        }
+    
+        System.out.print("Enter new age or press Enter to keep [" + staff.getAge() + "]: ");
+        String ageInput = sc.nextLine();
+        if (!ageInput.isEmpty()) {
+            try {
+                int age = Integer.parseInt(ageInput);
+                if (age <= 0) {
+                    System.out.println("Age must be a positive integer. Press Enter to continue.");
+                    sc.nextLine();
+                    throw new PageBackException();
+                } else if (age < 18) {
+                    System.out.println("They are underage. We can't have them as staff. Press Enter to continue.");
+                    sc.nextLine();
+                    throw new PageBackException();
+                } else {
+                    staff.setAge(age);
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input for age. Press Enter to continue.");
+                sc.nextLine();
+                throw new PageBackException();
+            }
+        }
+    
+        System.out.println("Select new gender or press Enter to keep [" + staff.getGender() + "]: ");
+        System.out.println("\t1. Male");
+        System.out.println("\t2. Female");
+        System.out.print("Enter your choice: ");
+        String genderChoice = sc.nextLine();
+        if (!genderChoice.isEmpty()) {
+            switch (genderChoice) {
+                case "1":
+                    staff.setGender(Gender.MALE);
+                    break;
+                case "2":
+                    staff.setGender(Gender.FEMALE);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Press Enter to continue.");
+                    sc.nextLine();
+                    throw new PageBackException();
+            }
+        }
+    
+        adminService.updateStaff(staff);
+        System.out.println("Staff details updated successfully. Press Enter to continue.");
+        sc.nextLine();
+    }
+
+    private static void addStaff() throws PageBackException {
+
+        AdminService adminService = new AdminService();
+        Scanner sc = new Scanner(System.in);
+        
+        ChangePage.changePage();
+        System.out.println("Adding new branch staff member.");
+        System.out.print("Enter Staff Name: ");
+        String name = sc.nextLine();
+        if (name.isEmpty()){
+            System.out.println("Name cannot be empty. Press Enter to Continue.");
+            sc.nextLine();
+            throw new PageBackException();           
+        }
+        System.out.print("Enter Staff Login ID: ");
+        String staffLoginId = sc.nextLine();
+        if (staffLoginId.isEmpty()) {
+            System.out.println("Login ID cannot be empty. Press Enter to Continue.");
+            sc.nextLine();
+            throw new PageBackException();
+        }
+        System.out.println("Select Role: ");
+        System.out.println("\t1. Branch Manager");
+        System.out.println("\t2. Staff");
+        System.out.print("Enter here: ");
+        int rolechoice = sc.nextInt();
+        sc.nextLine();
+        Role role;
+        switch (rolechoice) {
+            case 1:
+                role = Role.BRANCHMANAGER;
+                break;
+            case 2:
+                role = Role.STAFF;
+                break;
+            default:
+                System.out.println("Invalid choice. Press Enter to Continue.");
+                sc.nextLine();
+                throw new PageBackException();
+        }
+
+        System.out.println("Select Gender: ");
+        System.out.println("\t1. Male");
+        System.out.println("\t2. Female");
+        System.out.print("Enter here: ");
+        int genderchoice = sc.nextInt();
+        sc.nextLine();
+        Gender gender;
+        switch (genderchoice) {
+            case 1:
+                gender = Gender.MALE;
+                break;
+            case 2:
+                gender = Gender.FEMALE;
+                break;
+            default:
+                System.out.println("Invalid choice. Press Enter to Continue.");
+                sc.nextLine();
+                throw new PageBackException();
+        }
+
+        System.out.print("Enter Age: ");
+        int age = 0;
+        try {
+            age = sc.nextInt();
+            sc.nextLine();
+
+            if (age <= 0) {
+                System.out.println("Age must be a positive integer. Press Enter to Continue.");
+                sc.nextLine();
+                throw new PageBackException();
+            }
+            else if (age < 18) {
+                System.out.println("Boss, they are underage. We can't hire them. Press Enter to Continue.");
+                sc.nextLine();
+                throw new PageBackException();
+            }
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press Enter to Continue.");
+            sc.nextLine();
+            sc.nextLine();
+            throw new PageBackException(); // Custom exception to handle errors
+        }
+        System.out.print("Select Branch: ");
+        int count = 1;
+        Branch[] branches = adminService.getBranchList();
+        for (Branch branch : branches){
+            System.out.println("\t" + count + ". " + branch.getName());
+            count++;
+        }
+        System.out.print("Enter your choice: ");
+
+        int choice = sc.nextInt();
+        sc.nextLine();
+        Branch selectedBranch = null;
+        int branchID = -3;
+        if (choice > 0 && choice <= branches.length) {
+            selectedBranch = branches[choice - 1];
+        } else {
+            System.out.println("Invalid choice. Please select a number between 1 and " + branches.length);
+            System.out.println("Press <enter> to return.");
+            sc.nextLine();
+            throw new PageBackException();
+        }
+        if (selectedBranch != null){
+            branchID = selectedBranch.getID();
+        }
+        if (branchID == -3){
+            System.out.println("Invalid choice. Press Enter to Continue.");
+            sc.nextLine();
+            throw new PageBackException();
+        }
+        
+        BranchUser staff = new BranchUser(name, staffLoginId, role, gender, age, branchID);
+        adminService.addStaff(staff);
     }
 
     private static void getStaffList() throws PageBackException {
@@ -180,9 +539,13 @@ public class AdminController {
                 age = sc.nextInt();
                 sc.nextLine();
                 if (age < 0) {
-                    System.out.println("Invalid input. Age cannot be negative. Please enter a positive age.");
+                    System.out.println("Invalid input. Age cannot be negative. Press <enter> to return.");
+                    sc.nextLine();
+                    throw new PageBackException();
                 } else if (age < 18){
-                    System.out.println("Nice try, but we don't hire minors. Please enter an age above 18.");
+                    System.out.println("Nice try, but we don't hire minors. Press <enter> to return.");
+                    sc.nextLine();
+                    throw new PageBackException();
                 } else {
                     staffListView.display(adminService.getStaffList(age), adminService.getBranchList());
                 }

@@ -3,12 +3,15 @@ package services;
 import java.util.Arrays;
 import enums.Role;
 import interfaces.IAdminService;
+import models.Account;
 import models.Branch;
 import models.BranchUser;
 import models.PaymentMethod;
 import stores.BranchStorage;
 import stores.BranchUserStorage;
+import stores.PasswordStorage;
 import stores.PaymentMethodStorage;
+import stores.UserStorage;
 import utils.StaffUpdateChecker;
 import utils.exceptions.TooFewManagersException;
 import utils.exceptions.TooManyManagersException;
@@ -57,6 +60,15 @@ public class AdminService implements IAdminService{
 
     @Override
     public boolean addStaff(BranchUser staff){
+
+        Account[] staffList = PasswordStorage.getAll();
+        for (Account account : staffList){
+            if (account.getLoginID() == staff.getLoginID()){
+                System.out.println("Staff already exists.");
+                return false;
+            }
+        }
+
         int staffCount = 0;
         int managerCount = 0;
         Branch branch = BranchStorage.get(staff.getBranchID());
@@ -92,6 +104,7 @@ public class AdminService implements IAdminService{
         try {
             StaffUpdateChecker.check(staffCount, managerCount, branch);
             BranchUserStorage.add(staff);
+            UserStorage.add(staff);
             return true;
         } catch (TooFewManagersException e) {
             System.out.println("Addition blocked as there will be too many staff in the branch." + e.getMessage());
