@@ -1,8 +1,6 @@
 package services;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import java.util.Arrays;
 import enums.Role;
 import interfaces.IAdminService;
 import models.Branch;
@@ -14,27 +12,46 @@ import stores.PaymentMethodStorage;
 import utils.StaffUpdateChecker;
 import utils.exceptions.TooFewManagersException;
 import utils.exceptions.TooManyManagersException;
+import enums.Gender;
 
 public class AdminService implements IAdminService{
 
-    public BranchUser[] getStaffList(HashMap<FilterType, String> filters) {
-        BranchUser[] allUsers = BranchUserStorage.getAll();
-        if (filters == null || filters.isEmpty()) {
-            return allUsers;
-        }
+    
+    
 
-        ArrayList<BranchUser> filteredUsers = new ArrayList<>();
-        for (BranchUser user : allUsers) {
-            if (matchesFilters(user, filters)) {
-                filteredUsers.add(user);
-            }
-        }
-        return filteredUsers.toArray(new BranchUser[0]);
+    @Override
+    public BranchUser[] getStaffList() {
+        // Return all staff members
+        return BranchUserStorage.getAll();
     }
 
-    
+    public BranchUser[] getStaffList(int dataType, int data) {
+        if (dataType == 0){ // Interpret as Age
+            return Arrays.stream(BranchUserStorage.getAll())
+                         .filter(user -> user.getAge() == data)
+                         .toArray(BranchUser[]::new);
+        }
+        else if (dataType == 1){ // Interprete as Branch ID
+            return Arrays.stream(BranchUserStorage.getAll())
+                         .filter(user -> user.getBranchID() == data)
+                         .toArray(BranchUser[]::new);
+        }
+        throw new IllegalArgumentException("Invalid data type. Must be 0 (age) or 1 (branch ID).");
+    }
 
-    
+    public BranchUser[] getStaffList(Role role) {
+        // Filter by role
+        return Arrays.stream(BranchUserStorage.getAll())
+                     .filter(user -> user.getRole() == role)
+                     .toArray(BranchUser[]::new);
+    }
+
+    public BranchUser[] getStaffList(Gender gender) {
+        // Filter by gender
+        return Arrays.stream(BranchUserStorage.getAll())
+                     .filter(user -> user.getGender() == gender)
+                     .toArray(BranchUser[]::new);
+    }
 
     public Branch[] getBranchList(){
         return BranchStorage.getAll();
