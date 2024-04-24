@@ -148,4 +148,12 @@ public class BranchMenuItemStorage {
         }
         return counter;
     }
+
+    /**
+     * Returns the list of unique categories.
+     * @return the list of unique categories
+     */
+    public static List<String> getCategories() {
+        return categories;
+    }
 }

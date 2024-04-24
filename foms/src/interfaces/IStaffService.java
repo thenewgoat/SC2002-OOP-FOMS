@@ -9,7 +9,7 @@ import utils.exceptions.AccountNotFoundException;
 import utils.exceptions.PasswordMismatchException;
 import utils.exceptions.PasswordValidationException;
 
-public interface IBranchUserService {
+public interface IStaffService {
 
     public List<Order> getOrders(int branchID);
 

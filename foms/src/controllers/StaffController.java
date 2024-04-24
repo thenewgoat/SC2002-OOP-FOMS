@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import enums.OrderStatus;
 import interfaces.IOrderView;
-import interfaces.IBranchUserService;
+import interfaces.IStaffService;
 import models.BranchUser;
 import models.Order;
 import models.User;
@@ -20,7 +20,7 @@ public class StaffController {
 
     private static final Scanner sc = new Scanner(System.in);
 
-    protected static final IBranchUserService staffService = new StaffService();
+    protected static final IStaffService staffService = new StaffService();
 
     protected static IOrderView orderView;
 
@@ -126,6 +126,7 @@ public class StaffController {
     }
 
     private static void changePassword(User user) throws PageBackException {
+        ChangePage.changePage();
         System.out.println("Enter old password:");
         String oldPassword = sc.nextLine();
         System.out.println("Enter new password:");

@@ -116,10 +116,10 @@ public class Cart {
             System.out.println("Item Category: " + item.getCategory());
             System.out.println("Item Price: " + item.getPrice());
             System.out.println("Item Quantity: " + item.getQuantity());
-            System.out.println("Price of " + item.getQuantity() + " " + item.getItemName() + " is " + item.getPrice() * item.getQuantity());
+            System.out.println("Price of " + item.getQuantity() + " " + item.getItemName() + " is " + String.format("%.2f", item.getPrice() * item.getQuantity()));
             System.out.println("--------------------------------------------------");
             calculateTotalPrice();
-            System.out.println("Total Price of Items: " + this.totalPrice);
+            System.out.println("Total Price of Items: " + String.format("%.2f",this.totalPrice));
         }
     }
 }
