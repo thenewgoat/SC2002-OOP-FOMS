@@ -7,12 +7,16 @@ import models.Account;
 import models.Branch;
 import models.BranchUser;
 import models.PaymentMethod;
+import models.User;
 import stores.BranchStorage;
 import stores.BranchUserStorage;
 import stores.PasswordStorage;
 import stores.PaymentMethodStorage;
 import stores.UserStorage;
 import utils.StaffUpdateChecker;
+import utils.exceptions.AccountNotFoundException;
+import utils.exceptions.PasswordMismatchException;
+import utils.exceptions.PasswordValidationException;
 import utils.exceptions.TooFewManagersException;
 import utils.exceptions.TooManyManagersException;
 import enums.Gender;
@@ -383,5 +387,22 @@ public class AdminService implements IAdminService{
             }
         }
         return null;
+    }
+
+    public void changePassword(User user, String oldPassword, String newPassword) throws AccountNotFoundException, PasswordMismatchException, PasswordValidationException {
+        Account account = findAccountByLoginID(user.getLoginID());
+    
+        if (account == null) {
+            throw new AccountNotFoundException("No account found with login ID: " + user.getLoginID());
+        }
+        if (!account.getPassword().equals(oldPassword)) {
+            throw new PasswordMismatchException("The old password provided is incorrect.");
+        }
+        if (newPassword == null || newPassword.isEmpty() || newPassword.equals("password")) {
+            throw new PasswordValidationException("The new password is invalid. It cannot be null, empty, or 'password'.");
+        }
+    
+        account.setPassword(newPassword);
+        PasswordStorage.update(account);
     }
 }

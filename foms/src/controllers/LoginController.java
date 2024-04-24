@@ -48,7 +48,7 @@ public class LoginController {
         }
     }
 
-    private static void changePassword(Account account) {
+    protected static void changePassword(Account account) {
 
         LoginService loginService = new LoginService();
 

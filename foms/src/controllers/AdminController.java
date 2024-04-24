@@ -11,10 +11,12 @@ import models.Branch;
 import models.BranchUser;
 import models.User;
 import services.AdminService;
-import services.UserService;
 import utils.ChangePage;
+import utils.exceptions.AccountNotFoundException;
 import utils.exceptions.PageBackException;
 import utils.exceptions.PasswordIncorrectException;
+import utils.exceptions.PasswordMismatchException;
+import utils.exceptions.PasswordValidationException;
 import views.StaffListView;
 
 public class AdminController {
@@ -88,25 +90,24 @@ public class AdminController {
         }
     }
 
-    private static void changePassword(User user) {
-
+    private static void changePassword(User user) throws PageBackException {
         AdminService adminService = new AdminService();
-        UserService userService = new UserService();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter old password:");
+        String oldPassword = scanner.nextLine();
+        System.out.println("Enter new password:");
+        String newPassword = scanner.nextLine();
 
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter new password: ");
-        String newPassword = sc.nextLine();
-        Account account = adminService.findAccountByLoginID(user.getLoginID());
         try {
-            if (userService.changePassword(account.getLoginID(), account.getPassword(), newPassword)) {
-                System.out.println("Password changed successfully.");
-            } else {
-                System.out.println("Password change failed. Please try again.");
-            }
-        } catch (PasswordIncorrectException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Password change failed. Please try again.");
+            adminService.changePassword(user, oldPassword, newPassword);
+        } catch (AccountNotFoundException | PasswordMismatchException | PasswordValidationException e) {
+            System.out.println("Error changing password: " + e.getMessage());
+            System.out.println("Press <enter> to continue.");
+            scanner.nextLine();
+            throw new PageBackException();
         }
+        return;
+        
     }
 
     private static void branchManagement() {

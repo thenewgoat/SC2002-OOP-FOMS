@@ -10,7 +10,7 @@ import services.AdminService;
 
 public class Welcome {
 
-    public static void welcome() {
+    public static void welcome() throws Exception {
         int choice;
 		int flag = 0;
 
@@ -54,16 +54,15 @@ public class Welcome {
                         }
 						break;
 					case 2:						
-						//LoginController.login();
+						LoginController.login();
 						break;
 					case 3:
 						flag = 1;
-						System.out.println("Thank you for using FOMS. Goodbye!");
-						sc.nextLine();
 						break;
 					default:
-						System.out.println("Invalid Option. Pick another option.");
-						break;
+						System.out.println("Invalid Option. Press <enter> to try again.");
+                        sc.nextLine();
+                        break;
 				}
 			}
 		} finally {
