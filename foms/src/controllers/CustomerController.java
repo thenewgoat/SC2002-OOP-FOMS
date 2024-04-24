@@ -160,6 +160,7 @@ public class CustomerController {
         branchMenuItemView = new BranchMenuItemView();
         for (BranchMenuItem item : branchMenuItems) {
             branchMenuItemView.displayBranchMenuItem(item, index);
+            index++;
         }
         System.out.println("Please enter the item number you would like to add to your cart: ");
         int choice = sc.nextInt();
