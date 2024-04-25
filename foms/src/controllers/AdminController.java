@@ -19,6 +19,8 @@ import utils.exceptions.PasswordValidationException;
 import views.StaffListView;
 
 public class AdminController {
+
+    private static final Scanner sc = new Scanner(System.in);
     
     public static void start(User user) throws PageBackException{
         if (user instanceof Admin){
@@ -39,7 +41,6 @@ public class AdminController {
             System.out.println();
             System.out.print("Please enter your choice: ");
 
-            Scanner sc = new Scanner(System.in);
             int choice;
             try {
                 choice = sc.nextInt();
@@ -85,11 +86,11 @@ public class AdminController {
                         System.out.println("Logging out...");
                         System.out.println("Logged out successfully.");
                         System.out.println("Press <enter> to continue.");
-                        new Scanner(System.in).nextLine();
+                        sc.nextLine();
                         break;
                     default:
                         System.out.println("Invalid choice. Please press <enter> to try again.");
-                        new Scanner(System.in).nextLine();
+                        sc.nextLine();
                         throw new PageBackException();                    
                 }
             } catch (PageBackException e) {
@@ -105,20 +106,19 @@ public class AdminController {
 
     private static void changePassword(User user) throws PageBackException {
         AdminService adminService = new AdminService();
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter old password:");
-        String oldPassword = scanner.nextLine();
+        String oldPassword = sc.nextLine();
         System.out.println("Enter new password:");
-        String newPassword = scanner.nextLine();
+        String newPassword = sc.nextLine();
 
         try {
             adminService.changePassword(user, oldPassword, newPassword);
             System.out.println("Password changed successfully. Press <enter> to log in again.");
-            scanner.nextLine();
+            sc.nextLine();
         } catch (AccountNotFoundException | PasswordMismatchException | PasswordValidationException e) {
             System.out.println("Error changing password: " + e.getMessage());
             System.out.println("Press <enter> to continue.");
-            scanner.nextLine();
+            sc.nextLine();
             throw new PageBackException();
         }
         return;
@@ -131,7 +131,6 @@ public class AdminController {
         System.out.println("\t2. Close Branch");
         System.out.print("Enter your choice: ");
 
-        Scanner sc = new Scanner(System.in);
         int choice;
         try {
             choice = sc.nextInt();
@@ -160,7 +159,6 @@ public class AdminController {
     }
 
     private static void addBranch() throws PageBackException {
-        Scanner sc = new Scanner(System.in);
         AdminService adminService = new AdminService();
 
         System.out.println("Adding new branch...");
@@ -211,7 +209,6 @@ public class AdminController {
 
     private static void closeBranch() {
         AdminService adminService = new AdminService();
-        Scanner sc = new Scanner(System.in);
 
         System.out.println("Select Branch to close: ");
         int count = 1;
@@ -365,7 +362,6 @@ public class AdminController {
 
     private static void transferStaff() throws PageBackException {
         AdminService adminService = new AdminService();
-        Scanner sc = new Scanner(System.in);
     
         System.out.print("Enter Staff Login ID of staff to transfer: ");
         String staffLoginId = sc.nextLine();
@@ -413,7 +409,6 @@ public class AdminController {
 
     private static void promoteStaff() throws PageBackException {
         AdminService adminService = new AdminService();
-        Scanner sc = new Scanner(System.in);
     
         System.out.print("Enter Staff Login ID of staff to promote: ");
         String staffLoginId = sc.nextLine();
@@ -446,7 +441,6 @@ public class AdminController {
 
         System.out.print("Enter your choice: ");
 
-        Scanner sc = new Scanner(System.in);
         int choice;
         try {
             choice = sc.nextInt();
@@ -482,7 +476,6 @@ public class AdminController {
 
     private static void removeStaff() throws PageBackException {
         AdminService adminService = new AdminService();
-        Scanner sc = new Scanner(System.in);
     
         System.out.print("Enter Staff Login ID to remove: ");
         String staffLoginId = sc.nextLine();
@@ -513,7 +506,6 @@ public class AdminController {
 
     private static void editStaff() throws PageBackException {
         AdminService adminService = new AdminService();
-        Scanner sc = new Scanner(System.in);
     
         System.out.print("Enter Staff Login ID to edit: ");
         String staffLoginId = sc.nextLine();
@@ -578,7 +570,6 @@ public class AdminController {
     private static void addStaff() throws PageBackException {
 
         AdminService adminService = new AdminService();
-        Scanner sc = new Scanner(System.in);
         
         ChangePage.changePage();
         System.out.println("Adding new branch staff member.");
@@ -730,7 +721,6 @@ public class AdminController {
         System.out.println("\t5. Age");
         System.out.print("Enter your choice: ");
 
-        Scanner sc = new Scanner(System.in);
         int choice;
         try {
             choice = sc.nextInt();
