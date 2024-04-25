@@ -712,10 +712,10 @@ public class AdminController {
         
         BranchUser staff = new BranchUser(name, staffLoginId, role, gender, age, branchID);
         if (adminService.addStaff(staff)){
-            System.out.println("Staff added successfully. Press <enter> to Continue.");
+            System.out.println("Press <enter> to Continue.");
             sc.nextLine();
         } else {
-            System.out.println("Staff could not be added. Press <enter> to Continue.");
+            System.out.println("Press <enter> to Continue.");
             sc.nextLine();
         }
 
