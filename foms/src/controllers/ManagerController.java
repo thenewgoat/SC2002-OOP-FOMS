@@ -71,10 +71,10 @@ public class ManagerController {
                         displayPendingOrders(branchID);
                         break;
                     case 2:
-                        viewOrderDetails();
+                        viewOrderDetails(branchID);
                         break;
                     case 3:
-                        processOrder();
+                        processOrder(branchID);
                         break;
                     case 4:
                         displayStaffList(branchID);
@@ -118,7 +118,7 @@ public class ManagerController {
         }
     }
 
-    private static void viewOrderDetails() {
+    private static void viewOrderDetails(int branchID) {
         orderView = new OrderDetailsView();
         System.out.print("Enter order ID: ");
         int orderID;
@@ -138,24 +138,43 @@ public class ManagerController {
             sc.nextLine();
             return;
         }
+        else if(order.getBranchID() != branchID){
+            System.out.println("Order not found.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return;
+        }
         orderView.displayOrderDetails(order);
         System.out.println("Press <enter> to continue.");
         sc.nextLine();
         return;
     }
 
-    private static void processOrder() {
+    private static void processOrder(int branchID) {
         System.out.print("Enter order ID: ");
         int orderID;
         try {
             orderID = sc.nextInt();
+            sc.nextLine();
         } catch (InputMismatchException ime) {
             System.out.println("Invalid input. Press <enter> to return to previous page.");
             sc.nextLine();
             sc.nextLine();
             return;
         }
-        sc.nextLine();
+        Order order = managerService.getOrder(orderID);
+        if (order == null) {
+            System.out.println("Order not found.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return;
+        }
+        else if(order.getBranchID() != branchID){
+            System.out.println("Order not found.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return;
+        }
         Boolean success = managerService.updateOrderStatus(orderID);
         if (success) {
             System.out.println("Order processed successfully.");
