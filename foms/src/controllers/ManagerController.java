@@ -99,6 +99,7 @@ public class ManagerController {
     }
 
     private static void displayPendingOrders(int branchID) {
+        ChangePage.changePage();
         orderView = new OrderDetailsView();
         List<Order> orders = managerService.getOrders(branchID);
         if (orders != null && orders.size() > 0){
@@ -119,6 +120,7 @@ public class ManagerController {
     }
 
     private static void viewOrderDetails(int branchID) {
+        ChangePage.changePage();
         orderView = new OrderDetailsView();
         System.out.print("Enter order ID: ");
         int orderID;
@@ -151,6 +153,7 @@ public class ManagerController {
     }
 
     private static void processOrder(int branchID) {
+        ChangePage.changePage();
         System.out.print("Enter order ID: ");
         int orderID;
         try {
@@ -211,6 +214,7 @@ public class ManagerController {
     }
 
     private static void displayStaffList(int branchID) {
+        ChangePage.changePage();
         List<BranchUser> users = managerService.getStaffList(branchID);
         String branchName = managerService.getBranchName(branchID);
         branchUserView = new BranchUserView();

@@ -74,6 +74,7 @@ public class StaffController {
     }
 
     private static void displayPendingOrders(int branchID) {
+        ChangePage.changePage();
         orderView = new OrderDetailsView();
         List<Order> orders = staffService.getOrders(branchID);
         if (orders != null && orders.size() > 0){
@@ -94,6 +95,7 @@ public class StaffController {
     }
 
     private static void viewOrderDetails(int branchID) {
+        ChangePage.changePage();
         orderView = new OrderDetailsView();
         System.out.print("Enter order ID: ");
         int orderID;
@@ -127,6 +129,7 @@ public class StaffController {
     }
 
     private static void processOrder(int branchID) {
+        ChangePage.changePage();
         System.out.print("Enter order ID: ");
         int orderID;
         try {
