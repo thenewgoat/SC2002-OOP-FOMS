@@ -89,7 +89,7 @@ public class AdminController {
                         sc.nextLine();
                         break;
                     default:
-                        System.out.println("Invalid choice. Please press <enter> to try again.");
+                        System.out.println("Invalid choice. Press <enter> to try again.");
                         sc.nextLine();
                         throw new PageBackException();                    
                 }
@@ -151,7 +151,7 @@ public class AdminController {
                 closeBranch();
                 break;
             default:
-                System.out.println("Invalid choice. Press Enter to go back to the previous page.");
+                System.out.println("Invalid choice. Press <enter> to go back to the previous page.");
                 sc.nextLine();
                 throw new PageBackException();
         }
@@ -165,14 +165,14 @@ public class AdminController {
         System.out.print("Enter branch name: ");
         String branchName = sc.nextLine();
         if (branchName == null || branchName.isEmpty()) {
-            System.out.println("Branch name cannot be empty. Press Enter to continue.");
+            System.out.println("Branch name cannot be empty. Press <enter> to continue.");
             sc.nextLine();
             throw new PageBackException();
         }
         System.out.print("Enter branch location: ");
         String branchLocation = sc.nextLine();
         if (branchLocation == null || branchLocation.isEmpty()) {
-            System.out.println("Branch location cannot be empty. Press Enter to continue.");
+            System.out.println("Branch location cannot be empty. Press <enter> to continue.");
             sc.nextLine();
             throw new PageBackException();
         }
@@ -182,26 +182,26 @@ public class AdminController {
             staffQuota = sc.nextInt();
             sc.nextLine();
             if (staffQuota <= 0) {
-                System.out.println("Staff quota must be a positive integer. Press Enter to continue.");
+                System.out.println("Staff quota must be a positive integer. Press <enter> to continue.");
                 sc.nextLine();
                 throw new PageBackException();
             }
             if (staffQuota > 15){
-                System.out.println("Staff quota cannot exceed 15. Press Enter to continue.");
+                System.out.println("Staff quota cannot exceed 15. Press <enter> to continue.");
                 sc.nextLine();
                 throw new PageBackException();
             }
         } catch (InputMismatchException ime) {
-            System.out.println("Invalid input. Press Enter to continue.");
+            System.out.println("Invalid input. Press <enter> to continue.");
             sc.nextLine();
             throw new PageBackException();
         }
 
         if (adminService.createBranch(branchName, branchLocation, staffQuota)){
-            System.out.println("Branch created successfully. Press Enter to continue.");
+            System.out.println("Branch created successfully. Press <enter> to continue.");
             sc.nextLine();
         } else {
-            System.out.println("Branch could not be created. Press Enter to continue.");
+            System.out.println("Branch could not be created. Press <enter> to continue.");
             sc.nextLine();
         }
         
@@ -231,10 +231,10 @@ public class AdminController {
         if (choice > 0 && choice <= branches.length) {
             Branch branch = branches[choice - 1];
             if (adminService.removeBranch(branch)) {
-                System.out.println("Branch closed successfully. Press Enter to continue.");
+                System.out.println("Branch closed successfully. Press <enter> to continue.");
                 sc.nextLine();
             } else {
-                System.out.println("Branch could not be closed. Press Enter to continue.");
+                System.out.println("Branch could not be closed. Press <enter> to continue.");
                 sc.nextLine();
             }
         } else {
@@ -302,10 +302,10 @@ public class AdminController {
         if (choice > 0 && choice <= paymentMethods.length) {
             PaymentMethod selectedPaymentMethod = paymentMethods[choice - 1];
             if (adminService.removePaymentMethod(selectedPaymentMethod)) {
-                System.out.println("Payment Method removed successfully. Press Enter to continue.");
+                System.out.println("Payment Method removed successfully. Press <enter> to continue.");
                 sc.nextLine();
             } else {
-                System.out.println("Payment Method could not be removed. Press Enter to continue.");
+                System.out.println("Payment Method could not be removed. Press <enter> to continue.");
                 sc.nextLine();
             }
         } else {
@@ -321,12 +321,12 @@ public class AdminController {
         System.out.print("Enter Payment Method Name: ");
         String paymentMethod = sc.nextLine();
         if (paymentMethod.isEmpty()) {
-            System.out.println("Payment Method Name cannot be empty. Press Enter to continue.");
+            System.out.println("Payment Method Name cannot be empty. Press <enter> to continue.");
             sc.nextLine();
             return;
         }
 
-        System.out.print("Select Payment Method Type: ");
+        System.out.println("Select Payment Method Type: ");
         System.out.println("\t1. Credit/Debit Card");
         System.out.println("\t2. Online Payment");
         System.out.print("Enter your choice: ");
@@ -349,10 +349,10 @@ public class AdminController {
         }
         
         if (adminService.addPaymentMethod(newPaymentMethod)) {
-            System.out.println("Payment Method added successfully. Press Enter to continue.");
+            System.out.println("Payment Method added successfully. Press <enter> to continue.");
             sc.nextLine();
         } else {
-            System.out.println("Payment Method could not be added. Press Enter to continue.");
+            System.out.println("Payment Method could not be added. Press <enter> to continue.");
             sc.nextLine();
         }
     }
@@ -365,7 +365,7 @@ public class AdminController {
         BranchUser staff = adminService.findStaffByLoginID(staffLoginId);
     
         if (staff == null) {
-            System.out.println("No staff member found with that Login ID. Press Enter to continue.");
+            System.out.println("No staff member found with that Login ID. Press <enter> to continue.");
             sc.nextLine();
             throw new PageBackException();
         }
@@ -393,7 +393,7 @@ public class AdminController {
             Branch oldBranch = adminService.findBranchById(staff.getBranchID());
             if (oldBranch != null) {
                 adminService.transferStaff(staff, oldBranch, newBranch);
-                System.out.println("Staff transferred successfully. Press Enter to continue.");
+                System.out.println("Staff transferred successfully. Press <enter> to continue.");
                 sc.nextLine();
             }
         } else {
@@ -412,7 +412,7 @@ public class AdminController {
         BranchUser staff = adminService.findStaffByLoginID(staffLoginId);
     
         if (staff == null) {
-            System.out.println("No staff member found with that Login ID. Press Enter to continue.");
+            System.out.println("No staff member found with that Login ID. Press <enter> to continue.");
             sc.nextLine();
             throw new PageBackException();
         } else {
@@ -464,7 +464,7 @@ public class AdminController {
                 throw new PageBackException();
             default:
                 System.out.println("Invalid choice.");
-                System.out.println("Press Enter to go back to the previous page.");
+                System.out.println("Press <enter> to go back to the previous page.");
                 sc.nextLine();
                 throw new PageBackException();
         }
@@ -479,7 +479,7 @@ public class AdminController {
         BranchUser staff = adminService.findStaffByLoginID(staffLoginId);
     
         if (staff == null) {
-            System.out.println("No staff member found with that Login ID. Press Enter to continue.");
+            System.out.println("No staff member found with that Login ID. Press <enter> to continue.");
             sc.nextLine();
             return;
         }
@@ -488,14 +488,14 @@ public class AdminController {
         String choice = sc.nextLine();
         if (choice.equalsIgnoreCase("Y")) {
             if (adminService.removeStaff(staff)) {
-                System.out.println("Staff removed successfully. Press Enter to continue.");
+                System.out.println("Staff removed successfully. Press <enter> to continue.");
                 sc.nextLine();
             } else {
-                System.out.println("Staff could not be removed. Press Enter to continue.");
+                System.out.println("Staff could not be removed. Press <enter> to continue.");
                 sc.nextLine();
             }
         } else {
-            System.out.println("Staff not removed. Press Enter to continue.");
+            System.out.println("Staff not removed. Press <enter> to continue.");
             sc.nextLine();
         }
     }
@@ -509,7 +509,7 @@ public class AdminController {
         BranchUser staff = adminService.findStaffByLoginID(staffLoginId);
     
         if (staff == null) {
-            System.out.println("No staff member found with that Login ID. Press Enter to continue.");
+            System.out.println("No staff member found with that Login ID. Press <enter> to continue.");
             sc.nextLine();
             throw new PageBackException();
         }
@@ -526,14 +526,14 @@ public class AdminController {
             try {
                 int age = Integer.parseInt(ageInput);
                 if (age < 18) {
-                    System.out.println("Invalid age. Must be at least 18. Press Enter to continue.");
+                    System.out.println("Invalid age. Must be at least 18. Press <enter> to continue.");
                     sc.nextLine();
                     throw new PageBackException();
                 } else {
                     staff.setAge(age);
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input for age. Press Enter to continue.");
+                System.out.println("Invalid input for age. Press <enter> to continue.");
                 sc.nextLine();
                 throw new PageBackException();
             }
@@ -553,14 +553,14 @@ public class AdminController {
                     staff.setGender(Gender.FEMALE);
                     break;
                 default:
-                    System.out.println("Invalid choice. Press Enter to continue.");
+                    System.out.println("Invalid choice. Press <enter> to continue.");
                     sc.nextLine();
                     throw new PageBackException();
             }
         }
     
         adminService.updateStaff(staff);
-        System.out.println("Staff details updated successfully. Press Enter to continue.");
+        System.out.println("Staff details updated successfully. Press <enter> to continue.");
         sc.nextLine();
     }
     
@@ -573,14 +573,14 @@ public class AdminController {
         System.out.print("Enter Staff Name: ");
         String name = sc.nextLine();
         if (name.isEmpty()){
-            System.out.println("Name cannot be empty. Press Enter to Continue.");
+            System.out.println("Name cannot be empty. Press <enter> to Continue.");
             sc.nextLine();
             throw new PageBackException();           
         }
         System.out.print("Enter Staff Login ID: ");
         String staffLoginId = sc.nextLine();
         if (staffLoginId.isEmpty()) {
-            System.out.println("Login ID cannot be empty. Press Enter to Continue.");
+            System.out.println("Login ID cannot be empty. Press <enter> to Continue.");
             sc.nextLine();
             throw new PageBackException();
         }
@@ -607,7 +607,7 @@ public class AdminController {
                 role = Role.STAFF;
                 break;
             default:
-                System.out.println("Invalid choice. Press Enter to Continue.");
+                System.out.println("Invalid choice. Press <enter> to Continue.");
                 sc.nextLine();
                 throw new PageBackException();
         }
@@ -635,7 +635,7 @@ public class AdminController {
                 gender = Gender.FEMALE;
                 break;
             default:
-                System.out.println("Invalid choice. Press Enter to Continue.");
+                System.out.println("Invalid choice. Press <enter> to Continue.");
                 sc.nextLine();
                 throw new PageBackException();
         }
@@ -647,20 +647,20 @@ public class AdminController {
             sc.nextLine();
 
             if (age <= 0) {
-                System.out.println("Age must be a positive integer. Press Enter to Continue.");
+                System.out.println("Age must be a positive integer. Press <enter> to Continue.");
                 sc.nextLine();
                 throw new PageBackException();
             }
             else if (age < 18) {
-                System.out.println("Boss, they are underage. We can't hire them. Press Enter to Continue.");
+                System.out.println("Boss, they are underage. We can't hire them. Press <enter> to Continue.");
                 sc.nextLine();
                 throw new PageBackException();
             }
         } catch (InputMismatchException ime) {
-            System.out.println("Invalid input. Press Enter to Continue.");
+            System.out.println("Invalid input. Press <enter> to Continue.");
             sc.nextLine();
             sc.nextLine();
-            throw new PageBackException(); // Custom exception to handle errors
+            throw new PageBackException();
         }
         System.out.print("Select Branch: ");
         int count = 1;
@@ -695,7 +695,7 @@ public class AdminController {
             branchID = selectedBranch.getID();
         }
         if (branchID == -3){
-            System.out.println("Invalid choice. Press Enter to Continue.");
+            System.out.println("Invalid choice. Press <enter> to Continue.");
             sc.nextLine();
             throw new PageBackException();
         }
@@ -732,7 +732,7 @@ public class AdminController {
         switch (choice) {
             case 1:
                 staffListView.display(adminService.getStaffList(), adminService.getBranchList());
-                System.out.println("Press Enter to return.");
+                System.out.println("Press <enter> to return.");
                 sc.nextLine();
                 break;
             case 2:
@@ -767,7 +767,7 @@ public class AdminController {
                 }
                 if (selectedBranch != null){
                     staffListView.display(adminService.getStaffList(selectedBranch), adminService.getBranchList());
-                    System.out.println("Press Enter to return.");
+                    System.out.println("Press <enter> to return.");
                     sc.nextLine();
                 }
                 break;
@@ -789,14 +789,14 @@ public class AdminController {
 
                 if (choice == 1){
                     staffListView.display(adminService.getStaffList(Role.STAFF), adminService.getBranchList());
-                    System.out.println("Press Enter to return.");
+                    System.out.println("Press <enter> to return.");
                     sc.nextLine();
                 } else if (choice == 2){
                     staffListView.display(adminService.getStaffList(Role.BRANCHMANAGER), adminService.getBranchList());
-                    System.out.println("Press Enter to return.");
+                    System.out.println("Press <enter> to return.");
                     sc.nextLine();
                 } else {
-                    System.out.println("Invalid choice. Please press <enter> to return.");
+                    System.out.println("Invalid choice. Press <enter> to return.");
                     sc.nextLine();
                     throw new PageBackException();
                 }
@@ -819,14 +819,14 @@ public class AdminController {
 
                 if (choice == 1){
                     staffListView.display(adminService.getStaffList(Gender.MALE), adminService.getBranchList());
-                    System.out.println("Press Enter to return.");
+                    System.out.println("Press <enter> to return.");
                     sc.nextLine();
                 } else if (choice == 2){
                     staffListView.display(adminService.getStaffList(Gender.FEMALE), adminService.getBranchList());
-                    System.out.println("Press Enter to return.");
+                    System.out.println("Press <enter> to return.");
                     sc.nextLine();
                 } else {
-                    System.out.println("Invalid choice. Please press <enter> to return.");
+                    System.out.println("Invalid choice. Press <enter> to return.");
                     sc.nextLine();
                     throw new PageBackException();
                 }
@@ -848,7 +848,7 @@ public class AdminController {
                     throw new PageBackException();
                 } else {
                     staffListView.display(adminService.getStaffList(age), adminService.getBranchList());
-                    System.out.println("Press Enter to return.");
+                    System.out.println("Press <enter> to return.");
                     sc.nextLine();
                 }
             } catch (InputMismatchException ime) {
