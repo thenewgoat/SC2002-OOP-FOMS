@@ -104,6 +104,7 @@ public class BranchMenuItemStorage {
             branchMenuItems = csvDataService.importMenuData();
             save();
         }
+        refreshCategories();
     }
 
     /**

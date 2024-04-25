@@ -296,7 +296,6 @@ public class ManagerController {
             addItemToMenu(branchID);
             return;
         }
-        sc.nextLine();
         if(categoryChoice < 1 || categoryChoice > counter){
             System.out.println("Invalid choice. Press <enter> to try again.");
             sc.nextLine();
