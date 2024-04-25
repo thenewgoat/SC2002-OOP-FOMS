@@ -200,6 +200,7 @@ public class AdminController {
         } catch (InputMismatchException ime) {
             System.out.println("Invalid input. Press <enter> to continue.");
             sc.nextLine();
+            sc.nextLine();
             throw new PageBackException();
         }
 
