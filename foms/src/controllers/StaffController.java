@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -49,10 +50,10 @@ public class StaffController {
                         displayPendingOrders(branchID);
                         break;
                     case 2:
-                        viewOrderDetails();
+                        viewOrderDetails(branchID);
                         break;
                     case 3:
-                        processOrder();
+                        processOrder(branchID);
                         break;
                     case 4:
                         changePassword(user);
@@ -92,13 +93,28 @@ public class StaffController {
         }
     }
 
-    private static void viewOrderDetails() {
+    private static void viewOrderDetails(int branchID) {
         orderView = new OrderDetailsView();
         System.out.print("Enter order ID: ");
-        int orderID = sc.nextInt();
-        sc.nextLine();
+        int orderID;
+        try {
+            orderID = sc.nextInt();
+            sc.nextLine();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            sc.nextLine();
+            return;
+        }
         Order order = staffService.getOrder(orderID);
         if (order == null) {
+            System.out.println("Order not found.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return;
+        }
+        else if (order.getBranchID() != branchID) {
             System.out.println("Order not found.");
             System.out.println("Press <enter> to continue.");
             sc.nextLine();
@@ -110,10 +126,31 @@ public class StaffController {
         return;
     }
 
-    private static void processOrder() {
+    private static void processOrder(int branchID) {
         System.out.print("Enter order ID: ");
-        int orderID = sc.nextInt();
-        sc.nextLine();
+        int orderID;
+        try {
+            orderID = sc.nextInt();
+            sc.nextLine();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return;
+        }
+        Order order = staffService.getOrder(orderID);
+        if (order == null) {
+            System.out.println("Order not found.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return;
+        }
+        else if (order.getBranchID() != branchID) {
+            System.out.println("Order not found.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return;
+        }
         Boolean success = staffService.updateOrderStatus(orderID);
         if (success) {
             System.out.println("Order processed successfully.");
