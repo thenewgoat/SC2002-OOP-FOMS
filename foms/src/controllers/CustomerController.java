@@ -58,7 +58,7 @@ public class CustomerController {
             switch(choice){
                 case 1:
                     ChangePage.changePage();
-                    checkOrderStatus();
+                    checkOrderStatus(branchID);
                     break;
                 case 2:
                     customerOrderPage(branchID);
@@ -80,11 +80,12 @@ public class CustomerController {
         
     }
 
-    private static void checkOrderStatus(){
+    private static void checkOrderStatus(int branchID){
         System.out.println("Please enter your Order ID: ");
         int orderID;
         try {
             orderID = sc.nextInt();
+            sc.nextLine();
         } catch (InputMismatchException ime) {
             System.out.println("Invalid input. Press <enter> to continue.");
             sc.nextLine();
@@ -99,10 +100,19 @@ public class CustomerController {
             sc.nextLine();
             return;
         }
-        LocalDateTime currDateTime = LocalDateTime.now();
-        long seconds = Duration.between(order.getReadyTime(), currDateTime).getSeconds();
-        if(seconds > 60){
-            customerService.setOrderStatus(orderID);
+        else if(order.getBranchID() != branchID){
+            System.out.println("Order not found.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            sc.nextLine();
+            return;
+        }
+        if(order.getOrderStatus() == OrderStatus.READY){
+            LocalDateTime currDateTime = LocalDateTime.now();
+            long seconds = Duration.between(order.getReadyTime(), currDateTime).getSeconds();
+            if(seconds > 60){
+                customerService.setOrderStatus(orderID);
+            }
         }
         orderView = new OrderStatusView();
         orderView.displayOrderDetails(order);
