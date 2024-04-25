@@ -75,6 +75,7 @@ public class CustomerController {
     }
 
     private static void checkOrderStatus(int branchID){
+        ChangePage.changePage();
         System.out.println("Please enter your Order ID: ");
         int orderID;
         try {
@@ -91,13 +92,11 @@ public class CustomerController {
             System.out.println("Order not found.");
             System.out.println("Press <enter> to continue.");
             sc.nextLine();
-            sc.nextLine();
             return;
         }
         else if(order.getBranchID() != branchID){
             System.out.println("Order not found.");
             System.out.println("Press <enter> to continue.");
-            sc.nextLine();
             sc.nextLine();
             return;
         }
@@ -110,6 +109,8 @@ public class CustomerController {
         }
         orderView = new OrderStatusView();
         orderView.displayOrderDetails(order);
+        System.out.println("Press <enter> to continue.");
+        sc.nextLine();
         if (order.getOrderStatus() == OrderStatus.READY) {
             System.out.println("Would you like to collect your order?");
             System.out.println("\t1. Yes");
@@ -552,7 +553,6 @@ public class CustomerController {
             sc.nextLine();
             return null;
         }
-        System.out.println("Please enter your card number: ");
         System.out.println("Please enter your 16-digit card number: ");
         String cardNumber = sc.nextLine();
         if(cardNumber.length() != 16){
@@ -569,7 +569,6 @@ public class CustomerController {
             sc.nextLine();
             return null;
         }
-        System.out.println("Please enter your card CVV: ");
         System.out.println("Please enter your 3-digit card CVV: ");
         String cvv = sc.nextLine();
         if(cvv.length() != 3){
