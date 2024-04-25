@@ -251,7 +251,6 @@ public class AdminController {
         System.out.println("\t2. Remove Payment Method");
 
         System.out.print("Enter your choice: ");
-        Scanner sc = new Scanner(System.in);
         int choice;
         try {
             choice = sc.nextInt();
@@ -280,7 +279,6 @@ public class AdminController {
 
     private static void removePaymentMethod() {
         AdminService adminService = new AdminService();
-        Scanner sc = new Scanner(System.in);
 
         System.out.println("Select Payment Method to remove: ");
         int count = 1;
@@ -319,7 +317,6 @@ public class AdminController {
 
     private static void addPaymentMethod() {
         AdminService adminService = new AdminService();
-        Scanner sc = new Scanner(System.in);
 
         System.out.print("Enter Payment Method Name: ");
         String paymentMethod = sc.nextLine();
