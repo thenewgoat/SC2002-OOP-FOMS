@@ -84,12 +84,14 @@ public class CustomerController {
         } catch (InputMismatchException ime) {
             System.out.println("Invalid input. Press <enter> to continue.");
             sc.nextLine();
+            sc.nextLine();
             return;
         }
         Order order = customerService.getOrder(orderID);
         if(order == null){
             System.out.println("Order not found.");
             System.out.println("Press <enter> to continue.");
+            sc.nextLine();
             sc.nextLine();
             return;
         }
@@ -104,6 +106,7 @@ public class CustomerController {
                 choice = sc.nextInt();
             } catch (InputMismatchException ime) {
                 System.out.println("Invalid input. Press <enter> to continue.");
+                sc.nextLine();
                 sc.nextLine();
                 return;
             }
@@ -140,9 +143,9 @@ public class CustomerController {
         try {
             choice = sc.nextInt();
         } catch (InputMismatchException ime) {
-            System.out.println("Invalid input. Press <enter> to try again.");
+            System.out.println("Invalid input. Press <enter> to continue.");
             sc.nextLine();
-            customerOrderPage(branchID);
+            sc.nextLine();
             return;
         }
         try {
@@ -165,7 +168,7 @@ public class CustomerController {
                     throw new PageBackException();
             }
         } catch (PageBackException e) {
-            customerOrderPage(branchID);
+            return;
         }
         Cart cart = new Cart();
         manageCart(branchID, orderType, cart);
@@ -187,9 +190,9 @@ public class CustomerController {
             try {
                 choice = sc.nextInt();
             } catch (InputMismatchException ime) {
-                System.out.println("Invalid input. Press <enter> to try again.");
+                System.out.println("Invalid input. Press <enter> to return to main page.");
                 sc.nextLine();
-                manageCart(branchID, orderType, cart);
+                sc.nextLine();
                 return;
             }
             sc.nextLine();
@@ -237,6 +240,7 @@ public class CustomerController {
         } catch (InputMismatchException ime) {
             System.out.println("Invalid input. Press <enter> to continue.");
             sc.nextLine();
+            sc.nextLine();
             return;
         }
         try {
@@ -256,6 +260,7 @@ public class CustomerController {
             quantity = sc.nextInt();
         } catch (InputMismatchException ime) {
             System.out.println("Invalid input. Press <enter> to continue.");
+            sc.nextLine();
             sc.nextLine();
             return;
         }
@@ -285,6 +290,12 @@ public class CustomerController {
 
     private static void editCart(Cart cart, int branchID){
         ChangePage.changePage();
+        if(cart.getOrderItems().isEmpty()){
+            System.out.println("Your cart is empty.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return;
+        }
         cart.displayItems();
         System.out.println("Please enter the name of the item you would like to edit: ");
         String itemName = sc.nextLine();
@@ -307,6 +318,7 @@ public class CustomerController {
             quantity = sc.nextInt();
         } catch (InputMismatchException ime) {
             System.out.println("Invalid input. Press <enter> to continue.");
+            sc.nextLine();
             sc.nextLine();
             return;
         }
@@ -335,6 +347,12 @@ public class CustomerController {
 
     private static void removeItemFromCart(Cart cart, int branchID){
         ChangePage.changePage();
+        if(cart.getOrderItems().isEmpty()){
+            System.out.println("Your cart is empty.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return;
+        }
         cart.displayItems();
         System.out.println("Please enter the name of the item you would like to remove: ");
         String itemName = sc.nextLine();
@@ -382,6 +400,12 @@ public class CustomerController {
 
     private static void displayCart(Cart cart){
         ChangePage.changePage();
+        if(cart.getOrderItems().isEmpty()){
+            System.out.println("Your cart is empty.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return;
+        }
         cart.displayItems();
         System.out.println("Press <enter> to continue.");
         sc.nextLine();
