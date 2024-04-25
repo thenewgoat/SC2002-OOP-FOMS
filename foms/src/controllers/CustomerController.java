@@ -59,9 +59,11 @@ public class CustomerController {
                 case 1:
                     ChangePage.changePage();
                     checkOrderStatus(branchID);
+                    customerMainPage(branchID);
                     break;
                 case 2:
                     customerOrderPage(branchID);
+                    customerMainPage(branchID);
                     break;
                 case 3:
                     System.out.println("Thank you for visiting " + customerService.getBranchName(branchID) + "!");
@@ -77,7 +79,6 @@ public class CustomerController {
         } catch (PageBackException e) {
             customerMainPage(branchID);
         }
-        
     }
 
     private static void checkOrderStatus(int branchID){
@@ -97,13 +98,11 @@ public class CustomerController {
             System.out.println("Order not found.");
             System.out.println("Press <enter> to continue.");
             sc.nextLine();
-            sc.nextLine();
             return;
         }
         else if(order.getBranchID() != branchID){
             System.out.println("Order not found.");
             System.out.println("Press <enter> to continue.");
-            sc.nextLine();
             sc.nextLine();
             return;
         }
@@ -191,6 +190,7 @@ public class CustomerController {
         }
         Cart cart = new Cart();
         manageCart(branchID, orderType, cart);
+        return;
     }
 
     private static void manageCart(int branchID, OrderType orderType, Cart cart){
@@ -205,15 +205,31 @@ public class CustomerController {
             System.out.println("\t5. Checkout Cart");
             System.out.println("\t6. Cancel Order");
             System.out.print("Please enter your choice: ");
-            int choice;
-            try {
-                choice = sc.nextInt();
-            } catch (InputMismatchException ime) {
-                System.out.println("Invalid input. Press <enter> to return to main page.");
-                sc.nextLine();
-                sc.nextLine();
-                return;
-            }
+            int choice = -1;
+            do {
+                ChangePage.changePage();
+                System.out.println("What would you like to do?");
+                System.out.println("\t1. Add Item to Cart");
+                System.out.println("\t2. Edit Cart");
+                System.out.println("\t3. Remove Item from Cart");
+                System.out.println("\t4. Display Cart");
+                System.out.println("\t5. Checkout Cart");
+                System.out.println("\t6. Cancel Order");
+                System.out.print("Please enter your choice: ");
+                try {
+                    choice = sc.nextInt();
+                    if(choice < 1 || choice > 6){
+                        choice = -1;
+                        System.out.println("Invalid choice. Press <enter> to try again.");
+                        sc.nextLine();
+                        sc.nextLine();
+                    }
+                } catch (InputMismatchException ime) {
+                    System.out.println("Invalid input. Press <enter> to try again.");
+                    sc.nextLine();
+                    sc.nextLine();
+                }
+            } while (choice == -1);
             sc.nextLine();
             switch (choice) {
                 case 1:
@@ -229,14 +245,15 @@ public class CustomerController {
                     displayCart(cart);
                     break;
                 case 5:
-                    checkoutCart(branchID, orderType, cart);
-                    exit = true;
+                    exit = checkoutCart(branchID, orderType, cart);
                     break;
                 case 6:
                     cancelOrder(cart, branchID);
                     exit = true;
                     break;
                 default:
+                    System.out.println("Invalid choice. Press <enter> to try again.");
+                    sc.nextLine();
                     break;
             }
         } while (exit == false);
@@ -416,14 +433,14 @@ public class CustomerController {
         sc.nextLine();
     }
 
-    private static void checkoutCart(int branchID, OrderType orderType, Cart cart){
+    private static Boolean checkoutCart(int branchID, OrderType orderType, Cart cart){
         orderView = new OrderDetailsView();
         ChangePage.changePage();
         if(cart.getOrderItems().isEmpty()){
             System.out.println("Your cart is empty. Please add items to your cart before checking out.");
             System.out.println("Press <enter> to continue.");
             sc.nextLine();
-            return;
+            return false;
         }
         cart.calculateTotalPrice();
         System.out.println("Please confirm your order: ");
@@ -434,7 +451,6 @@ public class CustomerController {
         System.out.println("Please select your payment type: ");
         System.out.println("\t1. Credit/Debit Card");
         System.out.println("\t2. Online Payment");
-        System.out.println("\t3. Exit");
         int choice;
         try {
             choice = sc.nextInt();
@@ -443,7 +459,7 @@ public class CustomerController {
             System.out.println("Invalid input. Press <enter> to continue.");
             sc.nextLine();
             sc.nextLine();
-            return;
+            return false;
         }
         switch (choice) {
             case 1:
@@ -452,6 +468,7 @@ public class CustomerController {
                     System.out.println("Payment failed. Please try again.");
                     System.out.println("Press <enter> to continue.");
                     sc.nextLine();
+                    return false;
                 }else{
                     cardPaymentMethod.pay(cart.getTotalPrice());
                     Order order = new Order(customerService.getNextOrderID(), branchID, cart.getOrderItems(), orderType, cart.getTotalPrice());
@@ -461,14 +478,15 @@ public class CustomerController {
                     orderView.displayOrderDetails(order);
                     System.out.println("Press <enter> to continue.");
                     sc.nextLine();
+                    return true;
                 }
-                break;
             case 2:
                 PaymentMethod onlinePaymentMethod = onlinePaymentProcess();
                 if(onlinePaymentMethod == null){
                     System.out.println("Payment failed. Please try again.");
                     System.out.println("Press <enter> to continue.");
                     sc.nextLine();
+                    return false;
                 }else{
                     onlinePaymentMethod.pay(cart.getTotalPrice());
                     Order order = new Order(customerService.getNextOrderID(), branchID, cart.getOrderItems(), orderType, cart.getTotalPrice());
@@ -478,18 +496,12 @@ public class CustomerController {
                     orderView.displayOrderDetails(order);
                     System.out.println("Press <enter> to continue.");
                     sc.nextLine();
+                    return true;
                 }
-                break;
-            case 3:
-                System.out.println("Thank you for using FOMS. Goodbye!");
-                System.out.println("Press <enter> to return to the main page.");
-                sc.nextLine();
-                ChangePage.changePage();
-                return;
             default:
                 System.out.println("Invalid choice. Press <enter> to continue.");
                 sc.nextLine();
-                return;
+                return false;
         }
     }
 
@@ -551,7 +563,7 @@ public class CustomerController {
             sc.nextLine();
             return null;
         }
-        System.out.println("Please enter your card number: ");
+        System.out.println("Please enter your 16-digit card number: ");
         String cardNumber = sc.nextLine();
         if(cardNumber.length() != 16){
             System.out.println("Invalid card number. Please try again.");
@@ -567,7 +579,7 @@ public class CustomerController {
             sc.nextLine();
             return null;
         }
-        System.out.println("Please enter your card CVV: ");
+        System.out.println("Please enter your 3-digit card CVV: ");
         String cvv = sc.nextLine();
         if(cvv.length() != 3){
             System.out.println("Invalid CVV. Please try again.");
