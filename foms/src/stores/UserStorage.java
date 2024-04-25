@@ -38,6 +38,7 @@ public class UserStorage {
         } else {
             throw new IllegalArgumentException("Parameter must be a non-null User.");
         }
+        save();
     }
 
     /**
@@ -51,6 +52,7 @@ public class UserStorage {
         } else {
             throw new IllegalArgumentException("Parameter must be a non-null User.");
         }
+        save();
     }
 
     /**
@@ -64,6 +66,7 @@ public class UserStorage {
         } else {
             throw new IllegalArgumentException("Parameter must be a non-null User.");
         }
+        save();
     }
 
     /**

@@ -48,7 +48,7 @@ public class Welcome {
                 System.out.println("\t2. Staff");
                 System.out.println("\t3. Exit");
 				System.out.println("");
-				System.out.println("Enter your choice: ");
+				System.out.print("Enter your choice: ");
 				Scanner sc = new Scanner(System.in);
 				try {
                     choice = sc.nextInt();
@@ -88,6 +88,13 @@ public class Welcome {
 						break;
 					case 3:
 						flag = 1;
+                        BranchUserStorage.save();
+                        BranchStorage.save();
+                        UserStorage.save();
+                        OrderStorage.save();
+                        PasswordStorage.save();
+                        PaymentMethodStorage.save();
+                        BranchMenuItemStorage.save();
 						break;
 					default:
 						System.out.println("Invalid Option. Press <enter> to try again.");

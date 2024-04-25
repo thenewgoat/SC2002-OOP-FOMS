@@ -40,6 +40,7 @@ public class BranchMenuItemStorage {
         } else {
             throw new IllegalArgumentException("Parameter must be a non-null BranchMenuItem.");
         }
+        save();
     }
 
     /**
@@ -51,6 +52,7 @@ public class BranchMenuItemStorage {
             branchMenuItems.remove(branchMenuItem.getItemID());
             refreshCategories();
         }
+        save();
     }
 
     /**
@@ -63,6 +65,7 @@ public class BranchMenuItemStorage {
         } else {
             throw new IllegalArgumentException("Cannot update non-existing or null BranchMenuItem.");
         }
+        save();
     }
 
     /**

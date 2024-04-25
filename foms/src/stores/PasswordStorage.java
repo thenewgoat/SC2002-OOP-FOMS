@@ -35,6 +35,7 @@ public class PasswordStorage {
         } else {
             throw new IllegalArgumentException("Parameter must be a non-null Account.");
         }
+        save();
     }
 
     /**
@@ -48,6 +49,7 @@ public class PasswordStorage {
         } else {
             throw new IllegalArgumentException("Parameter must be a non-null Account.");
         }
+        save();
     }
 
     /**
@@ -61,6 +63,7 @@ public class PasswordStorage {
         } else {
             throw new IllegalArgumentException("Parameter must be a non-null Account.");
         }
+        save();
     }
 
     /**

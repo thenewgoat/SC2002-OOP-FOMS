@@ -35,6 +35,7 @@ public class PaymentMethodStorage {
         } else {
             throw new IllegalArgumentException("Parameter must be a non-null PaymentMethod.");
         }
+        save();
     }
 
     /**
@@ -48,6 +49,7 @@ public class PaymentMethodStorage {
         } else {
             throw new IllegalArgumentException("Parameter must be a non-null PaymentMethod.");
         }
+        save();
     }
 
     /**
@@ -61,6 +63,7 @@ public class PaymentMethodStorage {
         } else {
             throw new IllegalArgumentException("Cannot update non-existing or null PaymentMethod.");
         }
+        save();
     }
 
     /**

@@ -110,6 +110,8 @@ public class ManagerService implements IManagerService{
 
     public void addBranchMenuItem(BranchMenuItem item) {
         BranchMenuItemStorage.add(item);
+        System.out.println("i'M DOING SOMETHING");
+        System.out.println(item);
     }
 
     public void editBranchMenuItem(BranchMenuItem item) {

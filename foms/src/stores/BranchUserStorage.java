@@ -39,6 +39,7 @@ public class BranchUserStorage {
         } else {
             throw new IllegalArgumentException("Parameter must be a non-null BranchUser.");
         }
+        save();
     }
 
     /**
@@ -52,6 +53,7 @@ public class BranchUserStorage {
         } else {
             throw new IllegalArgumentException("Parameter must be a non-null BranchUser.");
         }
+        save();
     }
 
     /**
@@ -65,6 +67,7 @@ public class BranchUserStorage {
         } else {
             throw new IllegalArgumentException("Parameter must be a non-null BranchUser.");
         }
+        save();
     }
 
     /**

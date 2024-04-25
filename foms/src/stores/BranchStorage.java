@@ -36,6 +36,7 @@ public class BranchStorage {
         } else {
             throw new IllegalArgumentException("Parameter must be a non-null Branch.");
         }
+        save();
     }
 
     /**
@@ -49,6 +50,7 @@ public class BranchStorage {
         } else {
             throw new IllegalArgumentException("Parameter must be a non-null Branch.");
         }
+        save();
     }
 
     /**
@@ -62,6 +64,7 @@ public class BranchStorage {
         } else {
             throw new IllegalArgumentException("Cannot update non-existing or null Branch.");
         }
+        save();
     }
 
     /**
