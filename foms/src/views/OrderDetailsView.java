@@ -18,7 +18,7 @@ public class OrderDetailsView implements IOrderView{
         System.out.println("Order Items:");
         for (OrderItem item : order.getOrderItems()) {
             System.out.println("\tItem Name: " + item.getItemName() + ", Category: " + item.getCategory() +
-                    ", Quantity: " + item.getQuantity() + ", Price: $" + item.getPrice() + ", SubTotal: $" + item.getPrice() * item.getQuantity());
+                    ", Quantity: " + item.getQuantity() + ", Price: $" + item.getPrice() + ", SubTotal: $" + String.format("%.2f", item.getPrice() * item.getQuantity()));
             if(item.getSpecialRequest() != "none"){
                 System.out.println("Special Request: " + item.getSpecialRequest());
             }
