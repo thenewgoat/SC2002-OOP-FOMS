@@ -1,9 +1,11 @@
 package models;
 
+import java.io.Serializable;
+
 /**
  * Represents an item in an order.
  */
-public class OrderItem {
+public class OrderItem implements Serializable{
     private String itemName;
     private String category;
     private int quantity;

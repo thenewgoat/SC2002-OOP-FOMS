@@ -82,6 +82,9 @@ public class OrderStorage {
      * @return An array of all order objects in the storage.
      */
     public static Order[] getAll() {
+        if (orders == null) {
+            return new Order[0];  // Return an empty array if orders is null
+        }
         return orders.values().toArray(new Order[0]);
     }
 
