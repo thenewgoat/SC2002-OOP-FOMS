@@ -100,14 +100,21 @@ public class ManagerController {
 
     private static void displayPendingOrders(int branchID) {
         ChangePage.changePage();
+        Boolean flag = true;
         orderView = new OrderDetailsView();
         List<Order> orders = managerService.getOrders(branchID);
         if (orders != null && orders.size() > 0){
             for (Order order : orders) {
                 if(order.getOrderStatus() == OrderStatus.PREPARING){
                     orderView.displayOrderDetails(order);
+                    flag = false;
                 }
             }
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return;
+        } else if(orders.size() > 0 && flag == true){
+            System.out.println("No pending orders.");
             System.out.println("Press <enter> to continue.");
             sc.nextLine();
             return;
