@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-
 import enums.OrderStatus;
 import enums.OrderType;
 import interfaces.IBranchMenuItemView;
@@ -23,22 +22,15 @@ import views.OrderDetailsView;
 import views.OrderStatusView;
 
 public class CustomerController {
-
     private static final Scanner sc = new Scanner(System.in);
-
     protected static final ICustomerService customerService = new CustomerService();
-
     protected static IBranchMenuItemView branchMenuItemView;
-
     protected static IOrderView orderView;
-
     public CustomerController() {
     }
-
     public static void customerMainPage(int branchID) {
         ChangePage.changePage();
         int choice;
-
         System.out.println("Welcome to " + customerService.getBranchName(branchID) + "!");
         System.out.println("Please select your choice: ");
         System.out.println("\t1. Check Order Status");
@@ -79,6 +71,7 @@ public class CustomerController {
         } catch (PageBackException e) {
             customerMainPage(branchID);
         }
+
     }
 
     private static void checkOrderStatus(int branchID){
@@ -98,11 +91,13 @@ public class CustomerController {
             System.out.println("Order not found.");
             System.out.println("Press <enter> to continue.");
             sc.nextLine();
+            sc.nextLine();
             return;
         }
         else if(order.getBranchID() != branchID){
             System.out.println("Order not found.");
             System.out.println("Press <enter> to continue.");
+            sc.nextLine();
             sc.nextLine();
             return;
         }
@@ -148,7 +143,6 @@ public class CustomerController {
             }
         }
     }
-
     private static void customerOrderPage(int branchID){
         ChangePage.changePage();
         OrderType orderType = null;
@@ -259,7 +253,6 @@ public class CustomerController {
         } while (exit == false);
         
     }
-
     private static void addItemToCart(Cart cart, int branchID){
         ChangePage.changePage();
         List<BranchMenuItem> branchMenuItems = customerService.getBranchMenuItemList(branchID);
@@ -343,7 +336,6 @@ public class CustomerController {
         System.out.println("Press <enter> to continue.");
         sc.nextLine();
     }
-
     private static void editCart(Cart cart, int branchID){
         ChangePage.changePage();
         if(cart.getOrderItems().isEmpty()){
@@ -401,7 +393,6 @@ public class CustomerController {
         System.out.println("Press <enter> to continue.");
         sc.nextLine();
     }
-
     private static void removeItemFromCart(Cart cart, int branchID){
         ChangePage.changePage();
         if(cart.getOrderItems().isEmpty()){
@@ -515,7 +506,6 @@ public class CustomerController {
         cart.getOrderItems().clear();
         System.out.println("Order cancelled successfully.");
     }
-
     private static void displayCart(Cart cart){
         ChangePage.changePage();
         if(cart.getOrderItems().isEmpty()){
@@ -528,7 +518,6 @@ public class CustomerController {
         System.out.println("Press <enter> to continue.");
         sc.nextLine();
     }
-
     private static PaymentMethod cardPaymentProcess(){
         List<PaymentMethod> paymentMethods = customerService.getPaymentMethods("Credit/Debit Card");
         System.out.println("Please select your card: ");
@@ -563,6 +552,7 @@ public class CustomerController {
             sc.nextLine();
             return null;
         }
+        System.out.println("Please enter your card number: ");
         System.out.println("Please enter your 16-digit card number: ");
         String cardNumber = sc.nextLine();
         if(cardNumber.length() != 16){
@@ -579,6 +569,7 @@ public class CustomerController {
             sc.nextLine();
             return null;
         }
+        System.out.println("Please enter your card CVV: ");
         System.out.println("Please enter your 3-digit card CVV: ");
         String cvv = sc.nextLine();
         if(cvv.length() != 3){
@@ -589,7 +580,6 @@ public class CustomerController {
         }
         return paymentMethod;
     }
-
     private static PaymentMethod onlinePaymentProcess(){
         List<PaymentMethod> paymentMethods = customerService.getPaymentMethods("Online Payment");
         System.out.println("Please select your payment method:");
