@@ -57,26 +57,32 @@ public class AdminController {
                 switch (choice) {
                     case 1:
                         getStaffList();
+                        ChangePage.changePage();
                         AdminController.start(user);
                         break;
                     case 2: 
                         manageStaff();
+                        ChangePage.changePage();
                         AdminController.start(user);
                         break;
                     case 3:
                         promoteStaff();
+                        ChangePage.changePage();
                         AdminController.start(user);
                         break;
                     case 4:
                         transferStaff();
+                        ChangePage.changePage();
                         AdminController.start(user);
                         break;
                     case 5:
                         managePayments();
+                        ChangePage.changePage();
                         AdminController.start(user);
                         break;
                     case 6:
                         branchManagement();
+                        ChangePage.changePage();
                         AdminController.start(user);
                         break;
                     case 7:
