@@ -20,6 +20,7 @@ public class ChangePage {
             if (os.contains("win")) {
                 // Windows
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } else {
                 // Unix-like systems
                 System.out.print("\033[H\033[2J");
