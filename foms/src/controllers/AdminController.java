@@ -398,9 +398,13 @@ public class AdminController {
             Branch newBranch = branches[choice - 1];
             Branch oldBranch = adminService.findBranchById(staff.getBranchID());
             if (oldBranch != null) {
-                adminService.transferStaff(staff, oldBranch, newBranch);
-                System.out.println("Staff transferred successfully. Press <enter> to continue.");
-                sc.nextLine();
+                if(adminService.transferStaff(staff, oldBranch, newBranch)){
+                    System.out.println("Staff transferred successfully. Press <enter> to continue.");
+                    sc.nextLine();
+                } else {
+                    System.out.println("Staff could not be transferred. Press <enter> to continue.");
+                    sc.nextLine();
+                }
             }
         } else {
             System.out.println("Invalid choice. Please select a number between 1 and " + branches.length);

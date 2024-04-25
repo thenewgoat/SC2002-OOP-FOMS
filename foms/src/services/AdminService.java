@@ -112,11 +112,11 @@ public class AdminService implements IAdminService{
             createAccount(staff);
             return true;
         } catch (TooFewManagersException e) {
-            System.out.println("Addition blocked as there will be too many staff in the branch." + e.getMessage());
+            System.out.println("Addition blocked as there will be too many staff in the branch.");
             System.out.println("Try adding new staff to other branches.");
             return false;
         } catch (TooManyManagersException e) {
-            System.out.println("Addition blocked as there will be too many managers in the branch." + e.getMessage());
+            System.out.println("Addition blocked as there will be too many managers in the branch.");
             System.out.println("Try adding new manager to other branches.");
             return false;
         } catch (IllegalArgumentException e) {
@@ -162,10 +162,10 @@ public class AdminService implements IAdminService{
                     deleteAccount(staff);
                     return true;
                 } catch (TooFewManagersException e) {
-                    System.out.println("Removal blocked as there will be insufficient managers in the branch." + e.getMessage());
+                    System.out.println("Removal blocked as there will be insufficient managers in the branch.");
                     return false;
                 } catch (TooManyManagersException e) {
-                    System.out.println("Removal blocked as there will be insufficient staff in the branch." + e.getMessage());
+                    System.out.println("Removal blocked as there will be insufficient staff in the branch.");
                     return false;
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
@@ -259,11 +259,11 @@ public class AdminService implements IAdminService{
             try {
                 StaffUpdateChecker.check(oldStaffCount, oldManagerCount - 1, oldBranch);
             } catch (TooFewManagersException e) {
-                System.out.println("Transfer blocked as there will be insufficient managers in the old branch." + e.getMessage());
+                System.out.println("Transfer blocked as there will be insufficient managers in the old branch.");
                 return false;
             } catch (TooManyManagersException e) {
                 System.out.println("This message should never be seen. ");
-                System.out.println("Transfer blocked as there will be too many managers in the old branch." + e.getMessage());
+                System.out.println("Transfer blocked as there will be too many managers in the old branch.");
                 return false;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
@@ -274,10 +274,10 @@ public class AdminService implements IAdminService{
                 StaffUpdateChecker.check(newStaffCount, newManagerCount + 1, newBranch);
             } catch (TooFewManagersException e) {
                 System.out.println("This message should never be seen. ");
-                System.out.println("Transfer blocked as there will be insufficient managers in the new branch." + e.getMessage());
+                System.out.println("Transfer blocked as there will be insufficient managers in the new branch.");
                 return false;
             } catch (TooManyManagersException e) {
-                System.out.println("Transfer blocked as there will be too many managers in the new branch." + e.getMessage());
+                System.out.println("Transfer blocked as there will be too many managers in the new branch.");
                 return false;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
@@ -291,10 +291,10 @@ public class AdminService implements IAdminService{
                 StaffUpdateChecker.check(oldStaffCount - 1, oldManagerCount, oldBranch);
             } catch (TooFewManagersException e) {
                 System.out.println("This message should never be seen. ");
-                System.out.println("Transfer blocked as there will be too many staff in the old branch." + e.getMessage());
+                System.out.println("Transfer blocked as there will be too many staff in the old branch.");
                 return false;
             } catch (TooManyManagersException e) {
-                System.out.println("Transfer blocked as there will be insufficient staff in the old branch." + e.getMessage());
+                System.out.println("Transfer blocked as there will be insufficient staff in the old branch.");
                 return false;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
@@ -304,11 +304,11 @@ public class AdminService implements IAdminService{
             try {
                 StaffUpdateChecker.check(newStaffCount + 1, newManagerCount, newBranch);
             } catch (TooFewManagersException e) {
-                System.out.println("Transfer blocked as there will be too many staff in the new branch." + e.getMessage());
+                System.out.println("Transfer blocked as there will be too many staff in the new branch.");
                 return false;
             } catch (TooManyManagersException e) {
                 System.out.println("This message should never be seen. ");
-                System.out.println("Transfer blocked as there will be too many managers in the new branch." + e.getMessage());
+                System.out.println("Transfer blocked as there will be too many managers in the new branch.");
                 return false;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
