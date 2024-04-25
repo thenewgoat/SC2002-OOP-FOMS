@@ -82,9 +82,8 @@ public class CustomerController {
         try {
             orderID = sc.nextInt();
         } catch (InputMismatchException ime) {
-            System.out.println("Invalid input. Press <enter> to try again.");
+            System.out.println("Invalid input. Press <enter> to continue.");
             sc.nextLine();
-            checkOrderStatus();
             return;
         }
         Order order = customerService.getOrder(orderID);
@@ -104,9 +103,8 @@ public class CustomerController {
             try {
                 choice = sc.nextInt();
             } catch (InputMismatchException ime) {
-                System.out.println("Invalid input. Press <enter> to try again.");
+                System.out.println("Invalid input. Press <enter> to continue.");
                 sc.nextLine();
-                checkOrderStatus();
                 return;
             }
             switch(choice){
@@ -123,9 +121,8 @@ public class CustomerController {
                     sc.nextLine();
                     return;
                 default:
-                    System.out.println("Invalid choice. Press <enter> to try again.");
+                    System.out.println("Invalid choice. Press <enter> to continue.");
                     sc.nextLine();
-                    checkOrderStatus();
                     return;
             }
         }
@@ -238,19 +235,18 @@ public class CustomerController {
         try {
             choice = sc.nextInt();
         } catch (InputMismatchException ime) {
-            System.out.println("Invalid input. Press <enter> to try again.");
+            System.out.println("Invalid input. Press <enter> to continue.");
             sc.nextLine();
-            addItemToCart(cart, branchID);
             return;
         }
         try {
             if(choice < 1 || choice > branchMenuItems.size()){
-                System.out.println("Invalid choice. Press <enter> to try again.");
+                System.out.println("Invalid choice. Press <enter> to continue.");
                 sc.nextLine();
                 throw new PageBackException();
             }
         } catch (PageBackException e) {
-            addItemToCart(cart, branchID);
+            return;
         }
         choice--;
         BranchMenuItem item = branchMenuItems.get(choice);
@@ -259,9 +255,8 @@ public class CustomerController {
         try {
             quantity = sc.nextInt();
         } catch (InputMismatchException ime) {
-            System.out.println("Invalid input. Press <enter> to try again.");
+            System.out.println("Invalid input. Press <enter> to continue.");
             sc.nextLine();
-            addItemToCart(cart, branchID);
             return;
         }
         try {
@@ -277,7 +272,7 @@ public class CustomerController {
                 throw new PageBackException();
             }
         } catch (PageBackException e) {
-            addItemToCart(cart, branchID);
+            return;
         }
         item.setAvailability(item.getAvailability()-quantity);
         customerService.updateBranchMenuItem(item);
@@ -297,12 +292,12 @@ public class CustomerController {
         try {
             if(item == null){
                 System.out.println("Item not found in cart.");
-                System.out.println("Press <enter> to try again.");
+                System.out.println("Press <enter> to continue.");
                 sc.nextLine();
                 throw new PageBackException();
             }
         } catch (PageBackException e) {
-            editCart(cart, branchID);
+            return;
         }
         BranchMenuItem branchMenuItem = customerService.getBranchMenuItem(branchID, itemName);
         int oldQuantity = item.getQuantity();
@@ -311,25 +306,24 @@ public class CustomerController {
         try {
             quantity = sc.nextInt();
         } catch (InputMismatchException ime) {
-            System.out.println("Invalid input. Press <enter> to try again.");
+            System.out.println("Invalid input. Press <enter> to continue.");
             sc.nextLine();
-            editCart(cart, branchID);
             return;
         }
         try {
             if(quantity < 1){
-                System.out.println("Invalid quantity. Please try again.");
-                System.out.println("Press <enter> to try again.");
+                System.out.println("Invalid quantity.");
+                System.out.println("Press <enter> to continue.");
                 sc.nextLine();
                 throw new PageBackException();
             }else if(quantity > branchMenuItem.getAvailability() + item.getQuantity()) {
                 System.out.println("Sorry, the quantity you have entered exceeds the quantity in your cart.");
-                System.out.println("Press <enter> to try again.");
+                System.out.println("Press <enter> to continue.");
                 sc.nextLine();
                 throw new PageBackException();
             }
         } catch (PageBackException e) {
-            editCart(cart, branchID);
+            return;
         }
         cart.editItem(itemName, quantity);
         branchMenuItem.setAvailability(branchMenuItem.getAvailability() + oldQuantity - quantity);
@@ -348,12 +342,12 @@ public class CustomerController {
         try {
             if(item == null){
                 System.out.println("Item not found in cart.");
-                System.out.println("Press <enter> to try again.");
+                System.out.println("Press <enter> to continue.");
                 sc.nextLine();
                 throw new PageBackException();
             }
         } catch (PageBackException e) {
-            removeItemFromCart(cart, branchID);
+            return;
         }
         BranchMenuItem branchMenuItem = customerService.getBranchMenuItem(branchID, itemName);
         cart.removeItem(itemName);
