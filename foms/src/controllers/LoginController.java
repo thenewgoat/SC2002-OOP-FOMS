@@ -5,11 +5,8 @@ import models.Account;
 import models.User;
 import java.util.Scanner;
 
-import utils.exceptions.AccountNotFoundException;
 import utils.exceptions.PageBackException;
 import utils.exceptions.PasswordIncorrectException;
-import utils.exceptions.PasswordMismatchException;
-import utils.exceptions.PasswordValidationException;
 
 public class LoginController {
     private static final Scanner scanner = new Scanner(System.in);
@@ -61,21 +58,16 @@ public class LoginController {
         try {
             if (loginService.changePassword(account.getLoginID(), account.getPassword(), newPassword)) {
                 System.out.println("Password changed successfully. Please login again.");
+                return;
+            } else {
+                System.out.println("Password change failed. Please try again.");
+                changePassword(account);
             }
-        } catch (PasswordMismatchException e) {
-            System.out.println("Password change failed. " + e.getMessage());
-            changePassword(account);
-        } catch (AccountNotFoundException e) {
-            System.out.println("Password change failed. " + e.getMessage());
-            changePassword(account);
-        } catch (PasswordValidationException e) {
-            System.out.println("Password change failed. " + e.getMessage());
+        } catch (PasswordIncorrectException e) {
+            System.out.println(e.getMessage());
             changePassword(account);
         }
     }
-
-
-
 
     private static void redirect(User user) {
         try {

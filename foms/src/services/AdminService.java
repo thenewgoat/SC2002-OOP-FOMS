@@ -426,8 +426,8 @@ public class AdminService implements IAdminService{
         if (!account.getPassword().equals(oldPassword)) {
             throw new PasswordMismatchException("The old password provided is incorrect.");
         }
-        if (newPassword == null || newPassword.isEmpty() || newPassword.equals("password") || newPassword.equals(oldPassword)) {
-            throw new PasswordValidationException("The new password is invalid. It cannot be null, empty, 'password', or the same as the previous password.");
+        if (newPassword == null || newPassword.isEmpty() || newPassword.equals("password")) {
+            throw new PasswordValidationException("The new password is invalid. It cannot be null, empty, or 'password'.");
         }
     
         account.setPassword(newPassword);

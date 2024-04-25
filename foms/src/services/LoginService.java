@@ -7,10 +7,7 @@ import models.Account;
 import models.User;
 import stores.PasswordStorage;
 import stores.UserStorage;
-import utils.exceptions.AccountNotFoundException;
 import utils.exceptions.PasswordIncorrectException;
-import utils.exceptions.PasswordMismatchException;
-import utils.exceptions.PasswordValidationException;
 
 
 /**
@@ -50,25 +47,15 @@ public class LoginService implements IAuthorisationService {
         return user.getPassword().equals(password);
     }
 
-    public boolean changePassword(String loginID, String oldPassword, String newPassword) throws AccountNotFoundException, PasswordMismatchException, PasswordValidationException {
-        
-        User user = UserStorage.get(loginID);
-
-        Account account = findAccountByLoginID(user.getLoginID());
-    
-        if (account == null) {
-            throw new AccountNotFoundException("No account found with login ID: " + user.getLoginID());
+    public boolean changePassword(String loginID, String oldPassword, String newPassword) throws PasswordIncorrectException {
+        Account account = PasswordStorage.get(loginID);
+        if (account != null && account.getPassword().equals(oldPassword)) {
+            account.setPassword(newPassword);
+            PasswordStorage.update(account); // Assume a method to update the account in storage
+            return true;
+        } else {
+            throw new PasswordIncorrectException("Old password is incorrect.");
         }
-        if (!account.getPassword().equals(oldPassword)) {
-            throw new PasswordMismatchException("The old password provided is incorrect.");
-        }
-        if (newPassword == null || newPassword.isEmpty() || newPassword.equals("password") || newPassword.equals(oldPassword)) {
-            throw new PasswordValidationException("The new password is invalid. It cannot be null, empty, 'password', or the same as the previous password.");
-        }
-    
-        account.setPassword(newPassword);
-        PasswordStorage.update(account);
-        return true;
     }
 
     public User getUser(String loginID) {
@@ -77,15 +64,6 @@ public class LoginService implements IAuthorisationService {
 
     public Account getAccount(String loginID) {
         return PasswordStorage.get(loginID);
-    }
-
-    public Account findAccountByLoginID(String loginID) {
-        for (Account account : PasswordStorage.getAll()) {
-            if (account.getLoginID().equals(loginID)) {
-                return account;
-            }
-        }
-        return null;
     }
 
 }
