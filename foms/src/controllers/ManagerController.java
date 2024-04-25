@@ -119,6 +119,7 @@ public class ManagerController {
     }
 
     private static void viewOrderDetails() {
+        orderView = new OrderDetailsView();
         System.out.print("Enter order ID: ");
         int orderID;
         try {

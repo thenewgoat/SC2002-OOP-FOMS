@@ -93,6 +93,7 @@ public class StaffController {
     }
 
     private static void viewOrderDetails() {
+        orderView = new OrderDetailsView();
         System.out.print("Enter order ID: ");
         int orderID = sc.nextInt();
         sc.nextLine();
