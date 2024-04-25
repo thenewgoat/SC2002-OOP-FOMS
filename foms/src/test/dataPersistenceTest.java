@@ -6,6 +6,7 @@ package test;
 
 import java.util.Scanner;
 
+import interfaces.IOrderView;
 import models.Account;
 import models.Branch;
 import models.BranchMenuItem;
@@ -21,10 +22,14 @@ import stores.PasswordStorage;
 import stores.PaymentMethodStorage;
 import stores.UserStorage;
 import utils.FileCleanupUtility;
+import views.OrderDetailsView;
 
 public class dataPersistenceTest {
 
+    protected static IOrderView orderView;
+
     public static void test() throws Exception {
+        orderView = new OrderDetailsView();
 
 
         System.out.println("Current working directory: " + System.getProperty("user.dir"));
@@ -96,10 +101,10 @@ public class dataPersistenceTest {
         System.out.println("Number of Orders: " + orders.length);
         System.out.println("-------------------------------");
         for (Order order : orders) {
-            System.out.println("Order ID: " + order.getOrderID());
-            System.out.println("Total Price: " + order.getTotalPrice());
-            System.out.println("Order Status: " + order.getOrderStatus());
-            order.displayOrderDetails();
+            //System.out.println("Order ID: " + order.getOrderID());
+            //System.out.println("Total Price: " + order.getTotalPrice());
+            //System.out.println("Order Status: " + order.getOrderStatus());
+            orderView.displayOrderDetails(order);
             System.out.println("-------------------------------");
         }
 
