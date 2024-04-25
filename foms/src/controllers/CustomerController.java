@@ -1,4 +1,5 @@
 package controllers;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,7 +40,15 @@ public class CustomerController {
         System.out.println("\t1. Check Order Status");
         System.out.println("\t2. Make a New Order");
         System.out.println("\t3. Exit");
-        choice = sc.nextInt();
+        try {
+            choice = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to try again.");
+            sc.nextLine();
+            sc.nextLine();
+            customerMainPage(branchID);
+            return;
+        }
         sc.nextLine();
         try {
             switch(choice){
@@ -69,7 +78,15 @@ public class CustomerController {
 
     private static void checkOrderStatus(){
         System.out.println("Please enter your Order ID: ");
-        int orderID = sc.nextInt();
+        int orderID;
+        try {
+            orderID = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to try again.");
+            sc.nextLine();
+            checkOrderStatus();
+            return;
+        }
         Order order = customerService.getOrder(orderID);
         if(order == null){
             System.out.println("Order not found.");
@@ -83,20 +100,33 @@ public class CustomerController {
             System.out.println("Would you like to collect your order?");
             System.out.println("\t1. Yes");
             System.out.println("\t2. No");
-            int choice = sc.nextInt();
-            if (choice == 1) {
-                customerService.collectOrder(orderID);
-                System.out.println("Order collected successfully.");
-                System.out.println("Press <enter> to continue.");
+            int choice;
+            try {
+                choice = sc.nextInt();
+            } catch (InputMismatchException ime) {
+                System.out.println("Invalid input. Press <enter> to try again.");
                 sc.nextLine();
+                checkOrderStatus();
                 return;
             }
-            else{
-                System.out.println("Order not collected.");
-                System.out.println("Please be sure to collect your order before it is cancelled.");
-                System.out.println("Press <enter> to continue.");
-                sc.nextLine();
-                return;
+            switch(choice){
+                case 1:
+                    customerService.collectOrder(orderID);
+                    System.out.println("Order collected successfully.");
+                    System.out.println("Press <enter> to continue.");
+                    sc.nextLine();
+                    return;
+                case 2:
+                    System.out.println("Order not collected.");
+                    System.out.println("Please be sure to collect your order before it is cancelled.");
+                    System.out.println("Press <enter> to continue.");
+                    sc.nextLine();
+                    return;
+                default:
+                    System.out.println("Invalid choice. Press <enter> to try again.");
+                    sc.nextLine();
+                    checkOrderStatus();
+                    return;
             }
         }
     }
@@ -109,7 +139,15 @@ public class CustomerController {
         System.out.println("\t1. Dine In");
         System.out.println("\t2. Take Out");
         System.out.println("\t3. Exit");
-        int choice = sc.nextInt();
+        int choice;
+        try {
+            choice = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to try again.");
+            sc.nextLine();
+            customerOrderPage(branchID);
+            return;
+        }
         try {
             switch(choice){
                 case 1:
@@ -148,7 +186,15 @@ public class CustomerController {
             System.out.println("\t5. Checkout Cart");
             System.out.println("\t6. Cancel Order");
             System.out.print("Please enter your choice: ");
-            int choice = sc.nextInt();
+            int choice;
+            try {
+                choice = sc.nextInt();
+            } catch (InputMismatchException ime) {
+                System.out.println("Invalid input. Press <enter> to try again.");
+                sc.nextLine();
+                manageCart(branchID, orderType, cart);
+                return;
+            }
             sc.nextLine();
             switch (choice) {
                 case 1:
@@ -188,7 +234,15 @@ public class CustomerController {
             index++;
         }
         System.out.println("Please enter the item number you would like to add to your cart: ");
-        int choice = sc.nextInt();
+        int choice;
+        try {
+            choice = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to try again.");
+            sc.nextLine();
+            addItemToCart(cart, branchID);
+            return;
+        }
         try {
             if(choice < 1 || choice > branchMenuItems.size()){
                 System.out.println("Invalid choice. Press <enter> to try again.");
@@ -201,7 +255,15 @@ public class CustomerController {
         choice--;
         BranchMenuItem item = branchMenuItems.get(choice);
         System.out.println("Please enter the quantity you would like to order: ");
-        int quantity = sc.nextInt();
+        int quantity;
+        try {
+            quantity = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to try again.");
+            sc.nextLine();
+            addItemToCart(cart, branchID);
+            return;
+        }
         try {
             if(quantity > item.getAvailability()){
                 System.out.println("Sorry, the quantity you have entered exceeds our stock.");
@@ -245,7 +307,15 @@ public class CustomerController {
         BranchMenuItem branchMenuItem = customerService.getBranchMenuItem(branchID, itemName);
         int oldQuantity = item.getQuantity();
         System.out.println("Please enter the new quantity: ");
-        int quantity = sc.nextInt();
+        int quantity;
+        try {
+            quantity = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to try again.");
+            sc.nextLine();
+            editCart(cart, branchID);
+            return;
+        }
         try {
             if(quantity < 1){
                 System.out.println("Invalid quantity. Please try again.");
