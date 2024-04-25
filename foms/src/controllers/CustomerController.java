@@ -12,6 +12,7 @@ import models.BranchMenuItem;
 import models.Cart;
 import models.Order;
 import models.OrderItem;
+import models.PaymentMethod;
 import services.CustomerService;
 import utils.ChangePage;
 import utils.exceptions.PageBackException;
@@ -405,7 +406,68 @@ public class CustomerController {
             sc.nextLine();
             return;
         }
-        // do once payment is implemented
+        cart.calculateTotalPrice();
+        System.out.println("Please confirm your order: ");
+        cart.displayItems();
+        System.out.println("Press <enter> to continue.");
+        sc.nextLine();
+        ChangePage.changePage();
+        System.out.println("Please select your payment type: ");
+        System.out.println("\t1. Credit/Debit Card");
+        System.out.println("\t2. Online Payment");
+        System.out.println("\t3. Exit");
+        int choice;
+        try {
+            choice = sc.nextInt();
+            sc.nextLine();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to continue.");
+            sc.nextLine();
+            sc.nextLine();
+            return;
+        }
+        switch (choice) {
+            case 1:
+                PaymentMethod cardPaymentMethod = cardPaymentProcess();
+                if(cardPaymentMethod == null){
+                    System.out.println("Payment failed. Please try again.");
+                    System.out.println("Press <enter> to continue.");
+                    sc.nextLine();
+                }else{
+                    cardPaymentMethod.pay(cart.getTotalPrice());
+                    Order order = new Order(customerService.getNextOrderID(), branchID, cart.getOrderItems(), orderType, cart.getTotalPrice());
+                    customerService.newOrder(order);
+                    System.out.println("Order placed successfully.");
+                    System.out.println("Press <enter> to continue.");
+                    sc.nextLine();
+                }
+                break;
+            case 2:
+                PaymentMethod onlinePaymentMethod = onlinePaymentProcess();
+                if(onlinePaymentMethod == null){
+                    System.out.println("Payment failed. Please try again.");
+                    System.out.println("Press <enter> to continue.");
+                    sc.nextLine();
+                }else{
+                    onlinePaymentMethod.pay(cart.getTotalPrice());
+                    Order order = new Order(customerService.getNextOrderID(), branchID, cart.getOrderItems(), orderType, cart.getTotalPrice());
+                    customerService.newOrder(order);
+                    System.out.println("Order placed successfully.");
+                    System.out.println("Press <enter> to continue.");
+                    sc.nextLine();
+                }
+                break;
+            case 3:
+                System.out.println("Thank you for using FOMS. Goodbye!");
+                System.out.println("Press <enter> to return to the main page.");
+                sc.nextLine();
+                ChangePage.changePage();
+                return;
+            default:
+                System.out.println("Invalid choice. Press <enter> to continue.");
+                sc.nextLine();
+                return;
+        }
     }
 
     private static void cancelOrder(Cart cart, int branchID){
@@ -430,5 +492,111 @@ public class CustomerController {
         cart.displayItems();
         System.out.println("Press <enter> to continue.");
         sc.nextLine();
+    }
+
+    private static PaymentMethod cardPaymentProcess(){
+        List<PaymentMethod> paymentMethods = customerService.getPaymentMethods("Credit/Debit Card");
+        System.out.println("Please select your card: ");
+        for(int i = 0; i < paymentMethods.size(); i++){
+            System.out.println("\t" + (i+1) + ". " + paymentMethods.get(i).getPaymentMethod());
+        }
+        int choice;
+        try {
+            choice = sc.nextInt();
+            sc.nextLine();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to continue.");
+            sc.nextLine();
+            sc.nextLine();
+            return null;
+        }
+        try {
+            if(choice < 1 || choice > paymentMethods.size()){
+                System.out.println("Invalid choice. Press <enter> to continue.");
+                sc.nextLine();
+                throw new PageBackException();
+            }
+        } catch (PageBackException e) {
+            return null;
+        }
+        PaymentMethod paymentMethod = paymentMethods.get(choice-1);
+        System.out.println("Please enter the name on your card: ");
+        String cardName = sc.nextLine();
+        if(cardName.length() < 1){
+            System.out.println("Invalid card name. Please try again.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return null;
+        }
+        System.out.println("Please enter your card number: ");
+        String cardNumber = sc.nextLine();
+        if(cardNumber.length() != 16){
+            System.out.println("Invalid card number. Please try again.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return null;
+        }
+        System.out.println("Please enter your card expiry date (MM/YY): ");
+        String expiryDate = sc.nextLine();
+        if(expiryDate.length() != 5){
+            System.out.println("Invalid expiry date. Please try again.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return null;
+        }
+        System.out.println("Please enter your card CVV: ");
+        String cvv = sc.nextLine();
+        if(cvv.length() != 3){
+            System.out.println("Invalid CVV. Please try again.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return null;
+        }
+        return paymentMethod;
+    }
+
+    private static PaymentMethod onlinePaymentProcess(){
+        List<PaymentMethod> paymentMethods = customerService.getPaymentMethods("Online Payment");
+        System.out.println("Please select your payment method:");
+        for(int i = 0; i < paymentMethods.size(); i++){
+            System.out.println("\t" + (i+1) + ". " + paymentMethods.get(i).getPaymentMethod());
+        }
+        int choice;
+        try {
+            choice = sc.nextInt();
+            sc.nextLine();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to continue.");
+            sc.nextLine();
+            sc.nextLine();
+            return null;
+        }
+        try {
+            if(choice < 1 || choice > paymentMethods.size()){
+                System.out.println("Invalid choice. Press <enter> to continue.");
+                sc.nextLine();
+                throw new PageBackException();
+            }
+        } catch (PageBackException e) {
+            return null;
+        }
+        PaymentMethod paymentMethod = paymentMethods.get(choice-1);
+        System.out.println("Please enter your email address: ");
+        String email = sc.nextLine();
+        if(email.length() < 1){
+            System.out.println("Invalid email. Please try again.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return null;
+        }
+        System.out.println("Please enter your password: ");
+        String password = sc.nextLine();
+        if(password.length() < 1){
+            System.out.println("Invalid password. Please try again.");
+            System.out.println("Press <enter> to continue.");
+            sc.nextLine();
+            return null;
+        }
+        return paymentMethod;
     }
 }
