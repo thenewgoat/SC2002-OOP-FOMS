@@ -25,8 +25,6 @@ public class ChangePage {
                 // Unix-like systems
                 System.out.print("\033[H\033[2J");
                 System.out.flush();
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
