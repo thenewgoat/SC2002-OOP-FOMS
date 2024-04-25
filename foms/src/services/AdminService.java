@@ -454,9 +454,9 @@ public class AdminService implements IAdminService{
             if (curStaff.getLoginID().equals(staff.getLoginID())){
                 return;
             }
+        }
         Account account = new Account(staff.getLoginID(), "password");
         PasswordStorage.add(account);
-        }
     }
 
     private void deleteAccount(BranchUser staff){
@@ -465,7 +465,6 @@ public class AdminService implements IAdminService{
                 Account account = new Account(staff.getLoginID(), "password");
                 PasswordStorage.remove(account);
             }   
-        return;
         }
     }
 }
