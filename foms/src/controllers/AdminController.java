@@ -8,6 +8,7 @@ import enums.Role;
 import models.Admin;
 import models.Branch;
 import models.BranchUser;
+import models.PaymentMethod;
 import models.User;
 import services.AdminService;
 import utils.ChangePage;
@@ -248,8 +249,118 @@ public class AdminController {
 
 
     private static void managePayments() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'managePayments'");
+        System.out.println("Select action: ");
+        System.out.println("\t1. Add Payment Method");
+        System.out.println("\t2. Remove Payment Method");
+
+        System.out.print("Enter your choice: ");
+        Scanner sc = new Scanner(System.in);
+        int choice;
+        try {
+            choice = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to try again.");
+            sc.nextLine();
+            sc.nextLine();
+            managePayments();
+            return;
+        }
+        sc.nextLine();
+
+        switch (choice) {
+            case 1:
+                addPaymentMethod();
+                break;
+            case 2:
+                removePaymentMethod();
+                break;
+            default:
+                System.out.println("Invalid choice. Press <enter> to go back to the previous page.");
+                sc.nextLine();
+                return;
+        }
+    }
+
+    private static void removePaymentMethod() {
+        AdminService adminService = new AdminService();
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Select Payment Method to remove: ");
+        int count = 1;
+        PaymentMethod[] paymentMethods = adminService.getPaymentMethods();
+        for (PaymentMethod paymentMethod : paymentMethods) {
+            System.out.println("\t" + count + ". " + paymentMethod.getPaymentMethod());
+            count++;
+        }
+        
+        System.out.print("Enter your choice: ");
+        int choice;
+        try {
+            choice = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to return to previous page.");
+            sc.nextLine();
+            sc.nextLine();
+            return;
+        }
+        sc.nextLine();
+        if (choice > 0 && choice <= paymentMethods.length) {
+            PaymentMethod selectedPaymentMethod = paymentMethods[choice - 1];
+            if (adminService.removePaymentMethod(selectedPaymentMethod)) {
+                System.out.println("Payment Method removed successfully. Press Enter to continue.");
+                sc.nextLine();
+            } else {
+                System.out.println("Payment Method could not be removed. Press Enter to continue.");
+                sc.nextLine();
+            }
+        } else {
+            System.out.println("Invalid choice. Please select a number between 1 and " + paymentMethods.length);
+            System.out.println("Press <enter> to return.");
+            sc.nextLine();
+        }
+    }
+
+    private static void addPaymentMethod() {
+        AdminService adminService = new AdminService();
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter Payment Method Name: ");
+        String paymentMethod = sc.nextLine();
+        if (paymentMethod.isEmpty()) {
+            System.out.println("Payment Method Name cannot be empty. Press Enter to continue.");
+            sc.nextLine();
+            return;
+        }
+
+        System.out.print("Select Payment Method Type: ");
+        System.out.println("\t1. Credit/Debit Card");
+        System.out.println("\t2. Online Payment");
+        System.out.print("Enter your choice: ");
+
+        int choice;
+        try {
+            choice = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to return to previous page.");
+            sc.nextLine();
+            sc.nextLine();
+            return;
+        }
+        PaymentMethod newPaymentMethod = null;
+        if (choice == 1){
+            newPaymentMethod = new PaymentMethod(paymentMethod, "Credit/Debit Card");
+        }
+        else if (choice == 2){
+            newPaymentMethod = new PaymentMethod(paymentMethod, "Online Payment");
+        }
+        
+        if (adminService.addPaymentMethod(newPaymentMethod)) {
+            System.out.println("Payment Method added successfully. Press Enter to continue.");
+            sc.nextLine();
+        } else {
+            System.out.println("Payment Method could not be added. Press Enter to continue.");
+            sc.nextLine();
+        }
     }
 
     private static void transferStaff() throws PageBackException {
@@ -770,5 +881,5 @@ public class AdminController {
                 sc.nextLine();
                 throw new PageBackException();       
         }            
-    }
+    }    
 }

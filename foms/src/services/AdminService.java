@@ -350,7 +350,11 @@ public class AdminService implements IAdminService{
 
     @Override
     public boolean addPaymentMethod(PaymentMethod paymentMethod){
-        
+
+        if (paymentMethod == null){
+            System.out.println("Payment method cannot be null.");
+            return false;
+        }
         for (PaymentMethod curPaymentMethod : PaymentMethodStorage.getAll()){
             if (curPaymentMethod.getPaymentMethod().equals(paymentMethod.getPaymentMethod())){
                 System.out.println("Payment method already exists.");
@@ -371,6 +375,15 @@ public class AdminService implements IAdminService{
         }
         System.out.println("Payment method does not exist.");
         return false;
+    }
+
+    public PaymentMethod findPaymentMethod(String paymentMethod){
+        for (PaymentMethod curPaymentMethod : PaymentMethodStorage.getAll()){
+            if (curPaymentMethod.getPaymentMethod().equals(paymentMethod)){
+                return curPaymentMethod;
+            }
+        }
+        return null;
     }
 
     public BranchUser findStaffByLoginID(String staffLoginID) {
@@ -427,5 +440,9 @@ public class AdminService implements IAdminService{
         }
         Branch branch = new Branch(temp + 1, branchName, branchLocation, staffQuota);
         return addBranch(branch);
+    }
+
+    public PaymentMethod[] getPaymentMethods() {
+        return PaymentMethodStorage.getAll();
     }
 }
