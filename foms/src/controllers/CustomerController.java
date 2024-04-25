@@ -19,6 +19,7 @@ import services.CustomerService;
 import utils.ChangePage;
 import utils.exceptions.PageBackException;
 import views.BranchMenuItemView;
+import views.OrderDetailsView;
 import views.OrderStatusView;
 
 public class CustomerController {
@@ -406,6 +407,7 @@ public class CustomerController {
     }
 
     private static void checkoutCart(int branchID, OrderType orderType, Cart cart){
+        orderView = new OrderDetailsView();
         ChangePage.changePage();
         if(cart.getOrderItems().isEmpty()){
             System.out.println("Your cart is empty. Please add items to your cart before checking out.");
@@ -444,7 +446,9 @@ public class CustomerController {
                     cardPaymentMethod.pay(cart.getTotalPrice());
                     Order order = new Order(customerService.getNextOrderID(), branchID, cart.getOrderItems(), orderType, cart.getTotalPrice());
                     customerService.newOrder(order);
+                    ChangePage.changePage();
                     System.out.println("Order placed successfully.");
+                    orderView.displayOrderDetails(order);
                     System.out.println("Press <enter> to continue.");
                     sc.nextLine();
                 }
@@ -459,7 +463,9 @@ public class CustomerController {
                     onlinePaymentMethod.pay(cart.getTotalPrice());
                     Order order = new Order(customerService.getNextOrderID(), branchID, cart.getOrderItems(), orderType, cart.getTotalPrice());
                     customerService.newOrder(order);
+                    ChangePage.changePage();
                     System.out.println("Order placed successfully.");
+                    orderView.displayOrderDetails(order);
                     System.out.println("Press <enter> to continue.");
                     sc.nextLine();
                 }
