@@ -113,6 +113,7 @@ public class Cart {
      */
     public void displayItems() {
         for(OrderItem item : this.orderItems) {
+            System.out.println("--------------------------------------------------");
             System.out.println("Item Name: " + item.getItemName());
             System.out.println("Item Category: " + item.getCategory());
             System.out.println("Item Price: " + item.getPrice());
@@ -122,9 +123,9 @@ public class Cart {
                 System.out.println("Special Request: " + item.getSpecialRequest());
             }
             System.out.println("--------------------------------------------------");
-            calculateTotalPrice();
-            System.out.println("Total Price of Items: " + String.format("%.2f",this.totalPrice));
         }
+        calculateTotalPrice();
+        System.out.println("Total Price of Items: " + String.format("%.2f",this.totalPrice));
     }
 }
 
