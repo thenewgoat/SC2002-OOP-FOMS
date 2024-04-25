@@ -17,7 +17,7 @@ import services.SerialDataService;
 public class BranchMenuItemStorage {
     private static HashMap<Integer, BranchMenuItem> branchMenuItems = new HashMap<>();
     private static List<String> categories = new ArrayList<>();
-    private static final String menuFilename = "foms/data/branchMenuItems.ser";
+    private static final String menuFilename = "foms/data/menu.ser";
 
     // Static initializer to load the data when the class is first loaded
     static {
