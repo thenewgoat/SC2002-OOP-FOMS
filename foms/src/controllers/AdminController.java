@@ -379,6 +379,26 @@ public class AdminController {
         System.out.println("Select Branch to transfer to: ");
         int count = 1;
         Branch[] branches = adminService.getBranchList();
+        Branch curBranch =  adminService.findBranchById(staff.getBranchID());
+        Branch[] newBranches = new Branch[branches.length - 1]; // New array with one less element
+
+        int indexToRemove = -1;
+        for (int i = 0; i < branches.length; i++) {
+            if (curBranch == branches[i]) { // Find the index to remove
+                indexToRemove = i;
+                break;
+            }
+        }
+
+        if (indexToRemove != -1) {
+            for (int i = 0, j = 0; i < branches.length; i++) {
+                if (i != indexToRemove) {
+                    newBranches[j++] = branches[i]; // Copy all elements except the one to remove
+                }
+            }
+            branches = newBranches; // Optional: reassign the new array to the original reference
+        }
+
         for (Branch branch : branches) {
             System.out.println("\t" + count + ". " + branch.getName());
             count++;

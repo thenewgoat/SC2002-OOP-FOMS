@@ -107,11 +107,10 @@ public class AdminService implements IAdminService{
 
         try {
             StaffUpdateChecker.check(staffCount, managerCount, branch);
+            createAccount(staff);
             BranchUserStorage.add(staff);
-            UserStorage.add(staff);
-            if (createAccount(staff)){
-                System.out.println("Account created for staff.");
-            }
+            UserStorage.add(staff);          
+            System.out.println("Employee added successfully.");
             return true;
         } catch (TooFewManagersException e) {
             System.out.println("Addition blocked as there will be too many staff in the branch.");
@@ -159,9 +158,9 @@ public class AdminService implements IAdminService{
 
                 try {
                     StaffUpdateChecker.check(staffCount, managerCount, BranchStorage.get(staff.getBranchID()));
+                    deleteAccount(staff);
                     BranchUserStorage.remove(staff);
                     UserStorage.remove(staff);
-                    deleteAccount(staff);
                     return true;
                 } catch (TooFewManagersException e) {
                     System.out.println("Removal blocked as there will be insufficient managers in the branch.");
@@ -454,7 +453,7 @@ public class AdminService implements IAdminService{
     private boolean createAccount(BranchUser staff){
         for (BranchUser curStaff: getStaffList()){
             if (curStaff.getLoginID().equals(staff.getLoginID())){
-                return false;
+                throw new IllegalArgumentException("Staff already exists.");
             }
         }
         Account account = new Account(staff.getLoginID(), "password");
