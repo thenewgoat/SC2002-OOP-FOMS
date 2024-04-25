@@ -11,6 +11,8 @@ public class main {
 
         //dataPersistenceTest.test();
 
+        FileCleanupUtility.deleteSerFiles("foms/data"); //Resets before sessions.
+
         BranchUserStorage.load();
         BranchStorage.load();
         UserStorage.load();
@@ -22,6 +24,6 @@ public class main {
 
         Welcome.welcome();
 
-        //FileCleanupUtility.deleteSerFiles("foms/data"); //Resets between sessions.
+         
     }
 }
