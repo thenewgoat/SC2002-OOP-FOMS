@@ -11,7 +11,7 @@ import utils.exceptions.PasswordIncorrectException;
 
 
 /**
- * The AuthorisationService class provides methods for user authentication and login.
+ * The LoginService class provides methods for user authentication and login.
  * It implements the IAuthorisationService interface.
  */
 public class LoginService implements IAuthorisationService {

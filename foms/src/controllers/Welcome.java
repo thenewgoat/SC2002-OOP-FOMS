@@ -4,44 +4,22 @@ import java.util.Scanner;
 
 import models.Branch;
 import utils.ChangePage;
-import services.AdminService;
-import stores.BranchMenuItemStorage;
-import stores.BranchStorage;
-import stores.BranchUserStorage;
-import stores.OrderStorage;
-import stores.PasswordStorage;
-import stores.PaymentMethodStorage;
-import stores.UserStorage;
+import services.WelcomeService;
 
 public class Welcome {
+
+    private static WelcomeService welcomeService = new WelcomeService();
+    private static Scanner sc = new Scanner(System.in);
 
     public static void welcome() throws Exception {
         int choice;
 		int flag = 0;
 
-        AdminService adminService = new AdminService();
-
-		
-		
+        welcomeService.refresh();
         
 		try {
 			while (flag == 0) {
-                BranchUserStorage.save();
-                BranchStorage.save();
-                UserStorage.save();
-                OrderStorage.save();
-                PasswordStorage.save();
-                PaymentMethodStorage.save();
-                BranchMenuItemStorage.save();
-                BranchUserStorage.load();
-                BranchStorage.load();
-                UserStorage.load();
-                OrderStorage.load();
-                PasswordStorage.load();
-                PaymentMethodStorage.load();
-                BranchMenuItemStorage.load();
-
-
+                
                 ChangePage.changePage();
                 System.out.println("Welcome to the Fastfood ordering and management System (FOMS)! \n");
                 System.out.println("Please enter your choice to continue.");
@@ -50,7 +28,7 @@ public class Welcome {
                 System.out.println("\t3. Exit");
 				System.out.println("");
 				System.out.print("Enter your choice: ");
-				Scanner sc = new Scanner(System.in);
+
 				try {
                     choice = sc.nextInt();
                 } catch (Exception e) {
@@ -66,7 +44,7 @@ public class Welcome {
                         System.out.println("Select Branch: ");
                         int count = 1;
                         int branchID;
-                        Branch[] branches = adminService.getBranchList();
+                        Branch[] branches = welcomeService.getBranchList();
                         for (Branch branch : branches) {
                             System.out.println("\t" + count + ". " + branch.getName());
                             count++;
@@ -89,13 +67,7 @@ public class Welcome {
 						break;
 					case 3:
 						flag = 1;
-                        BranchUserStorage.save();
-                        BranchStorage.save();
-                        UserStorage.save();
-                        OrderStorage.save();
-                        PasswordStorage.save();
-                        PaymentMethodStorage.save();
-                        BranchMenuItemStorage.save();
+                        welcomeService.refresh();
 						break;
 					default:
 						System.out.println("Invalid Option. Press <enter> to try again.");
