@@ -42,7 +42,35 @@ public class StaffController {
             System.out.println("\t5. Log out");
             System.out.println();
             System.out.print("Enter your choice: ");
-            int choice = sc.nextInt();
+            int choice = -1;
+            do {
+                ChangePage.changePage();
+                System.out.println("Welcome " + user.getName() + "!");
+                System.out.println("What would you like to do?");
+                System.out.println();
+                System.out.println("\t1. Display pending orders");
+                System.out.println("\t2. View order details");
+                System.out.println("\t3. Process order");
+                System.out.println("\t4. Change password");
+                System.out.println("\t5. Log out");
+                System.out.println();
+                System.out.print("Enter your choice: ");
+                try {
+                    choice = sc.nextInt();
+                    if(choice < 1 || choice > 5){
+                        choice = -1;
+                        System.out.println("Invalid choice. Press <enter> to try again.");
+                        sc.nextLine();
+                        sc.nextLine();
+                    }
+                } catch (InputMismatchException ime) {
+                    System.out.println("Invalid input.");
+                    System.out.println("Press <enter> to try again.");
+                    sc.nextLine();
+                    sc.nextLine();
+                    continue;
+                }
+            } while (choice == -1);
             sc.nextLine();
             try {
                 switch (choice) {
@@ -70,7 +98,6 @@ public class StaffController {
                 start(user);
             }
         } while (exit == false);
-        // implement logout
     }
 
     private static void displayPendingOrders(int branchID) {
@@ -85,11 +112,13 @@ public class StaffController {
                     flag = false;
                 }
             }
-            System.out.println("Press <enter> to continue.");
-            sc.nextLine();
-            return;
+            if(flag == false){
+                System.out.println("Press <enter> to continue.");
+                sc.nextLine();
+                return;
+            }
         }
-        else if(orders.size() > 0 && flag == true){
+        if(orders.size() > 0 && flag == true){
             System.out.println("No pending orders.");
             System.out.println("Press <enter> to continue.");
             sc.nextLine();
