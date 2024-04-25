@@ -16,16 +16,12 @@ public class OrderDetailsView implements IOrderView{
         System.out.println("Order Type: " + order.getOrderType());
         System.out.println("Order Time: " + order.getOrderTime().format(formatter));
         System.out.println("Order Items:");
-        int counter = 1;
         for (OrderItem item : order.getOrderItems()) {
-            System.out.println("Item " + counter + ":");
             System.out.println("\tItem Name: " + item.getItemName() + ", Category: " + item.getCategory() +
                     ", Quantity: " + item.getQuantity() + ", Price: $" + item.getPrice() + ", SubTotal: $" + String.format("%.2f", item.getPrice() * item.getQuantity()));
             if(item.getSpecialRequest() != "none"){
-                System.out.println("\tSpecial Request: " + item.getSpecialRequest());
+                System.out.println("Special Request: " + item.getSpecialRequest());
             }
-            counter++;
-            System.out.println();
         }
         System.out.println("Total Price: " + order.getTotalPrice());
         System.out.println("--------------------------------------------------");
