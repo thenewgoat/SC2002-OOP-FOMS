@@ -1,5 +1,6 @@
 package services;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,5 +94,16 @@ public class CustomerService implements ICustomerService{
             }
         }
         return paymentMethods;
+    }
+
+    public LocalDateTime getReadyTime(int OrderID) {
+        Order order = OrderStorage.get(OrderID);
+        return order.getReadyTime();
+    }
+
+    public void setOrderStatus(int OrderID) {
+        Order order = OrderStorage.get(OrderID);
+        order.setOrderStatus(OrderStatus.CANCELLED);
+        OrderStorage.update(order);
     }
 }

@@ -1,4 +1,6 @@
 package controllers;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -95,6 +97,11 @@ public class CustomerController {
             sc.nextLine();
             sc.nextLine();
             return;
+        }
+        LocalDateTime currDateTime = LocalDateTime.now();
+        long seconds = Duration.between(order.getReadyTime(), currDateTime).getSeconds();
+        if(seconds > 60){
+            customerService.setOrderStatus(orderID);
         }
         orderView = new OrderStatusView();
         orderView.displayOrderDetails(order);

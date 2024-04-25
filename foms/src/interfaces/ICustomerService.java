@@ -1,5 +1,6 @@
 package interfaces;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import models.BranchMenuItem;
@@ -25,4 +26,8 @@ public interface ICustomerService {
     public BranchMenuItem getBranchMenuItem(int branchID, String itemName);
 
     public List<PaymentMethod> getPaymentMethods(String type);
+
+    public LocalDateTime getReadyTime(int OrderID);
+
+    public void setOrderStatus(int OrderID);
 }

@@ -3,9 +3,6 @@ package models;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import enums.OrderStatus;
 import enums.OrderType;
@@ -21,7 +18,7 @@ public class Order implements Serializable {
     private OrderStatus orderStatus;
     private OrderType orderType;
     private LocalDateTime orderTime;
-    private ScheduledExecutorService scheduler;
+    private LocalDateTime readyTime;
 
     /**
      * Constructs an Order object with the specified order ID, branch ID, order items, order type, and total price.
@@ -40,7 +37,7 @@ public class Order implements Serializable {
         this.orderStatus = OrderStatus.PREPARING;
         this.orderType = orderType;
         this.orderTime = LocalDateTime.now();
-        this.scheduler = Executors.newSingleThreadScheduledExecutor();
+        this.readyTime = null;
     }
 
         /**
@@ -108,18 +105,12 @@ public class Order implements Serializable {
     }
 
     /**
-     * Schedules the cancellation of the order after a specified delay.
-     * If the order status is READY, it will be changed to CANCELLED.
-     * The scheduler will be shutdown after the cancellation.
+     * Gets the time when the order is ready.
+     *
+     * @return the time when the order is ready
      */
-    private void scheduleCancellation() {
-        long delayUntilCancellation = 60; // Delay in seconds
-        this.scheduler.schedule(() -> {
-            if (orderStatus == OrderStatus.READY) {
-                orderStatus = OrderStatus.CANCELLED;
-                scheduler.shutdown();
-            }
-        }, delayUntilCancellation, TimeUnit.SECONDS);
+    public LocalDateTime getReadyTime() {
+        return readyTime;
     }
 
     /**
@@ -130,7 +121,7 @@ public class Order implements Serializable {
     public void setOrderStatus(OrderStatus status) {
         this.orderStatus = status;
         if (status == OrderStatus.READY) {
-            scheduleCancellation();
+            this.readyTime = LocalDateTime.now();
         }
     }
 
@@ -138,7 +129,6 @@ public class Order implements Serializable {
      * Completes the order.
      */
     public void completeOrder() {
-        scheduler.shutdownNow();
         if (orderStatus == OrderStatus.READY) {
             this.setOrderStatus(OrderStatus.COMPLETED);
         }
