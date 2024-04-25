@@ -291,15 +291,13 @@ public class ManagerController {
             categoryChoice = sc.nextInt();
             sc.nextLine();
         } catch (InputMismatchException e) {
-            System.out.println("Invalid choice. Press <enter> to try again.");
+            System.out.println("Invalid choice. Press <enter> to continue.");
             sc.nextLine();
-            addItemToMenu(branchID);
             return;
         }
         if(categoryChoice < 1 || categoryChoice > counter){
-            System.out.println("Invalid choice. Press <enter> to try again.");
+            System.out.println("Invalid choice. Press <enter> to continue.");
             sc.nextLine();
-            addItemToMenu(branchID);
             return;
         } else if (categoryChoice == counter) {
             System.out.print("Enter new category: ");
@@ -317,14 +315,12 @@ public class ManagerController {
                 throw new IllegalArgumentException();
             }
         } catch (InputMismatchException e) {
-            System.out.println("Invalid price. Press <enter> to try again.");
+            System.out.println("Invalid price. Press <enter> to continue.");
             sc.nextLine();
-            addItemToMenu(branchID);
             return;
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid price. Press <enter> to try again.");
+            System.out.println("Invalid price. Press <enter> to continue.");
             sc.nextLine();
-            addItemToMenu(branchID);
             return;
         }
         System.out.println("Enter item availability:");
@@ -336,14 +332,12 @@ public class ManagerController {
                 throw new IllegalArgumentException();
             }
         } catch (InputMismatchException e) {
-            System.out.println("Invalid Input. Press <enter> to try again.");
+            System.out.println("Invalid Input. Press <enter> to continue.");
             sc.nextLine();
-            addItemToMenu(branchID);
             return;
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid Input. Press <enter> to try again.");
+            System.out.println("Invalid Input. Press <enter> to continue.");
             sc.nextLine();
-            addItemToMenu(branchID);
             return;
         }
         System.out.println("Enter item description:");
@@ -415,17 +409,15 @@ public class ManagerController {
                     sc.nextLine();
                 } catch (InputMismatchException e) {
                     System.out.println("Invalid price.");
-                    System.out.println("Press <enter> to try again.");
+                    System.out.println("Press <enter> to continue.");
                     sc.nextLine();
-                    editItemPrice(branchID);
                     return;
                 }
                 sc.nextLine();
                 if(price < 0.0){
                     System.out.println("Invalid price.");
-                    System.out.println("Press <enter> to try again.");
+                    System.out.println("Press <enter> to continue.");
                     sc.nextLine();
-                    editItemPrice(branchID);
                     return;
                 }
                 item.setPrice(price);
@@ -462,17 +454,15 @@ public class ManagerController {
                     sc.nextLine();
                 } catch (InputMismatchException e) {
                     System.out.println("Invalid availability.");
-                    System.out.println("Press <enter> to try again.");
+                    System.out.println("Press <enter> to continue.");
                     sc.nextLine();
-                    editItemAvailability(branchID);
                     return;
                 }
                 sc.nextLine();
                 if(availability < 0){
                     System.out.println("Invalid availability.");
-                    System.out.println("Press <enter> to try again.");
+                    System.out.println("Press <enter> to continue.");
                     sc.nextLine();
-                    editItemAvailability(branchID);
                     return;
                 }
                 item.setAvailability(availability);
