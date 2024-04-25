@@ -31,9 +31,6 @@ public class OrderStorage {
             if (orders != null){
                 if (!orders.containsKey(order.getOrderID())) {
                     orders.put(order.getOrderID(), order);
-                    System.out.println("Order with ID " + order.getOrderID() + " added.");
-                    Scanner sc = new Scanner(System.in);
-                    sc.nextLine();
                 } else {
                     throw new IllegalArgumentException("Order with ID " + order.getOrderID() + " already exists.");
                 }
