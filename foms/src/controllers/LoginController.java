@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 import utils.exceptions.AccountNotFoundException;
 import utils.exceptions.PageBackException;
-import utils.exceptions.PasswordIncorrectException;
 import utils.exceptions.PasswordMismatchException;
 import utils.exceptions.PasswordValidationException;
 
