@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import models.Branch;
@@ -50,7 +51,14 @@ public class Welcome {
                             count++;
                         }
                         System.out.print("Enter your choice: ");
-                        choice = sc.nextInt();
+                        try {
+                            choice = sc.nextInt();
+                        } catch (InputMismatchException ime) {
+                            System.out.println("Invalid input. Press <enter> to try again.");
+                            sc.nextLine();
+                            sc.nextLine();
+                            continue;
+                        }
                         sc.nextLine();
                         if (choice > 0 && choice <= branches.length) {
                             Branch newBranch = branches[choice - 1];
