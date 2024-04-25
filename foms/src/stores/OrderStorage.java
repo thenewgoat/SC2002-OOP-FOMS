@@ -2,6 +2,7 @@ package stores;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Scanner;
 
 import models.Order;
 import services.SerialDataService;
@@ -27,11 +28,17 @@ public class OrderStorage {
      */
     public static void add(Order order) {
         if (order != null) {
-            if (!orders.containsKey(order.getOrderID())) {
-                orders.put(order.getOrderID(), order);
-            } else {
-                throw new IllegalArgumentException("Order with ID " + order.getOrderID() + " already exists.");
+            if (orders != null){
+                if (!orders.containsKey(order.getOrderID())) {
+                    orders.put(order.getOrderID(), order);
+                    System.out.println("Order with ID " + order.getOrderID() + " added.");
+                    Scanner sc = new Scanner(System.in);
+                    sc.nextLine();
+                } else {
+                    throw new IllegalArgumentException("Order with ID " + order.getOrderID() + " already exists.");
+                }
             }
+            else orders.put(order.getOrderID(), order);
         } else {
             throw new IllegalArgumentException("Parameter must be a non-null Order.");
         }
@@ -105,6 +112,9 @@ public class OrderStorage {
         if (file.exists()) {
             SerialDataService serialDataService = new SerialDataService();
             orders = serialDataService.importOrderData();
+            if (orders == null){
+                orders = new HashMap<>();
+            }
         } else {
             orders = new HashMap<>();
             System.out.println("Order storage file not found. Creating new order storage.");
