@@ -668,7 +668,7 @@ public class AdminController {
             sc.nextLine();
             throw new PageBackException();
         }
-        System.out.print("Select Branch: ");
+        System.out.println("Select Branch: ");
         int count = 1;
         Branch[] branches = adminService.getBranchList();
         for (Branch branch : branches){
@@ -707,7 +707,14 @@ public class AdminController {
         }
         
         BranchUser staff = new BranchUser(name, staffLoginId, role, gender, age, branchID);
-        adminService.addStaff(staff);
+        if (adminService.addStaff(staff)){
+            System.out.println("Staff added successfully. Press <enter> to Continue.");
+            sc.nextLine();
+        } else {
+            System.out.println("Staff could not be added. Press <enter> to Continue.");
+            sc.nextLine();
+        }
+
     }
 
     private static void getStaffList() throws PageBackException {
