@@ -15,6 +15,7 @@ import utils.exceptions.AccountNotFoundException;
 import utils.exceptions.PageBackException;
 import utils.exceptions.PasswordMismatchException;
 import utils.exceptions.PasswordValidationException;
+import views.OrderDetailsView;
 
 public class StaffController {
 
@@ -72,6 +73,7 @@ public class StaffController {
     }
 
     private static void displayPendingOrders(int branchID) {
+        orderView = new OrderDetailsView();
         List<Order> orders = staffService.getOrders(branchID);
         if (orders != null && orders.size() > 0){
             for (Order order : orders) {

@@ -2,7 +2,6 @@ package models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -44,6 +43,34 @@ public class Order implements Serializable {
         this.scheduler = Executors.newSingleThreadScheduledExecutor();
     }
 
+        /**
+     * Gets the ID of the order.
+     *
+     * @return the ID of the order
+     */
+    public int getOrderID() {
+        return this.orderID;
+    }
+
+    /**
+     * Gets the ID of the branch.
+     *
+     * @return the ID of the branch
+     */
+
+    public int getBranchID() {
+        return this.branchID;
+    }
+
+    /**
+     * Gets the list of order items.
+     *
+     * @return the list of order items
+     */
+    public List<OrderItem> getOrderItems() {
+        return this.orderItems;
+    }
+
     /**
      * Gets the total price of the order.
      *
@@ -51,6 +78,33 @@ public class Order implements Serializable {
      */
     public double getTotalPrice() {
         return totalPrice;
+    }
+
+    /**
+     * Gets the status of the order.
+     *
+     * @return the status of the order
+     */
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    /**
+     * Gets the type of the order.
+     *
+     * @return the type of the order
+     */
+    public OrderType getOrderType() {
+        return orderType;
+    }
+
+    /**
+     * Gets the time of the order.
+     *
+     * @return the time of the order
+     */
+    public LocalDateTime getOrderTime() {
+        return orderTime;
     }
 
     /**
@@ -88,52 +142,5 @@ public class Order implements Serializable {
         if (orderStatus == OrderStatus.READY) {
             this.setOrderStatus(OrderStatus.COMPLETED);
         }
-    }
-
-    /**
-     * Gets the status of the order.
-     *
-     * @return the status of the order
-     */
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
-    }
-
-    /**
-     * Displays the details of the order.
-     */
-    public void displayOrderDetails() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        System.out.println("Order ID: " + orderID);
-        System.out.println("Branch ID: " + branchID);
-        System.out.println("Order Status: " + orderStatus);
-        System.out.println("Order Type: " + orderType);
-        System.out.println("Order Time: " + orderTime.format(formatter));
-        System.out.println("Order Items:");
-        for (OrderItem item : orderItems) {
-            System.out.println("\tItem Name: " + item.getItemName() + ", Category: " + item.getCategory() +
-                    ", Quantity: " + item.getQuantity() + ", Price: $" + item.getPrice() + ", SubTotal: $" + item.getPrice() * item.getQuantity());
-        }
-        System.out.println("Total Price: " + totalPrice);
-        System.out.println("--------------------------------------------------");
-    }
-
-    /**
-     * Gets the ID of the order.
-     *
-     * @return the ID of the order
-     */
-    public int getOrderID() {
-        return this.orderID;
-    }
-
-    /**
-     * Gets the ID of the branch.
-     *
-     * @return the ID of the branch
-     */
-
-    public int getBranchID() {
-        return this.branchID;
     }
 }

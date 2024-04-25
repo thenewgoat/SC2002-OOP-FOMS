@@ -8,6 +8,7 @@ public class OrderItem {
     private String category;
     private int quantity;
     private double price;
+    private String specialRequest;
 
     /**
      * Constructs an OrderItem object with the specified item name, category, quantity, and price.
@@ -18,7 +19,7 @@ public class OrderItem {
      * @param price     the price of the item
      * @throws IllegalArgumentException if the item name is null or empty, or if the quantity or price is less than or equal to 0
      */
-    public OrderItem(String itemName, String category, int quantity, double price) {
+    public OrderItem(String itemName, String category, int quantity, double price, String specialRequest) {
         if (itemName == null || itemName.trim().isEmpty()) {
             throw new IllegalArgumentException("Item name cannot be null or empty.");
         }
@@ -32,6 +33,7 @@ public class OrderItem {
         this.category = category;
         this.quantity = quantity;
         this.price = price;
+        this.specialRequest = specialRequest;
     }
 
     /**
@@ -71,6 +73,15 @@ public class OrderItem {
     }
 
     /**
+     * Returns the special request of the item.
+     *
+     * @return the special request of the item
+     */
+    public String getSpecialRequest() {
+        return specialRequest;
+    }
+
+    /**
      * Sets the quantity of the item.
      *
      * @param quantity the new quantity of the item
@@ -78,4 +89,6 @@ public class OrderItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    
 }

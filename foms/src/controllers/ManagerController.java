@@ -22,6 +22,7 @@ import utils.exceptions.PasswordMismatchException;
 import utils.exceptions.PasswordValidationException;
 import views.BranchMenuItemView;
 import views.BranchUserView;
+import views.OrderDetailsView;
 
 public class ManagerController {
 
@@ -98,6 +99,7 @@ public class ManagerController {
     }
 
     private static void displayPendingOrders(int branchID) {
+        orderView = new OrderDetailsView();
         List<Order> orders = managerService.getOrders(branchID);
         if (orders != null && orders.size() > 0){
             for (Order order : orders) {
@@ -196,6 +198,12 @@ public class ManagerController {
             System.out.println(" =============== Staff ===============");
             for (BranchUser user : users) {
                 if(user.getRole().equals(Role.STAFF)){
+                    branchUserView.displayBranchUserDetails(user, branchName);
+                }
+            }
+            System.out.println(" ============== Managers ==============");
+            for (BranchUser user : users) {
+                if(user.getRole().equals(Role.BRANCHMANAGER)){
                     branchUserView.displayBranchUserDetails(user, branchName);
                 }
             }

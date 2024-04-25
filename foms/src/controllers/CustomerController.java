@@ -283,7 +283,25 @@ public class CustomerController {
         }
         item.setAvailability(item.getAvailability()-quantity);
         customerService.updateBranchMenuItem(item);
-        OrderItem orderItem = new OrderItem(item.getName(), item.getCategory(), quantity, item.getPrice());
+        System.out.println("Do you have any Special Requests?");
+        System.out.println("\t1. Yes");
+        System.out.println("\t2. No");
+        int specialRequestChoice;
+        try {
+            specialRequestChoice = sc.nextInt();
+            sc.nextLine();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to continue.");
+            sc.nextLine();
+            sc.nextLine();
+            return;
+        }
+        String specialRequest = "none";
+        if(specialRequestChoice == 1){
+            System.out.println("Please enter your special request: ");
+            specialRequest = sc.nextLine();
+        }
+        OrderItem orderItem = new OrderItem(item.getName(), item.getCategory(), quantity, item.getPrice(), specialRequest);
         cart.addItem(orderItem);
         System.out.println("Item added to cart successfully.");
         System.out.println("Press <enter> to continue.");
