@@ -7,9 +7,11 @@ import enums.OrderStatus;
 import interfaces.ICustomerService;
 import models.BranchMenuItem;
 import models.Order;
+import models.PaymentMethod;
 import stores.BranchMenuItemStorage;
 import stores.BranchStorage;
 import stores.OrderStorage;
+import stores.PaymentMethodStorage;
 
 public class CustomerService implements ICustomerService{
     
@@ -80,5 +82,16 @@ public class CustomerService implements ICustomerService{
             }
         }
         return null;
+    }
+
+    public List<PaymentMethod> getPaymentMethods(String type) {
+        List<PaymentMethod> paymentMethods = new ArrayList<>();
+        PaymentMethod[] methods = PaymentMethodStorage.getAll();
+        for (PaymentMethod method : methods) {
+            if(method.getType().equals(type)){
+                paymentMethods.add(method);
+            }
+        }
+        return paymentMethods;
     }
 }

@@ -31,11 +31,12 @@ public class Cart {
     /**
      * Calculates the total price of all items in the cart.
      * The total price is stored in the totalPrice field.
+     * The total price is rounded to two decimal places.
      */
     public void calculateTotalPrice() {
         totalPrice = 0; 
         for (OrderItem item : orderItems) {
-            totalPrice += item.getPrice() * item.getQuantity();
+            totalPrice += Math.round((item.getPrice() * item.getQuantity()) * 100.0) / 100.0;
         }
     }
 
@@ -117,6 +118,9 @@ public class Cart {
             System.out.println("Item Price: " + item.getPrice());
             System.out.println("Item Quantity: " + item.getQuantity());
             System.out.println("Price of " + item.getQuantity() + " " + item.getItemName() + " is " + String.format("%.2f", item.getPrice() * item.getQuantity()));
+            if(item.getSpecialRequest() != "none"){
+                System.out.println("Special Request: " + item.getSpecialRequest());
+            }
             System.out.println("--------------------------------------------------");
             calculateTotalPrice();
             System.out.println("Total Price of Items: " + String.format("%.2f",this.totalPrice));

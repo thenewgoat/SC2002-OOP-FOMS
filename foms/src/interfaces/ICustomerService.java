@@ -4,6 +4,7 @@ import java.util.List;
 
 import models.BranchMenuItem;
 import models.Order;
+import models.PaymentMethod;
 
 public interface ICustomerService {
 
@@ -22,4 +23,6 @@ public interface ICustomerService {
     public void updateBranchMenuItem(BranchMenuItem item);
 
     public BranchMenuItem getBranchMenuItem(int branchID, String itemName);
+
+    public List<PaymentMethod> getPaymentMethods(String type);
 }

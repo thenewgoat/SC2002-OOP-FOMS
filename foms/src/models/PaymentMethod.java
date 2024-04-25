@@ -26,7 +26,7 @@ public class PaymentMethod implements Serializable {
      * @param amount the amount to be paid
      */
     public void pay(double amount) {
-        System.out.println("Paying " + amount + " using " + paymentMethod + ".");
+        System.out.println("Paying " + amount + " using " + paymentMethod + " " + type +".");
         System.out.println("Processing payment...");
         try {
             Thread.sleep(3000);
