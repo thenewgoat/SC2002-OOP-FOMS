@@ -110,15 +110,19 @@ public class ManagerController {
                     flag = false;
                 }
             }
-            System.out.println("Press <enter> to continue.");
-            sc.nextLine();
-            return;
-        } else if(orders.size() > 0 && flag == true){
+            if(flag == false){
+                System.out.println("Press <enter> to continue.");
+                sc.nextLine();
+                return;
+            }
+        }
+        if(orders.size() > 0 && flag == true){
             System.out.println("No pending orders.");
             System.out.println("Press <enter> to continue.");
             sc.nextLine();
             return;
-        } else {
+        }
+        else {
             System.out.println("No pending orders.");
             System.out.println("Press <enter> to continue.");
             sc.nextLine();
