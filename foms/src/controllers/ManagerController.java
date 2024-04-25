@@ -293,6 +293,7 @@ public class ManagerController {
         } catch (InputMismatchException e) {
             System.out.println("Invalid choice. Press <enter> to continue.");
             sc.nextLine();
+            sc.nextLine();
             return;
         }
         if(categoryChoice < 1 || categoryChoice > counter){
@@ -317,9 +318,11 @@ public class ManagerController {
         } catch (InputMismatchException e) {
             System.out.println("Invalid price. Press <enter> to continue.");
             sc.nextLine();
+            sc.nextLine();
             return;
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid price. Press <enter> to continue.");
+            sc.nextLine();
             sc.nextLine();
             return;
         }
@@ -334,9 +337,11 @@ public class ManagerController {
         } catch (InputMismatchException e) {
             System.out.println("Invalid Input. Press <enter> to continue.");
             sc.nextLine();
+            sc.nextLine();
             return;
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid Input. Press <enter> to continue.");
+            sc.nextLine();
             sc.nextLine();
             return;
         }
@@ -406,10 +411,10 @@ public class ManagerController {
                 double price;
                 try {
                     price = sc.nextDouble();
-                    sc.nextLine();
                 } catch (InputMismatchException e) {
                     System.out.println("Invalid price.");
                     System.out.println("Press <enter> to continue.");
+                    sc.nextLine();
                     sc.nextLine();
                     return;
                 }
@@ -451,10 +456,10 @@ public class ManagerController {
                 int availability;
                 try {
                     availability = sc.nextInt();
-                    sc.nextLine();
                 } catch (InputMismatchException e) {
                     System.out.println("Invalid availability.");
                     System.out.println("Press <enter> to continue.");
+                    sc.nextLine();
                     sc.nextLine();
                     return;
                 }

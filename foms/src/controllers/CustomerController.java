@@ -237,6 +237,7 @@ public class CustomerController {
         int choice;
         try {
             choice = sc.nextInt();
+            sc.nextLine();
         } catch (InputMismatchException ime) {
             System.out.println("Invalid input. Press <enter> to continue.");
             sc.nextLine();
@@ -258,6 +259,7 @@ public class CustomerController {
         int quantity;
         try {
             quantity = sc.nextInt();
+            sc.nextLine();
         } catch (InputMismatchException ime) {
             System.out.println("Invalid input. Press <enter> to continue.");
             sc.nextLine();
@@ -316,6 +318,7 @@ public class CustomerController {
         int quantity;
         try {
             quantity = sc.nextInt();
+            sc.nextLine();
         } catch (InputMismatchException ime) {
             System.out.println("Invalid input. Press <enter> to continue.");
             sc.nextLine();
