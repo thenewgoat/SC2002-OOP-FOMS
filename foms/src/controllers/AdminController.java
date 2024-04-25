@@ -866,8 +866,7 @@ public class AdminController {
             }
             break;
             default:
-                System.out.println("Invalid choice.");
-                System.out.println("Press Enter to go back to the previous page.");
+                System.out.println("Invalid choice. Press <enter> to go back to the previous page.");
                 sc.nextLine();
                 throw new PageBackException();       
         }            
