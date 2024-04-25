@@ -53,7 +53,16 @@ public class ManagerController {
             System.out.println("\t7. Log out");
             System.out.println();
             System.out.print("Enter your choice: ");
-            int choice = sc.nextInt();
+            int choice;
+            try {
+                choice = sc.nextInt();
+            } catch (InputMismatchException ime) {
+                System.out.println("Invalid input. Press <enter> to continue");
+                sc.nextLine();
+                sc.nextLine();
+                start(user);
+                return;
+            }
             sc.nextLine();
             try {
                 switch (choice) {
@@ -109,7 +118,15 @@ public class ManagerController {
 
     private static void viewOrderDetails() {
         System.out.print("Enter order ID: ");
-        int orderID = sc.nextInt();
+        int orderID;
+        try {
+            orderID = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to return to previous page.");
+            sc.nextLine();
+            sc.nextLine();
+            return;
+        }
         sc.nextLine();
         Order order = managerService.getOrder(orderID);
         if (order == null) {
@@ -126,7 +143,15 @@ public class ManagerController {
 
     private static void processOrder() {
         System.out.print("Enter order ID: ");
-        int orderID = sc.nextInt();
+        int orderID;
+        try {
+            orderID = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to return to previous page.");
+            sc.nextLine();
+            sc.nextLine();
+            return;
+        }
         sc.nextLine();
         Boolean success = managerService.updateOrderStatus(orderID);
         if (success) {
@@ -201,7 +226,15 @@ public class ManagerController {
             System.out.println("\t7. Back");
 
             System.out.print("Please enter your choice: ");
-            int choice = sc.nextInt();
+            int choice;
+            try {
+                choice = sc.nextInt();
+            } catch (InputMismatchException ime) {
+                System.out.println("Invalid input. Press <enter> to return to previous page.");
+                sc.nextLine();
+                sc.nextLine();
+                return;
+            }
             sc.nextLine();
             switch (choice) {
                 case 1:
@@ -227,6 +260,8 @@ public class ManagerController {
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
+                    System.out.println("Press <enter> to continue.");
+                    sc.nextLine();
                     break;
             }
         } while (exit == false);
@@ -251,12 +286,21 @@ public class ManagerController {
         int counter = managerService.displayMenuCategories();
         System.out.println(counter + ". Add new category");
         System.out.print("Enter your choice: ");
-        int categoryChoice = sc.nextInt();
+        int categoryChoice;
+        try {
+            categoryChoice = sc.nextInt();
+            sc.nextLine();
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid choice. Press <enter> to try again.");
+            sc.nextLine();
+            addItemToMenu(branchID);
+            return;
+        }
         sc.nextLine();
         if(categoryChoice < 1 || categoryChoice > counter){
-            System.out.println("Invalid choice. Please try again.");
-            System.out.println("Press <enter> to continue.");
+            System.out.println("Invalid choice. Press <enter> to try again.");
             sc.nextLine();
+            addItemToMenu(branchID);
             return;
         } else if (categoryChoice == counter) {
             System.out.print("Enter new category: ");
@@ -274,12 +318,14 @@ public class ManagerController {
                 throw new IllegalArgumentException();
             }
         } catch (InputMismatchException e) {
-            System.out.println("Invalid price. Press Enter to continue.");
+            System.out.println("Invalid price. Press <enter> to try again.");
             sc.nextLine();
+            addItemToMenu(branchID);
             return;
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid price. Press Enter to continue.");
+            System.out.println("Invalid price. Press <enter> to try again.");
             sc.nextLine();
+            addItemToMenu(branchID);
             return;
         }
         System.out.println("Enter item availability:");
@@ -291,12 +337,14 @@ public class ManagerController {
                 throw new IllegalArgumentException();
             }
         } catch (InputMismatchException e) {
-            System.out.println("Invalid Input. Press Enter to continue.");
+            System.out.println("Invalid Input. Press <enter> to try again.");
             sc.nextLine();
+            addItemToMenu(branchID);
             return;
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid Input. Press Enter to continue.");
+            System.out.println("Invalid Input. Press <enter> to try again.");
             sc.nextLine();
+            addItemToMenu(branchID);
             return;
         }
         System.out.println("Enter item description:");
@@ -362,12 +410,23 @@ public class ManagerController {
         for (BranchMenuItem item : items) {
             if (item.getName().equals(name)) {
                 System.out.print("Enter new price: ");
-                double price = sc.nextDouble();
+                double price;
+                try {
+                    price = sc.nextDouble();
+                    sc.nextLine();
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid price.");
+                    System.out.println("Press <enter> to try again.");
+                    sc.nextLine();
+                    editItemPrice(branchID);
+                    return;
+                }
                 sc.nextLine();
                 if(price < 0.0){
                     System.out.println("Invalid price.");
-                    System.out.println("Press <enter> to continue.");
+                    System.out.println("Press <enter> to try again.");
                     sc.nextLine();
+                    editItemPrice(branchID);
                     return;
                 }
                 item.setPrice(price);
@@ -398,12 +457,23 @@ public class ManagerController {
         for (BranchMenuItem item : items) {
             if (item.getName().equals(name)) {
                 System.out.print("Enter new availability: ");
-                int availability = sc.nextInt();
+                int availability;
+                try {
+                    availability = sc.nextInt();
+                    sc.nextLine();
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid availability.");
+                    System.out.println("Press <enter> to try again.");
+                    sc.nextLine();
+                    editItemAvailability(branchID);
+                    return;
+                }
                 sc.nextLine();
                 if(availability < 0){
                     System.out.println("Invalid availability.");
-                    System.out.println("Press <enter> to continue.");
+                    System.out.println("Press <enter> to try again.");
                     sc.nextLine();
+                    editItemAvailability(branchID);
                     return;
                 }
                 item.setAvailability(availability);
