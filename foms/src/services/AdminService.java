@@ -271,16 +271,22 @@ public class AdminService implements IAdminService{
         // Perform checks for the old branch after removing transferred staff
         try {
             StaffUpdateChecker.check(oldStaffCount - transferringStaff, oldManagerCount - transferringManagers, oldBranch);
-        } catch (TooFewManagersException | TooManyManagersException e) {
-            System.out.println(e.getMessage());
+        } catch (TooFewManagersException e){
+            System.out.println("Too Few Managers in old branch! Transfer failed.");
+            return false;
+        } catch (TooManyManagersException e){
+            System.out.println("Too Many Managers in old branch! Transfer failed.");
             return false;
         }
     
         // Perform checks for the new branch after adding transferred staff
         try {
             StaffUpdateChecker.check(newStaffCount + transferringStaff, newManagerCount + transferringManagers, newBranch);
-        } catch (TooFewManagersException | TooManyManagersException e) {
-            System.out.println(e.getMessage());
+        } catch (TooFewManagersException e){
+            System.out.println("Too Few Managers in new branch! Transfer failed.");
+            return false;
+        } catch (TooManyManagersException e){
+            System.out.println("Too Many Managers in new branch! Transfer failed.");
             return false;
         }
     
