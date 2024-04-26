@@ -24,6 +24,8 @@ import views.OrderDetailsView;
 /**
  * This class is used to test the data persistence functionality of the FOMS application.
  * It retrieves and displays data from various storage classes.
+ * 
+ * <p> Not currently in use, but can be used to test the data persistence functionality of the FOMS application.
  */
 public class dataPersistenceTest {
 

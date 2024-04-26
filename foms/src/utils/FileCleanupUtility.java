@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 
 /**
- * Utility class for cleaning up .ser files in a specified directory.
+ * Utility class for cleaning up .ser files in a specified directory. Not currently in use.
  */
 public class FileCleanupUtility {
 
