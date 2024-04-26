@@ -8,11 +8,11 @@ UML Class Diagram | Report | Java Docs
 # Team Members
 | Name               | GitHub Account      | Matriculation No.   |
 | ------------------ | ------------------- | ------------------- |
-| Sally Ngui Yu Ying |                     | U2222782A           | 
-| Shingamu Sai Ajay  |                     | U2221941J           | 
-| Zhang Xinyang      |                     | U2221842C           |
-| Shen Jia Cheng     |                     | U2220979E           |
-| Sharanya Basu      |                     | U2221402A           |
+| Sally Ngui Yu Ying | [acrylicruler](https://github.com/acrylicruler)   | U2222782A           | 
+| Shingamu Sai Ajay  | [Sai-Ajay](https://github.com/Sai-Ajay)           | U2221941J           | 
+| Zhang Xinyang      | [thenewgoat](https://github.com/thenewgoat)       | U2221842C           |
+| Shen Jia Cheng     | [shenjc01](https://github.com/shenjc01)           | U2220979E           |
+| Sharanya Basu      | [SHAR0094]https://github.com/SHAR0094             | U2221402A           |
 
 # FOMS Set-Up Instructions
 ## Compiling and Running the Code
