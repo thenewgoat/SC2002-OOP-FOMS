@@ -65,9 +65,34 @@ Follow the steps below to generate JavaDocs using the terminal:
 
 Congratulations, you have successfully created and viewed the JavaDocs.
 
+## Accessing Data Files
+The data files used for system initialisation can be found in foms/data. 3 CSV files are used for initialisation:
+   1. staff_list.csv
+      Contains full list of all staff, managers and admin.
+      
+   2. branch_list.csv
+      Contains full list of all initial branches.
+      
+   3. menu_list.csv
+      Contains full list of all initial menu items and the respective branches where they can be found.
 
+## Usage
+### Login Credentials
+In this section you can find some of the login credentials for users with different roles. The full list of usernames is available in foms/data/staff_list.csv, and the password defaults to 'password' for first login.
 
+```
+# Staff
+USERID: MaryL
+PASSWORD: password
 
+# Manager
+USERID: TomC
+PASSWORD: password
+
+# Admin
+USERID: boss
+PASSWORD: password
+```
 
 
 
