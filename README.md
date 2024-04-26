@@ -6,13 +6,13 @@ The Fastfood Ordering and Management System (FOMS) Application enhances fast foo
 [UML Class Diagram](https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0/tree/main/foms/umldiagram) | Report | Java Docs
 
 ## Team Members
-| Name               | GitHub Account      | Matriculation No.   |
-| ------------------ | ------------------- | ------------------- |
-| Sally Ngui Yu Ying | [acrylicruler](https://github.com/acrylicruler)   | U2222782A           | 
-| Shingamu Sai Ajay  | [Sai-Ajay](https://github.com/Sai-Ajay)           | U2221941J           | 
-| Zhang Xinyang      | [thenewgoat](https://github.com/thenewgoat)       | U2221842C           |
-| Shen Jia Cheng     | [shenjc01](https://github.com/shenjc01)           | U2220979E           |
-| Sharanya Basu      | [SHAR0094](https://github.com/SHAR0094)             | U2221402A           |
+| Name               | GitHub Account      |
+| ------------------ | ------------------- |
+| Sally Ngui Yu Ying | [acrylicruler](https://github.com/acrylicruler)   |
+| Shingamu Sai Ajay  | [Sai-Ajay](https://github.com/Sai-Ajay)           |
+| Zhang Xinyang      | [thenewgoat](https://github.com/thenewgoat)       |
+| Shen Jia Cheng     | [shenjc01](https://github.com/shenjc01)           |
+| Sharanya Basu      | [SHAR0094](https://github.com/SHAR0094)             |
 
 ## FOMS Set-Up Instructions
 ### Compiling and Running the Code
