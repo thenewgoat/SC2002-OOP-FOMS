@@ -18,14 +18,14 @@ public interface IFileDataService {
     /**
      * Imports order data from a file and returns it as a HashMap.
      *
-     * @return the imported order data as a HashMap<Integer, Order>
+     * @return the imported order data as a HashMap of Order objects
      */
     public HashMap<Integer, Order> importOrderData();
 
     /**
      * Exports order data to a file.
      *
-     * @param orderData the order data to be exported as a HashMap<Integer, Order>
+     * @param orderData the order data to be exported as a HashMap of Order objects
      * @return true if the export is successful, false otherwise
      */
     public boolean exportOrderData(HashMap<Integer, Order> orderData);
@@ -33,14 +33,14 @@ public interface IFileDataService {
     /**
      * Imports user data from a file and returns it as a HashMap.
      *
-     * @return the imported user data as a HashMap<String, User>
+     * @return the imported user data as a HashMap of User objects
      */
     public HashMap<String, User> importUserData();
 
     /**
      * Exports user data to a file.
      *
-     * @param userData the user data to be exported as a HashMap<String, User>
+     * @param userData the user data to be exported as a HashMap of User objects
      * @return true if the export is successful, false otherwise
      */
     public boolean exportUserData(HashMap<String, User> userData);
@@ -48,14 +48,14 @@ public interface IFileDataService {
     /**
      * Imports branch user data from a file and returns it as a HashMap.
      *
-     * @return the imported branch user data as a HashMap<String, BranchUser>
+     * @return the imported branch user data as a HashMap of BranchUser objects
      */
     public HashMap<String, BranchUser> importBranchUserData();
 
     /**
      * Exports branch user data to a file.
      *
-     * @param branchUserData the branch user data to be exported as a HashMap<String, BranchUser>
+     * @param branchUserData the branch user data to be exported as a HashMap of BranchUser objects
      * @return true if the export is successful, false otherwise
      */
     public boolean exportBranchUserData(HashMap<String, BranchUser> branchUserData);
@@ -63,14 +63,14 @@ public interface IFileDataService {
     /**
      * Imports menu data from a file and returns it as a HashMap.
      *
-     * @return the imported menu data as a HashMap<Integer, BranchMenuItem>
+     * @return the imported menu data as a HashMap of BranchMenuItem objects
      */
     public HashMap<Integer, BranchMenuItem> importMenuData();
 
     /**
      * Exports menu data to a file.
      *
-     * @param menuData the menu data to be exported as a HashMap<Integer, BranchMenuItem>
+     * @param menuData the menu data to be exported as a HashMap of BranchMenuItem objects
      * @return true if the export is successful, false otherwise
      */
     public boolean exportMenuData(HashMap<Integer, BranchMenuItem> menuData);
@@ -78,14 +78,14 @@ public interface IFileDataService {
     /**
      * Imports payment method data from a file and returns it as a HashMap.
      *
-     * @return the imported payment method data as a HashMap<String, PaymentMethod>
+     * @return the imported payment method data as a HashMap of PaymentMethod objects
      */
     public HashMap<String, PaymentMethod> importPaymentMethodData();
 
     /**
      * Exports payment method data to a file.
      *
-     * @param paymentMethodData the payment method data to be exported as a HashMap<String, PaymentMethod>
+     * @param paymentMethodData the payment method data to be exported as a HashMap of PaymentMethod objects
      * @return true if the export is successful, false otherwise
      */
     public boolean exportPaymentMethodData(HashMap<String, PaymentMethod> paymentMethodData);
@@ -93,14 +93,14 @@ public interface IFileDataService {
     /**
      * Imports branch data from a file and returns it as a HashMap.
      *
-     * @return the imported branch data as a HashMap<Integer, Branch>
+     * @return the imported branch data as a HashMap of Branch objects
      */
     public HashMap<Integer, Branch> importBranchData();
 
     /**
      * Exports branch data to a file.
      *
-     * @param branchData the branch data to be exported as a HashMap<Integer, Branch>
+     * @param branchData the branch data to be exported as a HashMap of Branch objects
      * @return true if the export is successful, false otherwise
      */
     public boolean exportBranchData(HashMap<Integer, Branch> branchData);
@@ -108,14 +108,14 @@ public interface IFileDataService {
     /**
      * Imports password data from a file and returns it as a HashMap.
      *
-     * @return the imported password data as a HashMap<String, Account>
+     * @return the imported password data as a HashMap of Account objects
      */
     public HashMap<String, Account> importPasswordData();
 
     /**
      * Exports password data to a file.
      *
-     * @param passwordData the password data to be exported as a HashMap<String, Account>
+     * @param passwordData the password data to be exported as a HashMap of Account objects
      * @return true if the export is successful, false otherwise
      */
     public boolean exportPasswordData(HashMap<String, Account> passwordData);
