@@ -4,6 +4,8 @@ import services.LoginService;
 import models.Account;
 import models.User;
 import java.util.Scanner;
+
+import interfaces.IAuthorisationService;
 import utils.exceptions.AccountNotFoundException;
 import utils.exceptions.PageBackException;
 import utils.exceptions.PasswordMismatchException;
@@ -17,6 +19,11 @@ public class LoginController {
      * The scanner to be used for user input.
      */
     private static final Scanner scanner = new Scanner(System.in);
+
+    /**
+     * The LoginService instance to be used for login operations.
+     */
+    protected static final IAuthorisationService loginService = new LoginService();
 
     /**
      * Initiates the login process. Continuously prompts for user credentials until login succeeds or the user decides to exit.
