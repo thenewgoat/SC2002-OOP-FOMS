@@ -36,11 +36,12 @@ public interface ICustomerService {
      */
     public List<BranchMenuItem> getBranchMenuItemList(int BranchID);
 
+    
     /**
-     * Allows a customer to collect a ready order by marking it as completed.
+     * Collects an order with the specified OrderID.
      * 
-     * @param CustomerID The unique identifier of the customer.
-     * @return A list of Order objects.
+     * @param OrderID the ID of the order to be collected
+     * @return true if the order was successfully collected, false otherwise
      */
     public Boolean collectOrder(int OrderID);
 
