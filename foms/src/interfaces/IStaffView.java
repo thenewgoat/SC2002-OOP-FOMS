@@ -1,4 +1,4 @@
-package views;
+package interfaces;
 
 import models.Branch;
 import models.BranchUser;

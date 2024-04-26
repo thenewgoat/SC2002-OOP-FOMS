@@ -69,11 +69,13 @@ public class Welcome {
                             System.out.println("Invalid choice. Press <enter> to go back.");
                             sc.nextLine();
                         }
+                        welcomeService.refresh();
 						break;
 					case 2:
                         welcomeService.refresh();
                         ChangePage.changePage();						
 						LoginController.login();
+                        welcomeService.refresh();
 						break;
 					case 3:
 						flag = 1;
