@@ -1,5 +1,7 @@
 package controllers;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -163,6 +165,13 @@ public class StaffController {
             System.out.println("Press <enter> to continue.");
             sc.nextLine();
             return;
+        }
+        if(order.getOrderStatus() == OrderStatus.READY){
+            LocalDateTime currDateTime = LocalDateTime.now();
+            long seconds = Duration.between(order.getReadyTime(), currDateTime).getSeconds();
+            if(seconds > 300){
+                staffService.cancelOrder(orderID);
+            }
         }
         orderView.displayOrderDetails(order);
         System.out.println("Press <enter> to continue.");

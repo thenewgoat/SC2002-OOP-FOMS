@@ -20,4 +20,6 @@ public interface IStaffService {
     public Account findAccountByLoginID(String loginID);
 
     public void changePassword(User user, String oldPassword, String newPassword) throws AccountNotFoundException, PasswordMismatchException, PasswordValidationException;
+
+    public void cancelOrder(int orderID);
 }

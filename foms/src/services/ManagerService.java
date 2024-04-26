@@ -56,6 +56,7 @@ public class ManagerService implements IManagerService{
         return false;
     }
 
+    @Override
     public Account findAccountByLoginID(String loginID) {
         for (Account account : PasswordStorage.getAll()) {
             if (account.getLoginID().equals(loginID)) {
@@ -65,6 +66,7 @@ public class ManagerService implements IManagerService{
         return null;
     }
 
+    @Override
     public void changePassword(User user, String oldPassword, String newPassword) throws AccountNotFoundException, PasswordMismatchException, PasswordValidationException {
         Account account = findAccountByLoginID(user.getLoginID());
     
@@ -82,6 +84,7 @@ public class ManagerService implements IManagerService{
         PasswordStorage.update(account);
     }
 
+    @Override
     public List<BranchUser> getStaffList(int branchID) {
         List<BranchUser> staffList = new ArrayList<>();
         BranchUser[] users = BranchUserStorage.getAll();
@@ -93,6 +96,7 @@ public class ManagerService implements IManagerService{
         return staffList;
     }
 
+    @Override
     public List<BranchMenuItem> getBranchMenuItemList(int BranchID) {
         BranchMenuItem[] items = BranchMenuItemStorage.getAll();
         List<BranchMenuItem> branchItems = new ArrayList<>(); 
@@ -108,36 +112,44 @@ public class ManagerService implements IManagerService{
         }
     }
 
+    @Override
     public void addBranchMenuItem(BranchMenuItem item) {
         BranchMenuItemStorage.add(item);
         System.out.println("i'M DOING SOMETHING");
         System.out.println(item);
     }
 
+    @Override
     public void editBranchMenuItem(BranchMenuItem item) {
         BranchMenuItemStorage.update(item);
     }
 
+    @Override
     public void removeBranchMenuItem(BranchMenuItem item) {
         BranchMenuItemStorage.remove(item);
     }
 
+    @Override
     public String getBranchName(int branchID) {
         return BranchStorage.get(branchID).getName();
     }
 
+    @Override
     public int displayMenuCategories() {
         return BranchMenuItemStorage.displayMenuCategories();
     }
 
+    @Override
     public void addCategory(String category) {
         BranchMenuItemStorage.addUniqueCategory(category);
     }
 
+    @Override
     public List<String> getCategories() {
         return BranchMenuItemStorage.getCategories();
     }
 
+    @Override
     public int getNextItemID() {
         BranchMenuItem[] items = BranchMenuItemStorage.getAll();
         int id = 0;
@@ -147,5 +159,13 @@ public class ManagerService implements IManagerService{
             }
         }
         return id + 1;
+    }
+
+    @Override
+    public void cancelOrder(int orderID) {
+        Order order = getOrder(orderID);
+        if (order != null) {
+            order.setOrderStatus(OrderStatus.CANCELLED);
+        }
     }
 }
