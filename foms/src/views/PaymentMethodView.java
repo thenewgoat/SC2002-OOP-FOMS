@@ -1,10 +1,11 @@
 package views;
 
+import interfaces.IPaymentMethodView;
 import models.PaymentMethod;
 
-public class PaymentMethodView {
+public class PaymentMethodView implements IPaymentMethodView{
 
-    public static void displayPaymentMethods(PaymentMethod[] methodList){
+    public void displayPaymentMethods(PaymentMethod[] methodList){
         System.out.println("Payment Methods:");
         int count = 1;
         for (PaymentMethod method : methodList) {

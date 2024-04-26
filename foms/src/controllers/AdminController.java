@@ -329,7 +329,8 @@ public class AdminController {
     }
 
     private static void viewPaymentMethods() {
-        PaymentMethodView.displayPaymentMethods(PaymentMethodStorage.getAll());
+        PaymentMethodView paymentMethodView = new PaymentMethodView();
+        paymentMethodView.displayPaymentMethods(PaymentMethodStorage.getAll());
         System.out.println("Press <enter> to continue.");
         sc.nextLine();
     }

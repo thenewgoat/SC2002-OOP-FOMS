@@ -2,7 +2,7 @@ package views;
 
 import models.Branch;
 
-public class BranchListView {
+public class BranchListView implements IBranchListView{
 
     public void displayBranchDetails(Branch[] branches) {
         int count = 1;
