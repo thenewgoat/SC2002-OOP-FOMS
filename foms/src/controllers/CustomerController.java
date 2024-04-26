@@ -103,7 +103,7 @@ public class CustomerController {
         if(order.getOrderStatus() == OrderStatus.READY){
             LocalDateTime currDateTime = LocalDateTime.now();
             long seconds = Duration.between(order.getReadyTime(), currDateTime).getSeconds();
-            if(seconds > 60){
+            if(seconds > 300){
                 customerService.setOrderStatus(orderID);
             }
         }

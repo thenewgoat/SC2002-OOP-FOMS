@@ -51,6 +51,7 @@ public class StaffService implements IStaffService{
         return false;
     }
 
+    @Override
     public Account findAccountByLoginID(String loginID) {
         for (Account account : PasswordStorage.getAll()) {
             if (account.getLoginID().equals(loginID)) {
@@ -60,6 +61,7 @@ public class StaffService implements IStaffService{
         return null;
     }
 
+    @Override
     public void changePassword(User user, String oldPassword, String newPassword) throws AccountNotFoundException, PasswordMismatchException, PasswordValidationException {
         Account account = findAccountByLoginID(user.getLoginID());
     
@@ -75,5 +77,13 @@ public class StaffService implements IStaffService{
     
         account.setPassword(newPassword);
         PasswordStorage.update(account);
+    }
+
+    @Override
+    public void cancelOrder(int orderID) {
+        Order order = getOrder(orderID);
+        if (order != null) {
+            order.setOrderStatus(OrderStatus.CANCELLED);
+        }
     }
 }

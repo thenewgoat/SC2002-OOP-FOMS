@@ -43,4 +43,6 @@ public interface IManagerService {
     public List<String> getCategories();
 
     public int getNextItemID();
+
+    public void cancelOrder(int orderID);
 }
