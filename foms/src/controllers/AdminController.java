@@ -11,12 +11,14 @@ import models.BranchUser;
 import models.PaymentMethod;
 import models.User;
 import services.AdminService;
+import stores.PaymentMethodStorage;
 import utils.ChangePage;
 import utils.exceptions.AccountNotFoundException;
 import utils.exceptions.PageBackException;
 import utils.exceptions.PasswordMismatchException;
 import utils.exceptions.PasswordValidationException;
 import views.BranchListView;
+import views.PaymentMethodView;
 import views.StaffListView;
 
 public class AdminController {
@@ -256,6 +258,24 @@ public class AdminController {
         sc.nextLine();
         if (choice > 0 && choice <= branches.length) {
             Branch branch = branches[choice - 1];
+            for (BranchUser branchuser : adminService.getStaffList()){
+                if (branchuser.getBranchID() == branch.getID()){
+                    System.out.println("Branch still has staff. Are you sure you want to delete the branch? (Y/N)");
+                    String confirm = sc.nextLine();
+                    if (confirm.equalsIgnoreCase("N")){
+                        System.out.println("Branch not deleted. Press <enter> to continue.");
+                        sc.nextLine();
+                        return;
+                    }
+                    else if (confirm.equalsIgnoreCase("Y")){
+                        break;
+                    } else {
+                        System.out.println("Invalid input. Press <enter> to continue.");
+                        sc.nextLine();
+                        return;
+                    }
+                }
+            }
             if (adminService.removeBranch(branch)) {
                 System.out.println("Branch closed successfully. Press <enter> to continue.");
                 sc.nextLine();
@@ -276,6 +296,7 @@ public class AdminController {
         System.out.println("Select action: ");
         System.out.println("\t1. Add Payment Method");
         System.out.println("\t2. Remove Payment Method");
+        System.out.println("\t3. View Payment Methods");
 
         System.out.print("Enter your choice: ");
         int choice;
@@ -297,6 +318,9 @@ public class AdminController {
             case 2:
                 removePaymentMethod();
                 break;
+            case 3:
+                viewPaymentMethods();
+                break;
             default:
                 System.out.println("Invalid choice. Press <enter> to go back to the previous page.");
                 sc.nextLine();
@@ -304,14 +328,19 @@ public class AdminController {
         }
     }
 
+    private static void viewPaymentMethods() {
+        PaymentMethodView.displayPaymentMethods(PaymentMethodStorage.getAll());
+        System.out.println("Press <enter> to continue.");
+        sc.nextLine();
+    }
+
     private static void removePaymentMethod() {
         
-
         System.out.println("Select Payment Method to remove: ");
         int count = 1;
         PaymentMethod[] paymentMethods = adminService.getPaymentMethods();
         for (PaymentMethod paymentMethod : paymentMethods) {
-            System.out.println("\t" + count + ". " + paymentMethod.getPaymentMethod());
+            System.out.println("\t" + count + ". " + paymentMethod.getPaymentMethod() + "(" + paymentMethod.getType() + ")");
             count++;
         }
         

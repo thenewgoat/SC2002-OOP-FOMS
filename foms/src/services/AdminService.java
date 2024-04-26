@@ -330,8 +330,9 @@ public class AdminService implements IAdminService{
     public boolean removeBranch(Branch branch){
         for (BranchUser branchuser : getStaffList()){
             if (branchuser.getBranchID() == branch.getID()){
-                System.out.println("Branch still has staff. Remove all staff before closing branch.");
-                return false;
+                deleteAccount(branchuser);
+                BranchUserStorage.remove(branchuser);
+                UserStorage.remove(branchuser);
             }
         }
         for(Branch curBranch : BranchStorage.getAll()){
