@@ -23,12 +23,33 @@ import models.User;
  */
 public class SerialDataService implements IFileDataService{
 
+    /**
+     * The path to the serialized order data file.
+     */
     private final String orderDataPath = "foms/data/orders.ser";
+    /**
+     * The path to the serialized user data file.
+     */
     private final String userDataPath = "foms/data/users.ser";
+    /**
+     * The path to the serialized data file for branch users.
+     */
     private final String branchUserDataPath = "foms/data/branchUsers.ser";
+    /**
+     * The path to the serialized menu data file.
+     */
     private final String menuDataPath = "foms/data/menu.ser";
+    /**
+     * The file path for the serialized payment method data.
+     */
     private final String paymentMethodDataPath = "foms/data/paymentMethods.ser";
+    /**
+     * The path to the serialized data file for branches.
+     */
     private final String branchDataPath = "foms/data/branches.ser";
+    /**
+     * The file path for the serialized password data.
+     */
     private final String passwordDataPath = "foms/data/passwords.ser";
 
     /**

@@ -31,8 +31,17 @@ import stores.BranchStorage;
  */
 public class CSVDataService implements IFileDataService {
 
+    /**
+     * The filename of the CSV file containing the staff list.
+     */
     private final String userFilename = "foms/data/staff_list.csv";
+    /**
+     * The filename of the menu list CSV file.
+     */
     private final String menuFilename = "foms/data/menu_list.csv";
+    /**
+     * The filename of the branch list CSV file.
+     */
     private final String branchFilename = "foms/data/branch_list.csv";
 
     /**
