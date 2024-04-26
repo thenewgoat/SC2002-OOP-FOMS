@@ -16,25 +16,28 @@ The Fastfood Ordering and Management System (FOMS) Application enhances fast foo
 
 ## FOMS Set-Up Instructions
 ### Compiling and Running the Code
-##### Using the terminal
+#### Using the terminal
 These setup instructions will guide you through the process of cloning the repository, navigating to the cloned repository, compiling the project, and running the project in your terminal.
 
-Open your terminal
+1. Open your terminal
 
-Clone the repository by entering the following command:
-``Bash
+2. Clone the repository by entering the following command:
+```Bash
 git clone https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0.git
-``
-Navigate to the cloned repository by entering the following command:
-
-cd sc2002-fypms
-Compile the project by entering the following command:
-
-javac -cp src -d bin src/main/FypmsApp.java
-Run the project by entering the following command:
-
-java -cp bin main.FypmsApp
-Congratulations, you have successfully cloned, compiled, and run the FYPMS project!
+```
+3. Navigate to the cloned repository by entering the following command:
+```Bash
+cd SC2002-OOP-FOMS-2.0
+```
+4. Compile the project by entering the following command:
+```Bash
+javac -cp src -d bin src/main/FomsApp.java
+```
+5. Run the project by entering the following command:
+```Bash
+java -cp bin main.FomsApp
+```
+Congratulations, you have successfully cloned, compiled, and run the FOMS project!
 
 
 ### Generating Java Docs
