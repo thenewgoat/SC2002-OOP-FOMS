@@ -22,9 +22,10 @@ Bot H,h,S,M,29,14S2M
 Bot I,i,S,F,30,14S2M
 Bot J,j,M,F,19,14S2M
 Bot K,k,S,M,20,14S2M
-Bot L,l,S,M,26,6S1M
-Bot M,m,S,F,19,6S1M
-Bot N,n,S,F,33,6S1M
-Bot O,o,M,F,45,6S1M
-Bot P,p,S,F,33,6S1M
-Bot Q,q,S,F,31,6S1M
+BotL,l,S,M,26,6S2M
+BotM,m,S,F,19,6S2M
+BotN,n,S,F,33,6S2M
+BotO,o,M,F,45,6S2M
+BotP,p,S,F,33,6S2M
+BotQ,q,S,F,31,6S2M
+BotR,r,M,M,19,6S2M
