@@ -1,4 +1,6 @@
-# SC2002 Fastfood Ordering and Management System Application
+# Fastfood Ordering and Management System Application
+
+![Lorem ipsum dolor sit amet, consectetur adipiscing elit  Morbi tempor euismod mauris vestibulum commodo  Nunc quis nisi massa  In pretium erat vitae nisi venenatis consequat  Donec eu tristique er](https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0/assets/126130422/f2b28504-51cc-4224-ba1b-5a62934ef3d7)
 
 The Fastfood Ordering and Management System (FOMS) Application enhances fast food restaurant operations by facilitating menu management, order placement, and payment processing. It provides real-time order tracking for customers and allows staff and managers to efficiently handle orders and menu updates. Additionally, admins can oversee company and staff management. This README file provides detailed instructions on how to clone, compile, and run the application, ensuring users can easily set up and navigate the system.
 
