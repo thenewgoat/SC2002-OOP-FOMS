@@ -3,7 +3,7 @@
 The Fastfood Ordering and Management System (FOMS) Application enhances fast food restaurant operations by facilitating menu management, order placement, and payment processing. It provides real-time order tracking for customers and allows staff and managers to efficiently handle orders and menu updates. Additionally, admins can oversee company and staff management. This README file provides detailed instructions on how to clone, compile, and run the application, ensuring users can easily set up and navigate the system.
 
 ## Links: 
-UML Class Diagram | Report | Java Docs
+[UML Class Diagram](https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0/tree/main/foms/umldiagram) | Report | Java Docs
 
 ## Team Members
 | Name               | GitHub Account      | Matriculation No.   |
