@@ -78,7 +78,7 @@ The data files used for system initialisation can be found in foms/data. 3 CSV f
 
 ## Usage
 ### Login Credentials
-In this section you can find some of the login credentials for users with different roles. The full list of usernames is available in foms/data/staff_list.csv, and the password defaults to 'password' for first login.
+In this section you can find some of the login credentials for users with different roles. The full list of usernames is available in [foms/data/staff_list.csv](https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0/blob/main/foms/data/staff_list.csv), and the password defaults to 'password' for first login.
 
 ```
 # Staff
