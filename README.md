@@ -22,21 +22,21 @@ These setup instructions will guide you through the process of cloning the repos
 1. Open your terminal
 
 2. Clone the repository by entering the following command:
-```Bash
-git clone https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0.git
-```
+   ```Bash
+   git clone https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0.git
+   ```
 3. Navigate to the cloned repository by entering the following command:
-```Bash
-cd SC2002-OOP-FOMS-2.0
-```
+   ```Bash
+   cd SC2002-OOP-FOMS-2.0
+   ```
 4. Compile the project by entering the following command:
-```Bash
-javac -cp foms/src -d bin foms/src/main/FomsApp.java
-```
+   ```Bash
+   javac -cp foms/src -d bin foms/src/main/FomsApp.java
+   ```
 5. Run the project by entering the following command:
-```Bash
-java -cp bin main.FomsApp
-```
+   ```Bash
+   java -cp bin main.FomsApp
+   ```
 Congratulations, you have successfully cloned, compiled, and run the FOMS project!
 
 #### Using Eclipse
@@ -48,10 +48,9 @@ If you prefer to use Eclipse as your IDE, you can also set up the project there.
 2. Click on File > Import > Git > Projects from Git > Clone URI
 
 3. In the Clone URI window, paste the following URL:
-```html
-https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0.git
-```
-
+   ```html
+   https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0.git
+   ```
 4. Click Next and follow the prompts to finish the cloning process
 
 5. Once the project is cloned, right-click on the project folder and select Properties
@@ -74,18 +73,16 @@ Follow the steps below to generate JavaDocs using the terminal:
    ```Bash
    cd SC2002-OOP-FOMS-2.0/foms/src
    ```
-   
 3. Run the following command in the terminal:
-```Bash
- javadoc -d ../docs -author -private -noqualifier all -version "controllers" "enums" "interfaces" "main" "models" "services" "stores" "test" "utils" "utils.exceptions" "views"
-```
+   ```Bash
+    javadoc -d ../docs -author -private -noqualifier all -version "controllers" "enums" "interfaces" "main" "models" "services" "stores" "test" "utils" "utils.exceptions" "views"
+   ```
 This command will generate the JavaDocs and save them in the docs directory in HTML format.
 
 4. Navigate to the docs directory using the following command:
    ```Bash
    cd ../docs
    ```
-   
 5. Open the index.html file in a web browser to view the generated JavaDocs.
 
 Congratulations, you have successfully created and viewed the JavaDocs.
