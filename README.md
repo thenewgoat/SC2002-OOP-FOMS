@@ -1,11 +1,11 @@
 # Fastfood Ordering and Management System Application
 
-![Lorem ipsum dolor sit amet, consectetur adipiscing elit  Morbi tempor euismod mauris vestibulum commodo  Nunc quis nisi massa  In pretium erat vitae nisi venenatis consequat  Donec eu tristique er](https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0/assets/126130422/f2b28504-51cc-4224-ba1b-5a62934ef3d7)
+![Lorem ipsum dolor sit amet, consectetur adipiscing elit  Morbi tempor euismod mauris vestibulum commodo  Nunc quis nisi massa  In pretium erat vitae nisi venenatis consequat  Donec eu tristique er](https://github.com/thenewgoat/SC2002-OOP-FOMS/assets/126130422/f2b28504-51cc-4224-ba1b-5a62934ef3d7)
 
 The Fastfood Ordering and Management System (FOMS) Application enhances fast food restaurant operations by facilitating menu management, order placement, and payment processing. It provides real-time order tracking for customers and allows staff and managers to efficiently handle orders and menu updates. Additionally, admins can oversee company and staff management. This README file provides detailed instructions on how to clone, compile, and run the application, ensuring users can easily set up and navigate the system.
 
 ## Links: 
-[UML Class Diagram](https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0/tree/main/foms/umldiagram) | [Report](https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0/tree/main/foms/report) | [JavaDocs](https://sai-ajay.github.io/SC2002-OOP-FOMS-2.0/sc2002_foms/module-summary.html)
+[UML Class Diagram](https://github.com/thenewgoat/SC2002-OOP-FOMS/tree/main/foms/umldiagram) | [Report](https://github.com/thenewgoat/SC2002-OOP-FOMS/tree/main/foms/report) | [JavaDocs](https://thenewgoat.github.io/SC2002-OOP-FOMS/sc2002_foms/module-summary.html)
 
 ## Team Members
 | Name               | GitHub Account      |
@@ -25,7 +25,7 @@ These setup instructions will guide you through the process of cloning the repos
 
 2. Clone the repository by entering the following command:
    ```Bash
-   git clone https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0.git
+   git clone https://github.com/thenewgoat/SC2002-OOP-FOMS.git
    ```
 3. Navigate to the cloned repository by entering the following command:
    ```Bash
@@ -67,18 +67,18 @@ Congratulations, you have successfully created and viewed the JavaDocs.
 
 ## Accessing Data Files
 The data files used for system initialisation can be found in foms/data. 3 CSV files are used for initialisation:
-   1. [staff_list.csv](https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0/blob/main/foms/data/staff_list.csv)
+   1. [staff_list.csv](https://github.com/thenewgoat/SC2002-OOP-FOMS/blob/main/foms/data/staff_list.csv)
       <p> Contains full list of all staff, managers and admin.
       
-   2. [branch_list.csv](https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0/blob/main/foms/data/branch_list.csv)
+   2. [branch_list.csv](https://github.com/thenewgoat/SC2002-OOP-FOMS/blob/main/foms/data/branch_list.csv)
       <p> Contains full list of all initial branches.
       
-   3. [menu_list.csv](https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0/blob/main/foms/data/menu_list.csv)
+   3. [menu_list.csv](https://github.com/thenewgoat/SC2002-OOP-FOMS/blob/main/foms/data/menu_list.csv)
       <p> Contains full list of all initial menu items and the respective branches where they can be found.
 
 ## Usage
 ### Login Credentials
-In this section you can find some of the login credentials for users with different roles. The full list of usernames is available in [foms/data/staff_list.csv](https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0/blob/main/foms/data/staff_list.csv), and the password defaults to 'password' for first login.
+In this section you can find some of the login credentials for users with different roles. The full list of usernames is available in [foms/data/staff_list.csv](https://github.com/thenewgoat/SC2002-OOP-FOMS/blob/main/foms/data/staff_list.csv), and the password defaults to 'password' for first login.
 
 ```
 # Staff
