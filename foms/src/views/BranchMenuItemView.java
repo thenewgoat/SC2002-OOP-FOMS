@@ -3,11 +3,17 @@ package views;
 import interfaces.IBranchMenuItemView;
 import models.BranchMenuItem;
 
+/**
+ * The {@link BranchMenuItemView} class implements the IBranchMenuItemView interface and is responsible for displaying branch menu item details.
+ */
 public class BranchMenuItemView implements IBranchMenuItemView{
 
-    public BranchMenuItemView() {
-    }
-    
+    /**
+     * Displays the details of the given branch menu item.
+     *
+     * @param item a BranchMenuItem object
+     * @param index the index of the item in the list
+     */
     @Override
     public void displayBranchMenuItem(BranchMenuItem item, int index) {
         System.out.println("--------------------------------------------------");

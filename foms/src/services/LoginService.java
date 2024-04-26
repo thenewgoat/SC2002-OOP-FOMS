@@ -49,6 +49,17 @@ public class LoginService implements IAuthorisationService {
         return user.getPassword().equals(password);
     }
 
+    /**
+     * Method to change the password of the user.
+     * 
+     * @param loginID The login ID of the user.
+     * @param oldPassword The old password of the user.
+     * @param newPassword The new password to be set.
+     * @return true if the password is changed successfully, false otherwise.
+     * @throws AccountNotFoundException If the account is not found.
+     * @throws PasswordMismatchException If the old password provided does not match the stored password.
+     * @throws PasswordValidationException If the new password is invalid.
+     */
     public boolean changePassword(String loginID, String oldPassword, String newPassword) throws AccountNotFoundException, PasswordMismatchException, PasswordValidationException {
         
         User user = UserStorage.get(loginID);
@@ -70,14 +81,33 @@ public class LoginService implements IAuthorisationService {
         return true;
     }
 
+
+    /**
+     * Retrieves the user with the specified login ID.
+     *
+     * @param loginID the login ID of the user to retrieve
+     * @return the User object associated with the login ID, or null if no user is found
+     */
     public User getUser(String loginID) {
         return UserStorage.get(loginID);
     }
 
+    /**
+     * Retrieves the account with the specified login ID.
+     *
+     * @param loginID the login ID of the account to retrieve
+     * @return the Account object associated with the login ID, or null if no account is found
+     */
     public Account getAccount(String loginID) {
         return PasswordStorage.get(loginID);
     }
 
+    /**
+     * Finds an account by login ID.
+     * 
+     * @param loginID The login ID of the account to find.
+     * @return The account with the specified login ID, or null if not found.
+     */
     public Account findAccountByLoginID(String loginID) {
         for (Account account : PasswordStorage.getAll()) {
             if (account.getLoginID().equals(loginID)) {
@@ -86,5 +116,4 @@ public class LoginService implements IAuthorisationService {
         }
         return null;
     }
-
 }

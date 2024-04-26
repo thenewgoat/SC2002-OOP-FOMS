@@ -23,6 +23,7 @@ import stores.BranchStorage;
  * including users, menu items, and branches.
  * 
  * In this programme, CSV files are only used to import staff_livst.csv, menu_list.csv, and branch_list.csv.
+ * Furthermore, this import is only performed once for system initialization.
  * The other irrelevant import methods are not implemented.
  * 
  * CSV files are not used to store any data, hence none of the export methods are implemented.

@@ -1,9 +1,18 @@
 package views;
 
+import interfaces.IBranchListView;
 import models.Branch;
 
-public class BranchListView implements IBranchListView{
+/**
+ * The {@link BranchListView} class implements the IBranchListView interface and is responsible for displaying branch details.
+ */
+public class BranchListView implements IBranchListView {
 
+    /**
+     * Displays the details of the given branches.
+     *
+     * @param branches an array of Branch objects
+     */
     public void displayBranchDetails(Branch[] branches) {
         int count = 1;
         for (Branch branch : branches) {

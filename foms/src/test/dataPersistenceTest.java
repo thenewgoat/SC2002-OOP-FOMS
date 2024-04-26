@@ -1,7 +1,4 @@
-/**
- * This class is used to test the data persistence functionality of the FOMS application.
- * It retrieves and displays data from various storage classes.
- */
+
 package test;
 
 import java.util.Scanner;
@@ -24,10 +21,20 @@ import stores.UserStorage;
 import utils.FileCleanupUtility;
 import views.OrderDetailsView;
 
+/**
+ * This class is used to test the data persistence functionality of the FOMS application.
+ * It retrieves and displays data from various storage classes.
+ */
 public class dataPersistenceTest {
 
     protected static IOrderView orderView;
 
+    /**
+     * The main method is used to test the data persistence functionality of the FOMS application.
+     * It retrieves and displays data from various storage classes.
+     * 
+     * @throws Exception if an error occurs while testing the data persistence functionality.
+     */
     public static void test() throws Exception {
         orderView = new OrderDetailsView();
 

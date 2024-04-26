@@ -4,11 +4,16 @@ import enums.OrderStatus;
 import interfaces.IOrderView;
 import models.Order;
 
+/**
+ * The {@link OrderStatusView} class provides methods to display order status.
+ */
 public class OrderStatusView implements IOrderView{
 
-    public OrderStatusView() {
-    }
-
+    /**
+     * Displays the status of the given order.
+     *
+     * @param order the Order object representing the order to be displayed
+     */
     @Override
     public void displayOrderDetails(Order order) {
         if (order != null){

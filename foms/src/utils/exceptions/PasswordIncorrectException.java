@@ -1,7 +1,8 @@
 package utils.exceptions;
 
 /**
- * Exception thrown when a password does not match the expected value.
+ * The {@link PasswordIncorrectException} is thrown when the provided password is incorrect.
+ * It extends the {@link Exception} class.
  */
 public class PasswordIncorrectException extends Exception {
 

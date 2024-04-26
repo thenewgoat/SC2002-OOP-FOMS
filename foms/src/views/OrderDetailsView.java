@@ -6,8 +6,16 @@ import interfaces.IOrderView;
 import models.Order;
 import models.OrderItem;
 
+/**
+ * The {@link OrderDetailsView} class implements the IOrderView interface and is responsible for displaying order details.
+ */
 public class OrderDetailsView implements IOrderView{
 
+    /**
+     * Displays the details of the given order.
+     *
+     * @param order an Order object
+     */
     @Override
     public void displayOrderDetails(Order order) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
