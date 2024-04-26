@@ -8,11 +8,34 @@ import enums.Role;
  * Inherits from the User class.
  */
 public class BranchUser extends User{
+    /**
+     * The name of the branch user.
+     */
     private String name;
+    
+    /**
+     * The login ID of the branch user.
+     */
     private String loginID;
+    
+    /**
+     * The role of the branch user.
+     */
     private Role role;
+    
+    /**
+     * The gender of the branch user.
+     */
     private Gender gender;
+    
+    /**
+     * The age of the branch user.
+     */
     private int age;
+    
+    /**
+     * The ID of the branch the user belongs to.
+     */
     private int branchID;
     
     /**

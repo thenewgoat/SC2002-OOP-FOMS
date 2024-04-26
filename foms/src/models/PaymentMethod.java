@@ -6,7 +6,13 @@ import java.io.Serializable;
  * The PaymentMethod class represents a payment method with its associated type.
  */
 public class PaymentMethod implements Serializable {
+    /**
+     * Represents the payment method for a transaction.
+     */
     private String paymentMethod;
+    /**
+     * Represents the type of payment method.
+     */
     private String type;
 
     /**

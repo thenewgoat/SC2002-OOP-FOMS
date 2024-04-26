@@ -11,13 +11,37 @@ import enums.OrderType;
  * Represents an order in the system.
  */
 public class Order implements Serializable {
+    /**
+     * Represents the unique identifier for an order.
+     */
     private int orderID;
+    /**
+     * The ID of the branch associated with the order.
+     */
     private int branchID;
+    /**
+     * Represents the list of order items in an order.
+     */
     private List<OrderItem> orderItems;
+    /**
+     * Represents the total price of an order.
+     */
     private double totalPrice;
+    /**
+     * Represents the status of an order, either PREPARING, READY, COMPLETED, CANCELLED, UNAVAILABLE.
+     */
     private OrderStatus orderStatus;
+    /**
+     * Represents the type of an order, either Dine In or Takeaway.
+     */
     private OrderType orderType;
+    /**
+     * The date and time when the order was placed.
+     */
     private LocalDateTime orderTime;
+    /**
+     * The date and time when the order was ready for collection.
+     */
     private LocalDateTime readyTime;
 
     /**

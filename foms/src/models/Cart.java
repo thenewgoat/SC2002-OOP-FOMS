@@ -8,7 +8,13 @@ import java.util.List;
  * It provides methods to add, remove, and edit items in the cart, as well as calculate the total price of the items.
  */
 public class Cart {
+    /**
+     * Represents the list of order items in the cart.
+     */
     private List<OrderItem> orderItems;
+    /**
+     * Represents the total price of the items in the cart.
+     */
     private double totalPrice;
 
     /**

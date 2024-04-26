@@ -6,10 +6,25 @@ import java.io.Serializable;
  * Represents an item in an order.
  */
 public class OrderItem implements Serializable{
+    /**
+     * Represents the name of an item in an order.
+     */
     private String itemName;
+    /**
+     * Represents the category of an order item.
+     */
     private String category;
+    /**
+     * Represents the quantity of an item in an order.
+     */
     private int quantity;
+    /**
+     * The price of each order item.
+     */
     private double price;
+    /**
+     * Represents a special request for an order item.
+     */
     private String specialRequest;
 
     /**
