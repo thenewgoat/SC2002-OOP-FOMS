@@ -86,6 +86,10 @@ public class ManagerController {
                         changePassword(user);
                         break;
                     case 7:
+                        System.out.println("Logging out...");
+                        System.out.println("Logged out successfully.");
+                        System.out.println("Press <enter> to continue.");
+                        sc.nextLine();
                         exit = true;
                         break;
                     default:

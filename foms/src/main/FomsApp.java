@@ -13,6 +13,5 @@ public class FomsApp {
 
         Welcome.welcome();
 
-         
     }
 }

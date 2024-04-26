@@ -87,6 +87,10 @@ public class StaffController {
                         changePassword(user);
                         break;
                     case 5:
+                        System.out.println("Logging out...");
+                        System.out.println("Logged out successfully.");
+                        System.out.println("Press <enter> to continue.");
+                        sc.nextLine();
                         exit = true;
                         break;
                     default:
