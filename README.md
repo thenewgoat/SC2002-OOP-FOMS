@@ -64,7 +64,31 @@ https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0.git
 
 That's it! You should now have the project up and running in Eclipse.
 
-### Generating Java Docs
+## Generating Java Docs
+### Using the terminal
+Follow the steps below to generate JavaDocs using the terminal:
+
+1. Open your terminal.
+
+2. Navigate to the root directory of the project. Or enter the following command.
+   ```Bash
+   cd SC2002-OOP-FOMS-2.0/foms/src
+   ```
+   
+3. Run the following command in the terminal:
+```Bash
+ javadoc -d ../docs -author -private -noqualifier all -version "controllers" "enums" "interfaces" "main" "models" "services" "stores" "test" "utils" "utils.exceptions" "views"
+```
+This command will generate the JavaDocs and save them in the docs directory in HTML format.
+
+4. Navigate to the docs directory using the following command:
+   ```Bash
+   cd ../docs
+   ```
+   
+5. Open the index.html file in a web browser to view the generated JavaDocs.
+
+Congratulations, you have successfully created and viewed the JavaDocs.
 
 
 
