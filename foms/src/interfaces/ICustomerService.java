@@ -8,7 +8,7 @@ import models.Order;
 import models.PaymentMethod;
 
 /**
- * This interface defines the methods related to customer actions in a Fastfood Ordering and Management System.
+ * This interface provides the methods related to customer actions in a Fastfood Ordering and Management System.
  * It provides functionality to manage orders, menu items, and payment methods for customers.
  */
 public interface ICustomerService {
