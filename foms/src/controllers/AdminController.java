@@ -37,7 +37,13 @@ import views.StaffListView;
  */
 public class AdminController {
 
+    /**
+     * The `Scanner` object used for reading user input.
+     */
     private static final Scanner sc = new Scanner(System.in);
+    /**
+     * The `AdminService` object used to perform administrative operations.
+     */
     private final static AdminService adminService = new AdminService();
     
     /**

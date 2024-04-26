@@ -26,9 +26,21 @@ import views.OrderStatusView;
  * providing options to check order status, make new orders, and manage carts.
  */
 public class CustomerController {
+    /**
+     * The Scanner object to take input from the user.
+     */
     private static final Scanner sc = new Scanner(System.in);
+    /**
+     * The ICustomerService instance to interact with the CustomerService class.
+     */
     protected static final ICustomerService customerService = new CustomerService();
+    /**
+     * The IBranchMenuItemView instance to interact with the BranchMenuItemView class.
+     */
     protected static IBranchMenuItemView branchMenuItemView;
+    /**
+     * The IOrderView instance to interact with the OrderView class.
+     */
     protected static IOrderView orderView;
 
     /**

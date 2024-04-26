@@ -13,7 +13,13 @@ import services.WelcomeService;
  */
 public class Welcome {
 
+    /**
+     * The WelcomeService instance to be used for welcome screen operations.
+     */
     private static WelcomeService welcomeService = new WelcomeService();
+    /**
+     * The scanner to be used for user input.
+     */
     private static Scanner sc = new Scanner(System.in);
 
     /**

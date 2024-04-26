@@ -13,6 +13,9 @@ import utils.exceptions.PasswordValidationException;
  * Handles user authentication and post-login redirection based on user role.
  */
 public class LoginController {
+    /**
+     * The scanner to be used for user input.
+     */
     private static final Scanner scanner = new Scanner(System.in);
 
     /**

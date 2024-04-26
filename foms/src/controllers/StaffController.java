@@ -25,10 +25,19 @@ import views.OrderDetailsView;
  */
 public class StaffController {
 
+    /**
+     * The scanner to be used for user input.
+     */
     private static final Scanner sc = new Scanner(System.in);
 
+    /**
+     * The service to be used for staff operations.
+     */
     protected static final IStaffService staffService = new StaffService();
 
+    /**
+     * The view to be used for order details.
+     */
     protected static IOrderView orderView;
 
     /**

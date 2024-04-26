@@ -33,14 +33,29 @@ import views.OrderDetailsView;
  */
 public class ManagerController {
 
+    /**
+     * The scanner to be used for user input.
+     */
     private static final Scanner sc = new Scanner(System.in);
 
+    /**
+     * The service class for managing branch manager operations.
+     */
     protected static final IManagerService managerService = new ManagerService();
 
+    /**
+     * The view class for displaying order details.
+     */
     protected static IOrderView orderView;
 
+    /**
+     * The view class for displaying branch users.
+     */
     protected static IBranchUserView branchUserView;
 
+    /**
+     * The view class for displaying branch menu items.
+     */
     protected static IBranchMenuItemView branchMenuItemView;
 
     /**
