@@ -1,5 +1,6 @@
 package views;
 
+import interfaces.IStaffView;
 import models.Branch;
 import models.BranchUser;
 
