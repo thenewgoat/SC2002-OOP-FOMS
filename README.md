@@ -39,6 +39,30 @@ java -cp bin main.FomsApp
 ```
 Congratulations, you have successfully cloned, compiled, and run the FOMS project!
 
+#### Using Eclipse
+Using Eclipse
+If you prefer to use Eclipse as your IDE, you can also set up the project there. Here are the steps you need to follow:
+
+1. Open Eclipse
+
+2. Click on File > Import > Git > Projects from Git > Clone URI
+
+3. In the Clone URI window, paste the following URL:
+```html
+https://github.com/xJQx/sc2002-fypms.git
+```
+
+4. Click Next and follow the prompts to finish the cloning process
+
+5. Once the project is cloned, right-click on the project folder and select Properties
+
+6. In the Properties window, click on Java Build Path > Source > Add Folder
+
+7. Select the src folder from the project directory and click OK
+
+8. Now you can run the project by right-clicking on FypmsApp.java in the src/main folder and selecting Run As > Java Application
+
+That's it! You should now have the project up and running in Eclipse.
 
 ### Generating Java Docs
 
