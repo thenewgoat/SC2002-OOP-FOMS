@@ -8,7 +8,6 @@ import models.User;
 import stores.PasswordStorage;
 import stores.UserStorage;
 import utils.exceptions.AccountNotFoundException;
-import utils.exceptions.PasswordIncorrectException;
 import utils.exceptions.PasswordMismatchException;
 import utils.exceptions.PasswordValidationException;
 
