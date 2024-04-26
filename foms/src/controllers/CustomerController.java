@@ -463,6 +463,8 @@ public class CustomerController {
                     return false;
                 }else{
                     cardPaymentMethod.pay(cart.getTotalPrice());
+                    System.out.println("Press <enter> to continue.");
+                    sc.nextLine();
                     Order order = new Order(customerService.getNextOrderID(), branchID, cart.getOrderItems(), orderType, cart.getTotalPrice());
                     customerService.newOrder(order);
                     ChangePage.changePage();
@@ -481,6 +483,8 @@ public class CustomerController {
                     return false;
                 }else{
                     onlinePaymentMethod.pay(cart.getTotalPrice());
+                    System.out.println("Press <enter> to continue.");
+                    sc.nextLine();
                     Order order = new Order(customerService.getNextOrderID(), branchID, cart.getOrderItems(), orderType, cart.getTotalPrice());
                     customerService.newOrder(order);
                     ChangePage.changePage();
