@@ -27,11 +27,11 @@ git clone https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0.git
 ```
 3. Navigate to the cloned repository by entering the following command:
 ```Bash
-cd SC2002-OOP-FOMS-2.0
+cd SC2002-OOP-FOMS-2.0/foms
 ```
 4. Compile the project by entering the following command:
 ```Bash
-javac -cp src -d bin foms/src/main/FomsApp.java
+javac -cp src -d bin src/main/FomsApp.java
 ```
 5. Run the project by entering the following command:
 ```Bash
