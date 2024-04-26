@@ -228,99 +228,71 @@ public class AdminService implements IAdminService{
     };
 
     @Override
-    public boolean transferStaff(BranchUser staff, Branch oldBranch, Branch newBranch){
+    public boolean transferStaff(BranchUser[] staffList, Branch oldBranch, Branch newBranch){
 
-
-        // currently still at old branch
         int oldStaffCount = 0;
         int oldManagerCount = 0;
         int newStaffCount = 0;
         int newManagerCount = 0;
-
-        for (BranchUser branchUser : BranchUserStorage.getAll()){
-            if (branchUser.getBranchID() == oldBranch.getID()){
-                if (branchUser.getRole() == Role.BRANCHMANAGER){
+        int transferringManagers = 0;
+        int transferringStaff = 0;
+    
+        // First, count current staff and managers in both branches
+        for (BranchUser branchUser : BranchUserStorage.getAll()) {
+            if (branchUser.getBranchID() == oldBranch.getID()) {
+                if (branchUser.getRole() == Role.BRANCHMANAGER) {
                     oldManagerCount++;
-                }
-                else if (branchUser.getRole() == Role.STAFF){
+                } else if (branchUser.getRole() == Role.STAFF) {
                     oldStaffCount++;
                 }
-            }
-            else if (branchUser.getBranchID() == newBranch.getID()){
-                if (branchUser.getRole() == Role.BRANCHMANAGER){
+            } else if (branchUser.getBranchID() == newBranch.getID()) {
+                if (branchUser.getRole() == Role.BRANCHMANAGER) {
                     newManagerCount++;
-                }
-                else if (branchUser.getRole() == Role.STAFF){
+                } else if (branchUser.getRole() == Role.STAFF) {
                     newStaffCount++;
                 }
             }
         }
-
-        if (staff.getRole() == Role.BRANCHMANAGER){
-            try {
-                StaffUpdateChecker.check(oldStaffCount, oldManagerCount - 1, oldBranch);
-            } catch (TooFewManagersException e) {
-                System.out.println("Transfer blocked as there will be insufficient managers in the old branch.");
-                return false;
-            } catch (TooManyManagersException e) {
-                System.out.println("This message should never be seen. ");
-                System.out.println("Transfer blocked as there will be too many managers in the old branch.");
-                return false;
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-                return false;
-            }
     
-            try {
-                StaffUpdateChecker.check(newStaffCount, newManagerCount + 1, newBranch);
-            } catch (TooFewManagersException e) {
-                System.out.println("This message should never be seen. ");
-                System.out.println("Transfer blocked as there will be insufficient managers in the new branch.");
-                return false;
-            } catch (TooManyManagersException e) {
-                System.out.println("Transfer blocked as there will be too many managers in the new branch.");
-                return false;
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-                return false;
+        // Count the number of managers and staff being transferred
+        for (BranchUser staff : staffList) {
+            if (staff == null) {
+                break;
+            }
+            if (staff.getRole() == Role.BRANCHMANAGER) {
+                transferringManagers++;
+            } else if (staff.getRole() == Role.STAFF) {
+                transferringStaff++;
+            } else {
+                throw new IllegalArgumentException("Staff role must be either BRANCHMANAGER or STAFF.");
+            }
+        }
+    
+        // Perform checks for the old branch after removing transferred staff
+        try {
+            StaffUpdateChecker.check(oldStaffCount - transferringStaff, oldManagerCount - transferringManagers, oldBranch);
+        } catch (TooFewManagersException | TooManyManagersException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    
+        // Perform checks for the new branch after adding transferred staff
+        try {
+            StaffUpdateChecker.check(newStaffCount + transferringStaff, newManagerCount + transferringManagers, newBranch);
+        } catch (TooFewManagersException | TooManyManagersException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    
+        // Set new branch ID for each staff being transferred
+        for (BranchUser staff : staffList) {
+            if (staff == null) {
+                break;
             }
             staff.setBranchID(newBranch.getID());
-            return true;
         }
-        else if (staff.getRole() == Role.STAFF){
-            try {
-                StaffUpdateChecker.check(oldStaffCount - 1, oldManagerCount, oldBranch);
-            } catch (TooFewManagersException e) {
-                System.out.println("This message should never be seen. ");
-                System.out.println("Transfer blocked as there will be too many staff in the old branch.");
-                return false;
-            } catch (TooManyManagersException e) {
-                System.out.println("Transfer blocked as there will be insufficient staff in the old branch.");
-                return false;
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-                return false;
-            }
-    
-            try {
-                StaffUpdateChecker.check(newStaffCount + 1, newManagerCount, newBranch);
-            } catch (TooFewManagersException e) {
-                System.out.println("Transfer blocked as there will be too many staff in the new branch.");
-                return false;
-            } catch (TooManyManagersException e) {
-                System.out.println("This message should never be seen. ");
-                System.out.println("Transfer blocked as there will be too many managers in the new branch.");
-                return false;
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-                return false;
-            }
-            staff.setBranchID(newBranch.getID());
-            return true;
-        } else {
-            throw new IllegalArgumentException("Staff role must be either BRANCHMANAGER or STAFF.");
-        }
-    };
+        return true;
+    }
 
     @Override
     public boolean addBranch(Branch branch){

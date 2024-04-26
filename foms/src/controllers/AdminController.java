@@ -16,11 +16,13 @@ import utils.exceptions.AccountNotFoundException;
 import utils.exceptions.PageBackException;
 import utils.exceptions.PasswordMismatchException;
 import utils.exceptions.PasswordValidationException;
+import views.BranchListView;
 import views.StaffListView;
 
 public class AdminController {
 
     private static final Scanner sc = new Scanner(System.in);
+    private final static AdminService adminService = new AdminService();
     
     public static void start(User user) throws PageBackException{
         if (user instanceof Admin){
@@ -111,7 +113,7 @@ public class AdminController {
     }
 
     private static void changePassword(User user) throws PageBackException {
-        AdminService adminService = new AdminService();
+        
         System.out.println("Enter old password:");
         String oldPassword = sc.nextLine();
         System.out.println("Enter new password:");
@@ -132,9 +134,11 @@ public class AdminController {
     }
 
     private static void branchManagement() throws PageBackException {
+        ChangePage.changePage();
         System.out.println("Selection action: ");
         System.out.println("\t1. Add Branch");
         System.out.println("\t2. Close Branch");
+        System.out.println("\t3. View Branches");
         System.out.print("Enter your choice: ");
 
         int choice;
@@ -151,10 +155,16 @@ public class AdminController {
 
         switch (choice) {
             case 1:
+                ChangePage.changePage();
                 addBranch();
                 break;
             case 2:
+                ChangePage.changePage();
                 closeBranch();
+                break;
+            case 3:
+                ChangePage.changePage();
+                viewBranches();
                 break;
             default:
                 System.out.println("Invalid choice. Press <enter> to go back to the previous page.");
@@ -164,8 +174,17 @@ public class AdminController {
 
     }
 
+    private static void viewBranches() {
+        Branch[] branches = adminService.getBranchList();
+        BranchListView branchListView = new BranchListView();
+        branchListView.displayBranchDetails(branches);
+        System.out.println("Press <enter> to continue.");
+        sc.nextLine();
+
+    }
+
     private static void addBranch() throws PageBackException {
-        AdminService adminService = new AdminService();
+        
 
         System.out.println("Adding new branch...");
         System.out.print("Enter branch name: ");
@@ -215,7 +234,7 @@ public class AdminController {
     }
 
     private static void closeBranch() {
-        AdminService adminService = new AdminService();
+        
 
         System.out.println("Select Branch to close: ");
         int count = 1;
@@ -253,6 +272,7 @@ public class AdminController {
 
 
     private static void managePayments() {
+        ChangePage.changePage();
         System.out.println("Select action: ");
         System.out.println("\t1. Add Payment Method");
         System.out.println("\t2. Remove Payment Method");
@@ -285,7 +305,7 @@ public class AdminController {
     }
 
     private static void removePaymentMethod() {
-        AdminService adminService = new AdminService();
+        
 
         System.out.println("Select Payment Method to remove: ");
         int count = 1;
@@ -323,7 +343,7 @@ public class AdminController {
     }
 
     private static void addPaymentMethod() {
-        AdminService adminService = new AdminService();
+        
 
         System.out.print("Enter Payment Method Name: ");
         String paymentMethod = sc.nextLine();
@@ -365,40 +385,12 @@ public class AdminController {
     }
 
     private static void transferStaff() throws PageBackException {
-        AdminService adminService = new AdminService();
-    
-        System.out.print("Enter Staff Login ID of staff to transfer: ");
-        String staffLoginId = sc.nextLine();
-        BranchUser staff = adminService.findStaffByLoginID(staffLoginId);
-    
-        if (staff == null) {
-            System.out.println("No staff member found with that Login ID. Press <enter> to continue.");
-            sc.nextLine();
-            throw new PageBackException();
-        }
-    
-        System.out.println("Select Branch to transfer to: ");
+        
+        ChangePage.changePage();
+
+        System.out.println("Select Branch to transfer from: ");
         int count = 1;
         Branch[] branches = adminService.getBranchList();
-        Branch curBranch =  adminService.findBranchById(staff.getBranchID());
-        Branch[] newBranches = new Branch[branches.length - 1]; // New array with one less element
-
-        int indexToRemove = -1;
-        for (int i = 0; i < branches.length; i++) {
-            if (curBranch == branches[i]) { // Find the index to remove
-                indexToRemove = i;
-                break;
-            }
-        }
-
-        if (indexToRemove != -1) {
-            for (int i = 0, j = 0; i < branches.length; i++) {
-                if (i != indexToRemove) {
-                    newBranches[j++] = branches[i]; // Copy all elements except the one to remove
-                }
-            }
-            branches = newBranches; // Optional: reassign the new array to the original reference
-        }
 
         for (Branch branch : branches) {
             System.out.println("\t" + count + ". " + branch.getName());
@@ -415,11 +407,115 @@ public class AdminController {
             throw new PageBackException();
         }
         sc.nextLine();
+
+        Branch oldBranch = null;
         if (choice > 0 && choice <= branches.length) {
-            Branch newBranch = branches[choice - 1];
-            Branch oldBranch = adminService.findBranchById(staff.getBranchID());
+            oldBranch = branches[choice - 1];
+        } else {
+            System.out.println("Invalid choice. Please select a number between 1 and " + branches.length);
+            System.out.println("Press <enter> to return.");
+            sc.nextLine();
+            throw new PageBackException();
+        }
+
+        System.out.println("Select staff to transfer.");
+        int staffCount = 1;
+        BranchUser[] staffList = adminService.getStaffList(oldBranch);
+        BranchUser[] newStaffList = new BranchUser[18];
+
+        for (BranchUser staff : staffList) {
+            if (staff.getBranchID() == oldBranch.getID()){
+                newStaffList[staffCount - 1] = staff;
+                staffCount++;
+            }
+        }
+        staffCount = 1;
+        for (BranchUser staff : newStaffList) {
+            if (staff == null) {
+                break;
+            }
+            System.out.println("\t" + staffCount + ". " + staff.getName());
+            staffCount++;
+        }
+        System.out.println("If selecting more than one staff, separate choices by commas. ");
+        System.out.print("Enter your choices: ");
+        String input = sc.nextLine();
+        String[] selections = input.split(",");
+        int[] staffChoices = new int[selections.length];
+        try {
+            for (int i = 0; i < selections.length; i++) {
+                staffChoices[i] = Integer.parseInt(selections[i].trim());
+            }
+        } catch (NumberFormatException nfe) {
+            System.out.println("Invalid input. Please use numbers only. Press <enter> to return.");
+            sc.nextLine();
+            throw new PageBackException();
+        }
+        boolean duplicates = false;
+        for (int i = 0; i < staffChoices.length; i++) {
+            for (int j = i + 1; j < staffChoices.length; j++) {
+                if (staffChoices[i] == staffChoices[j]) {
+                    duplicates = true;
+                    break;
+                }
+            }
+            if (duplicates) {
+                System.out.println("Duplicate entries found. Each staff can only be selected once. Press <enter> to return.");
+                sc.nextLine();
+                throw new PageBackException();
+            }
+        }
+        BranchUser[] transferList = new BranchUser[18];
+        int transferIndex = 0;
+        for (int index : staffChoices) {
+            if (index < 1 || index > newStaffList.length) {
+                System.out.println("Invalid choice: " + index + ". Please select valid staff numbers.");
+                System.out.println("Press <enter> to return.");
+                sc.nextLine();
+                throw new PageBackException();
+            }
+            transferList[transferIndex++] = newStaffList[index - 1];
+        }
+            
+        System.out.println("Select Branch to transfer to: ");
+        Branch[] newBranches = new Branch[branches.length - 1]; // New array with one less element
+
+        int indexToRemove = -1;
+        for (int i = 0; i < branches.length; i++) {
+            if (oldBranch == branches[i]) { // Find the index to remove
+                indexToRemove = i;
+                break;
+            }
+        }
+
+        if (indexToRemove != -1) {
+            for (int i = 0, j = 0; i < branches.length; i++) {
+                if (i != indexToRemove) {
+                    newBranches[j++] = branches[i];
+                }
+            }
+            branches = newBranches;
+        }
+        count = 1;
+        for (Branch branch : branches) {
+            System.out.println("\t" + count + ". " + branch.getName());
+            count++;
+        }
+        System.out.print("Enter your choice: ");
+        int destinationChoice;
+        try {
+            destinationChoice = sc.nextInt();
+        } catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Press <enter> to return to previous page.");
+            sc.nextLine();
+            sc.nextLine();
+            throw new PageBackException();
+        }
+        sc.nextLine();
+        if (destinationChoice > 0 && destinationChoice <= branches.length) {
+            Branch newBranch = branches[destinationChoice - 1];
             if (oldBranch != null) {
-                if(adminService.transferStaff(staff, oldBranch, newBranch)){
+                if(adminService.transferStaff(transferList, oldBranch, newBranch)){
                     System.out.println("Staff transferred successfully. Press <enter> to continue.");
                     sc.nextLine();
                 } else {
@@ -436,8 +532,8 @@ public class AdminController {
     }
 
     private static void promoteStaff() throws PageBackException {
-        AdminService adminService = new AdminService();
-    
+        
+        ChangePage.changePage();
         System.out.print("Enter Staff Login ID of staff to promote: ");
         String staffLoginId = sc.nextLine();
         BranchUser staff = adminService.findStaffByLoginID(staffLoginId);
@@ -503,7 +599,7 @@ public class AdminController {
     }
 
     private static void removeStaff() throws PageBackException {
-        AdminService adminService = new AdminService();
+        
     
         System.out.print("Enter Staff Login ID to remove: ");
         String staffLoginId = sc.nextLine();
@@ -533,7 +629,7 @@ public class AdminController {
     
 
     private static void editStaff() throws PageBackException {
-        AdminService adminService = new AdminService();
+        
     
         System.out.print("Enter Staff Login ID to edit: ");
         String staffLoginId = sc.nextLine();
@@ -597,7 +693,7 @@ public class AdminController {
     
     private static void addStaff() throws PageBackException {
 
-        AdminService adminService = new AdminService();
+        
         
         ChangePage.changePage();
         System.out.println("Adding new branch staff member.");
@@ -744,7 +840,7 @@ public class AdminController {
 
     private static void getStaffList() throws PageBackException {
 
-        AdminService adminService = new AdminService();
+        
         StaffListView staffListView = new StaffListView();
 
         ChangePage.changePage();

@@ -17,7 +17,7 @@ public interface IAdminService {
 
     public boolean promoteStaff(BranchUser staff);
 
-    public boolean transferStaff(BranchUser staff, Branch oldBranch, Branch newBranch);
+    public boolean transferStaff(BranchUser[] staffList, Branch oldBranch, Branch newBranch);
 
     public boolean addBranch(Branch branch);
 
