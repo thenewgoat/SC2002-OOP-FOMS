@@ -536,7 +536,7 @@ public class AdminController {
 
         System.out.println("Select staff to transfer.");
         int staffCount = 1;
-        BranchUser[] staffList = adminService.getStaffList(oldBranch);
+        BranchUser[] staffList = adminService.getStaffList();
         BranchUser[] newStaffList = new BranchUser[18];
 
         for (BranchUser staff : staffList) {

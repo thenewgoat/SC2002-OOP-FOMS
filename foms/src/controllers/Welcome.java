@@ -4,8 +4,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import models.Branch;
-import utils.ChangePage;
 import services.WelcomeService;
+import utils.ChangePage;
+import interfaces.IWelcomeService;
 
 /**
  * Prints the welcome screen and user role selection for the Fastfood ordering and management System (FOMS).
@@ -16,7 +17,7 @@ public class Welcome {
     /**
      * The WelcomeService instance to be used for welcome screen operations.
      */
-    private static WelcomeService welcomeService = new WelcomeService();
+    private static IWelcomeService welcomeService = new WelcomeService();
     /**
      * The scanner to be used for user input.
      */
