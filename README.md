@@ -67,13 +67,13 @@ Congratulations, you have successfully created and viewed the JavaDocs.
 
 ## Accessing Data Files
 The data files used for system initialisation can be found in foms/data. 3 CSV files are used for initialisation:
-   1. staff_list.csv
+   1. [staff_list.csv](https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0/blob/main/foms/data/staff_list.csv)
       <p> Contains full list of all staff, managers and admin.
       
-   2. branch_list.csv
+   2. [branch_list.csv](https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0/blob/main/foms/data/branch_list.csv)
       <p> Contains full list of all initial branches.
       
-   3. menu_list.csv
+   3. [menu_list.csv](https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0/blob/main/foms/data/menu_list.csv)
       <p> Contains full list of all initial menu items and the respective branches where they can be found.
 
 ## Usage
