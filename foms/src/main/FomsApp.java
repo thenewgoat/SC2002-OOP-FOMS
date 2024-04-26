@@ -4,7 +4,7 @@ import controllers.Welcome;
 import test.dataPersistenceTest;
 import utils.FileCleanupUtility;
 
-public class Main {
+public class FomsApp {
     public static void main(String[] args) throws Exception {
 
         //dataPersistenceTest.test();
