@@ -41,6 +41,7 @@ public class Welcome {
 				sc.nextLine();
 				switch (choice) {
 					case 1:
+                        welcomeService.refresh();
                         ChangePage.changePage();
                         System.out.println("Select Branch: ");
                         int count = 1;
@@ -70,6 +71,7 @@ public class Welcome {
                         }
 						break;
 					case 2:
+                        welcomeService.refresh();
                         ChangePage.changePage();						
 						LoginController.login();
 						break;
