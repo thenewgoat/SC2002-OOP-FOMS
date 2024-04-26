@@ -28,6 +28,7 @@ public class Branch implements Serializable {
     /**
      * Constructs a new Branch with the specified details.
      * 
+     * @param branchID The ID of the branch.
      * @param name The name of the branch.
      * @param location The physical location of the branch.
      * @param staffQuota The maximum number of staff members that can be accommodated at the branch.

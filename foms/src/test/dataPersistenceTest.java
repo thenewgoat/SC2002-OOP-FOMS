@@ -27,6 +27,9 @@ import views.OrderDetailsView;
  */
 public class dataPersistenceTest {
 
+    /**
+     * The IOrderView instance to be used for displaying order details.
+     */
     protected static IOrderView orderView;
 
     /**

@@ -7,4 +7,5 @@ services
 stores
 test
 utils
+utils.exceptions
 views
