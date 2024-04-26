@@ -434,7 +434,7 @@ public class AdminController {
             if (staff == null) {
                 break;
             }
-            System.out.println("\t" + staffCount + ". " + staff.getName());
+            System.out.println("\t" + staffCount + ". " + staff.getName() + " (" + staff.getRole() + ")");
             staffCount++;
         }
         System.out.println("If selecting more than one staff, separate choices by commas. ");
