@@ -1,5 +1,3 @@
-package controllers;
-
 /**
  * The controllers package contains classes responsible for managing the user interface.
  * Controllers play a crucial role in the application's architecture by facilitating the interaction
@@ -17,3 +15,5 @@ package controllers;
  * <p>Controllers act as intermediaries, decoupling the user interface from the underlying business logic
  * to promote modularity, maintainability, and testability of the application.
  */
+package controllers;
+

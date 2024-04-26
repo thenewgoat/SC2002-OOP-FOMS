@@ -22,18 +22,18 @@ import views.PaymentMethodView;
 import views.StaffListView;
 
 /**
- * The `AdminController` class is responsible for managing administrative tasks and operations.
+ * <p>The `AdminController` class is responsible for managing administrative tasks and operations.
  * It provides functionality for displaying staff lists, managing staff accounts, promoting staff to managers,
  * transferring staff/managers, managing payment methods, managing branches, changing passwords, and logging out.
  * 
- * This class requires an instance of the `User` class, specifically an `Admin` user, to perform administrative tasks.
+ * <p>This class requires an instance of the `User` class, specifically an `Admin` user, to perform administrative tasks.
  * 
- * Usage:
- * 1. Call the `start` method with a valid `User` object to begin the administrative session.
- * 2. Follow the prompts to select and perform various administrative actions.
- * 3. The session can be terminated by selecting the "Logout" option.
+ * <p>Usage:
+ * <p>1. Call the `start` method with a valid `User` object to begin the administrative session.
+ * <p>2. Follow the prompts to select and perform various administrative actions.
+ * <p>3. The session can be terminated by selecting the "Logout" option.
  * 
- * Note: Non-admin users will not be able to access this class and will receive an error message.
+ * <p>Note: Non-admin users will not be able to access this class and will receive an error message.
  */
 public class AdminController {
 
