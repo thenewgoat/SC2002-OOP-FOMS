@@ -16,12 +16,6 @@ concurrency:
 
 jobs:
 
-  check-directory:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print Current Directory
-        run: echo "Current Directory: $PWD"
-        
   build:
     runs-on: ubuntu-latest
     environment:
@@ -40,12 +34,12 @@ jobs:
           distribution: 'temurin'
 
       - name: Build JavaDocs
-        run:  javadoc -d ../docs -author -private -noqualifier all -version "controllers" "enums" "interfaces" "main" "models" "services" "stores" "test" "utils" "utils.exceptions" "views"
+        run:  javadoc -d .foms/docs -author -private -noqualifier all -version "controllers" "enums" "interfaces" "main" "models" "services" "stores" "test" "utils" "utils.exceptions" "views"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: '../docs'
+          path: '.foms/docs'
 
       - name: Deploy to GitHub Pages
         id: deployment
