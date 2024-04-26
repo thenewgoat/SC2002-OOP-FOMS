@@ -49,7 +49,7 @@ If you prefer to use Eclipse as your IDE, you can also set up the project there.
 
 3. In the Clone URI window, paste the following URL:
 ```html
-https://github.com/xJQx/sc2002-fypms.git
+https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0.git
 ```
 
 4. Click Next and follow the prompts to finish the cloning process
