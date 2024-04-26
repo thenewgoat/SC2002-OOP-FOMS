@@ -68,13 +68,13 @@ Congratulations, you have successfully created and viewed the JavaDocs.
 ## Accessing Data Files
 The data files used for system initialisation can be found in foms/data. 3 CSV files are used for initialisation:
    1. staff_list.csv
-      Contains full list of all staff, managers and admin.
+      <p> Contains full list of all staff, managers and admin.
       
    2. branch_list.csv
-      Contains full list of all initial branches.
+      <p> Contains full list of all initial branches.
       
    3. menu_list.csv
-      Contains full list of all initial menu items and the respective branches where they can be found.
+      <p> Contains full list of all initial menu items and the respective branches where they can be found.
 
 ## Usage
 ### Login Credentials
