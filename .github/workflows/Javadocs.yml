@@ -34,7 +34,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build JavaDocs
-        run:  javadoc -d .foms/docs -sourcepath .foms -author -private -noqualifier all -version "controllers" "enums" "interfaces" "main" "models" "services" "stores" "test" "utils" "utils.exceptions" "views"
+        run:  javadoc -d foms/docs -sourcepath foms/src -author -private -noqualifier all -version "controllers" "enums" "interfaces" "main" "models" "services" "stores" "test" "utils" "utils.exceptions" "views"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
