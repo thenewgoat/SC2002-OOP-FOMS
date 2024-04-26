@@ -2,8 +2,8 @@
  * This project is a Java-based application for managing a fast food ordering and management system (FOMS).
  * 
  * @author Zhang Xinyang
- * @author Sai Ajay
- * @author Sally Ngui
+ * @author Shingamu Sai Ajay
+ * @author Sally Ngui Yu Ying
  * @author Shen Jia Cheng
  * @author Sharanya Basu
  * @version 1.0
