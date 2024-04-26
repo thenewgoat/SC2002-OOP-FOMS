@@ -12,7 +12,7 @@ UML Class Diagram | Report | Java Docs
 | Shingamu Sai Ajay  | [Sai-Ajay](https://github.com/Sai-Ajay)           | U2221941J           | 
 | Zhang Xinyang      | [thenewgoat](https://github.com/thenewgoat)       | U2221842C           |
 | Shen Jia Cheng     | [shenjc01](https://github.com/shenjc01)           | U2220979E           |
-| Sharanya Basu      | [SHAR0094]https://github.com/SHAR0094             | U2221402A           |
+| Sharanya Basu      | [SHAR0094](https://github.com/SHAR0094)             | U2221402A           |
 
 # FOMS Set-Up Instructions
 ## Compiling and Running the Code
