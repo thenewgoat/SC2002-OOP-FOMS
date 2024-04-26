@@ -65,7 +65,7 @@ If you prefer to use Eclipse as your IDE, you can also set up the project there.
 
 That's it! You should now have the project up and running in Eclipse.
 
-## Generating Java Docs
+## Generating Javadocs
 ### Using the terminal
 Follow the steps below to generate JavaDocs using the terminal:
 
