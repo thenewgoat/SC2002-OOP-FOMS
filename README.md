@@ -29,7 +29,7 @@ These setup instructions will guide you through the process of cloning the repos
    ```
 3. Navigate to the cloned repository by entering the following command:
    ```Bash
-   cd SC2002-OOP-FOMS-2.0
+   cd SC2002-OOP-FOMS
    ```
 4. Compile the project by entering the following command:
    ```Bash
@@ -49,7 +49,7 @@ Follow the steps below to generate JavaDocs using the terminal:
 
 2. Navigate to the root directory of the project. Or enter the following command.
    ```Bash
-   cd SC2002-OOP-FOMS-2.0/foms/src
+   cd SC2002-OOP-FOMS/foms/src
    ```
 3. Run the following command in the terminal:
    ```Bash
