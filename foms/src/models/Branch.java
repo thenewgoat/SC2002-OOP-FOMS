@@ -8,10 +8,21 @@ import java.io.Serializable;
  * with a branch.
  */
 public class Branch implements Serializable {
-    
+    /**
+     * The branchID of the branch.
+     */
     private int branchID;
+    /**
+     * The name of the branch.
+     */
     private String branchName;
+    /**
+     * The location of the branch.
+     */
     private String location;
+    /**
+     * The maximum number of staff members that can be accommodated at the branch.
+     */
     private int staffQuota;
 
     /**

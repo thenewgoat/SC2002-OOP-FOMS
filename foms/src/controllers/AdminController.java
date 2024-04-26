@@ -20,6 +20,7 @@ import utils.exceptions.PasswordValidationException;
 import views.BranchListView;
 import views.PaymentMethodView;
 import views.StaffListView;
+import interfaces.IAdminService;
 
 /**
  * <p>The `AdminController` class is responsible for managing administrative tasks and operations.
@@ -44,7 +45,7 @@ public class AdminController {
     /**
      * The `AdminService` object used to perform administrative operations.
      */
-    private final static AdminService adminService = new AdminService();
+    protected final static IAdminService adminService = new AdminService();
     
     /**
      * Starts the Admin Controller and displays the main page for the admin user.

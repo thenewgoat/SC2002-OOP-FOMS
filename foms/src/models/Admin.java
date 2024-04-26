@@ -9,10 +9,25 @@ import enums.Role;
  * to ADMIN by default and manages properties such as name, login ID, gender, and age.
  */
 public class Admin extends User{
+    /**
+     * The name of the admin.
+     */
     private String name;
+    /**
+     * The login ID of the admin.
+     */
     private String loginID;
+    /**
+     * The role of the admin. Set to Admin by default.
+     */
     private Role role = Role.ADMIN;  // Default role for Admin
+    /**
+     * The gender of the admin.
+     */
     private Gender gender;
+    /**
+     * The age of the admin.
+     */
     private int age;
 
     /**

@@ -7,9 +7,18 @@ import java.io.Serializable;
  * It stores the login ID and password of the account.
  */
 public class Account implements Serializable {
+    /**
+     * The serial version UID used for serialization.
+     */
     private static final long serialVersionUID = 1L;
 
+    /**
+     * The login ID of the account.
+     */
     private String loginID;
+    /**
+     * The password of the account.
+     */
     private String password;
 
     /**

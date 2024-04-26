@@ -6,12 +6,33 @@ import java.io.Serializable;
  * Represents a menu item specific to a branch in a restaurant.
  */
 public class BranchMenuItem implements Serializable {
+    /**
+     * The name of the menu item.
+     */
     private String name;
+    /**
+     * The ID of the menu item.
+     */
     private int itemID;
+    /**
+     * The category of the menu item.
+     */
     private String category;
+    /**
+     * The price of the menu item.
+     */
     private double price;
+    /**
+     * The ID of the branch associated with the menu item.
+     */
     private int branchID;
+    /**
+     * The availability of the menu item.
+     */
     private int availability;
+    /**
+     * The description of the menu item.
+     */
     private String description;
     
     /**
