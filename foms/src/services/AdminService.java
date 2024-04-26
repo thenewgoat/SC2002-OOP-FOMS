@@ -5,11 +5,15 @@ import enums.Role;
 import interfaces.IAdminService;
 import models.Account;
 import models.Branch;
+import models.BranchMenuItem;
 import models.BranchUser;
+import models.Order;
 import models.PaymentMethod;
 import models.User;
+import stores.BranchMenuItemStorage;
 import stores.BranchStorage;
 import stores.BranchUserStorage;
+import stores.OrderStorage;
 import stores.PasswordStorage;
 import stores.PaymentMethodStorage;
 import stores.UserStorage;
@@ -103,6 +107,11 @@ public class AdminService implements IAdminService{
             staffCount++;
         } else {
             throw new IllegalArgumentException("Staff role must be either BRANCHMANAGER or STAFF.");
+        }
+
+        if (staffCount > branch.getStaffQuota()){
+            System.out.println("Staff quota exceeded.");
+            return false;
         }
 
         try {
@@ -289,7 +298,12 @@ public class AdminService implements IAdminService{
             System.out.println("Too Many Managers in new branch! Transfer failed.");
             return false;
         }
-    
+        
+        if (newStaffCount > newBranch.getStaffQuota()) {
+            System.out.println("Staff quota exceeded in new branch. Transfer failed.");
+            return false;
+        }
+
         // Set new branch ID for each staff being transferred
         for (BranchUser staff : staffList) {
             if (staff == null) {
@@ -323,6 +337,16 @@ public class AdminService implements IAdminService{
         for(Branch curBranch : BranchStorage.getAll()){
             if (curBranch.getID() == branch.getID()){
                 BranchStorage.remove(branch);
+                for (Order order : OrderStorage.getAll()){
+                    if (order.getBranchID() == branch.getID()){
+                        OrderStorage.remove(order);
+                    }
+                }
+                for (BranchMenuItem item : BranchMenuItemStorage.getAll()){
+                    if (item.getBranchID() == branch.getID()){
+                        BranchMenuItemStorage.remove(item);
+                    }
+                }
                 return true;
             }
         }
