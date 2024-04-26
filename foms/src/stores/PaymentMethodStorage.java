@@ -106,6 +106,7 @@ public class PaymentMethodStorage {
             paymentMethods = new HashMap<>();
             System.out.println("Payment method storage file not found. Creating new storage.");
             paymentMethods.put("Credit/Debit Card", new PaymentMethod("UOB","Credit/Debit Card"));
+            paymentMethods.put("Credit/Debit Card", new PaymentMethod("DBS","Credit/Debit Card"));
             paymentMethods.put("PayPal", new PaymentMethod("PayPal","Online Payment"));
             save();
         }
