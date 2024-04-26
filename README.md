@@ -27,7 +27,7 @@ git clone https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0.git
 ```
 3. Navigate to the cloned repository by entering the following command:
 ```Bash
-cd SC2002-OOP-FOMS-2.0/foms
+cd SC2002-OOP-FOMS-2.0
 ```
 4. Compile the project by entering the following command:
 ```Bash
