@@ -6,7 +6,7 @@
  * @author Sally Ngui
  * @author Shen Jia Cheng
  * @author Sharanya Basu
- *
+ * @version 1.0
  */
 module sc2002_foms {
     exports controllers;
