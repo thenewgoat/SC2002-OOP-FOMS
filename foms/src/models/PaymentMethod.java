@@ -29,7 +29,7 @@ public class PaymentMethod implements Serializable {
         System.out.println("Paying " + amount + " using " + paymentMethod + " " + type +".");
         System.out.println("Processing payment...");
         try {
-            Thread.sleep(3000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
