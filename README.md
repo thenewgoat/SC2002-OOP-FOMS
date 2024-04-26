@@ -1,8 +1,11 @@
 # SC2002 Fastfood Ordering and Management System Application
 
-The Fastfood Ordering and Management System (FOMS) Application enhances fast food restaurant operations by facilitating menu management, order placement, and payment processing. It provides real-time order tracking for customers and allows staff and managers to efficiently handle orders and menu updates. Additionally, admins can oversee company and staff management. This README file provides detailed instructions on how to clone, compile, and run the application, ensuring users can set up and navigate the system with ease.
+The Fastfood Ordering and Management System (FOMS) Application enhances fast food restaurant operations by facilitating menu management, order placement, and payment processing. It provides real-time order tracking for customers and allows staff and managers to efficiently handle orders and menu updates. Additionally, admins can oversee company and staff management. This README file provides detailed instructions on how to clone, compile, and run the application, ensuring users can easily set up and navigate the system.
 
+# Links: 
+UML Class Diagram | Report | Java Docs
 
+# Team Members
 | Name               | Matriculation No.   |
 | ------------------ | ------------------- | 
 | Sally Ngui Yu Ying | U2222782A           | 
@@ -10,6 +13,13 @@ The Fastfood Ordering and Management System (FOMS) Application enhances fast foo
 | Zhang Xinyang      | U2221842C           |
 | Shen Jia Cheng     | U2220979E           |
 | Sharanya Basu      | U2221402A           |
+
+# FOMS Set-Up Instructions
+## Compiling and Running the Code
+
+
+
+
 
 
 
