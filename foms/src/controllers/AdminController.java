@@ -21,11 +21,31 @@ import views.BranchListView;
 import views.PaymentMethodView;
 import views.StaffListView;
 
+/**
+ * The `AdminController` class is responsible for managing administrative tasks and operations.
+ * It provides functionality for displaying staff lists, managing staff accounts, promoting staff to managers,
+ * transferring staff/managers, managing payment methods, managing branches, changing passwords, and logging out.
+ * 
+ * This class requires an instance of the `User` class, specifically an `Admin` user, to perform administrative tasks.
+ * 
+ * Usage:
+ * 1. Call the `start` method with a valid `User` object to begin the administrative session.
+ * 2. Follow the prompts to select and perform various administrative actions.
+ * 3. The session can be terminated by selecting the "Logout" option.
+ * 
+ * Note: Non-admin users will not be able to access this class and will receive an error message.
+ */
 public class AdminController {
 
     private static final Scanner sc = new Scanner(System.in);
     private final static AdminService adminService = new AdminService();
     
+    /**
+     * Starts the Admin Controller and displays the main page for the admin user.
+     * 
+     * @param user the User object representing the admin user
+     * @throws PageBackException if there is an error or the user is not authorized to access the page
+     */
     public static void start(User user) throws PageBackException{
         if (user instanceof Admin){
             ChangePage.changePage();
@@ -114,6 +134,12 @@ public class AdminController {
         }
     }
 
+    /**
+     * Changes the password for the specified user.
+     *
+     * @param user the user whose password needs to be changed
+     * @throws PageBackException if there is an error changing the password
+     */
     private static void changePassword(User user) throws PageBackException {
         
         System.out.println("Enter old password:");
@@ -135,6 +161,18 @@ public class AdminController {
         
     }
 
+    /**
+     * Manages the branch operations.
+     * This method displays a menu of branch actions and prompts the user to choose an action.
+     * The available actions are:
+     * 1. Add Branch
+     * 2. Close Branch
+     * 3. View Branches
+     * 
+     * If the user enters an invalid choice, they will be prompted to try again.
+     * 
+     * @throws PageBackException if the user chooses to go back to the previous page.
+     */
     private static void branchManagement() throws PageBackException {
         ChangePage.changePage();
         System.out.println("Selection action: ");
@@ -176,15 +214,22 @@ public class AdminController {
 
     }
 
+    /**
+     * Displays the details of all branches and waits for user input to continue.
+     */
     private static void viewBranches() {
         Branch[] branches = adminService.getBranchList();
         BranchListView branchListView = new BranchListView();
         branchListView.displayBranchDetails(branches);
         System.out.println("Press <enter> to continue.");
         sc.nextLine();
-
     }
 
+    /**
+     * Adds a new branch to the system.
+     * 
+     * @throws PageBackException if the user chooses to go back to the previous page
+     */
     private static void addBranch() throws PageBackException {
         
 
@@ -235,9 +280,12 @@ public class AdminController {
         
     }
 
+    /**
+     * Prompts the user to select a branch to close and performs the necessary operations to close the branch.
+     * If the branch has staff members, it asks for confirmation before deleting the branch.
+     * Prints appropriate messages based on the success or failure of closing the branch.
+     */
     private static void closeBranch() {
-        
-
         System.out.println("Select Branch to close: ");
         int count = 1;
         Branch[] branches = adminService.getBranchList();
@@ -291,6 +339,11 @@ public class AdminController {
     }
 
 
+    /**
+     * Displays a menu for managing payment methods.
+     * The user can choose to add a payment method, remove a payment method, or view existing payment methods.
+     * Invalid input will prompt the user to try again.
+     */
     private static void managePayments() {
         ChangePage.changePage();
         System.out.println("Select action: ");
@@ -328,6 +381,12 @@ public class AdminController {
         }
     }
 
+    /**
+     * Displays the payment methods available.
+     * This method creates a PaymentMethodView object and calls its displayPaymentMethods method
+     * to display all the payment methods stored in the PaymentMethodStorage.
+     * After displaying the payment methods, it prompts the user to press enter to continue.
+     */
     private static void viewPaymentMethods() {
         PaymentMethodView paymentMethodView = new PaymentMethodView();
         paymentMethodView.displayPaymentMethods(PaymentMethodStorage.getAll());
@@ -335,6 +394,14 @@ public class AdminController {
         sc.nextLine();
     }
 
+    /**
+     * Removes a payment method from the system.
+     * 
+     * This method prompts the user to select a payment method to remove from a list of available payment methods.
+     * If the user enters an invalid choice or if the removal operation fails, appropriate error messages are displayed.
+     * 
+     * @throws InputMismatchException if the user enters an invalid input for the choice
+     */
     private static void removePaymentMethod() {
         
         System.out.println("Select Payment Method to remove: ");
@@ -372,9 +439,15 @@ public class AdminController {
         }
     }
 
+    /**
+     * Adds a new payment method to the system.
+     * 
+     * This method prompts the user to enter the payment method name and type,
+     * and then creates a new PaymentMethod object based on the user's input.
+     * The new payment method is then added to the system using the adminService.
+     */
     private static void addPaymentMethod() {
-        
-
+    
         System.out.print("Enter Payment Method Name: ");
         String paymentMethod = sc.nextLine();
         if (paymentMethod.isEmpty()) {
@@ -414,6 +487,12 @@ public class AdminController {
         }
     }
 
+    
+    /**
+     * Transfers staff members from one branch to another. Can transfer more than one staff member at a time.
+     * 
+     * @throws PageBackException if there is an error during the transfer process and the user needs to return to the previous page.
+     */
     private static void transferStaff() throws PageBackException {
         
         ChangePage.changePage();
@@ -561,6 +640,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Promotes a staff member to a manager.
+     *
+     * @throws PageBackException if the user chooses to go back to the previous page.
+     */
     private static void promoteStaff() throws PageBackException {
         
         ChangePage.changePage();
@@ -584,6 +668,12 @@ public class AdminController {
     }
     
 
+    /**
+     * Manages the staff by providing options to add, edit, or remove staff members.
+     * Throws a PageBackException if the user chooses to go back to the previous page.
+     * 
+     * @throws PageBackException if the user chooses to go back to the previous page
+     */
     private static void manageStaff() throws PageBackException {
 
         ChangePage.changePage();
@@ -628,6 +718,11 @@ public class AdminController {
 
     }
 
+    /**
+     * Removes a staff member from the system.
+     *
+     * @throws PageBackException if there is an error, allowing navigation back to the previous page
+     */
     private static void removeStaff() throws PageBackException {
         
     
@@ -658,6 +753,11 @@ public class AdminController {
     }
     
 
+    /**
+     * Edits the details of a staff member.
+     * 
+     * @throws PageBackException upon input error to allow nagivation back to previous page
+     */
     private static void editStaff() throws PageBackException {
         
     
@@ -721,9 +821,12 @@ public class AdminController {
         sc.nextLine();
     }
     
-    private static void addStaff() throws PageBackException {
-
-        
+    /**
+     * Adds a new branch staff member.
+     *
+     * @throws PageBackException if there is an error during the process and the page needs to be returned.
+     */
+    private static void addStaff() throws PageBackException {     
         
         ChangePage.changePage();
         System.out.println("Adding new branch staff member.");
@@ -868,6 +971,14 @@ public class AdminController {
 
     }
 
+    /**
+     * Retrieves the staff list based on user-selected filters and displays it using the StaffListView.
+     * Allows the user to filter the staff list by branch, role, gender, and age.
+     * 
+     * Uses the overloaded getStaffList methods in AdminService to retrieve the staff list based on the selected filters.
+     * 
+     * @throws PageBackException if there is an error or the user chooses to go back to the previous page
+     */
     private static void getStaffList() throws PageBackException {
 
         

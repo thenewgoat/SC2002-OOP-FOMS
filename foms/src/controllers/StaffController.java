@@ -20,6 +20,9 @@ import utils.exceptions.PasswordMismatchException;
 import utils.exceptions.PasswordValidationException;
 import views.OrderDetailsView;
 
+/**
+ * Handles staff operations such as viewing and processing orders.
+ */
 public class StaffController {
 
     private static final Scanner sc = new Scanner(System.in);
@@ -28,6 +31,11 @@ public class StaffController {
 
     protected static IOrderView orderView;
 
+    /**
+     * Initiates the staff menu.
+     * 
+     * @param user The staff user who has logged in.
+     */
     public static void start(User user) {
         BranchUser branchUser = (BranchUser) user;
         int branchID = branchUser.getBranchID();
@@ -106,6 +114,11 @@ public class StaffController {
         } while (exit == false);
     }
 
+    /**
+     * Displays pending orders for the staff user to view.
+     * 
+     * @param branchID The ID of the branch to which the staff user belongs.
+     */
     private static void displayPendingOrders(int branchID) {
         ChangePage.changePage();
         Boolean flag = true;
@@ -136,8 +149,13 @@ public class StaffController {
             sc.nextLine();
             return;
         }
-    }
+    }  
 
+    /**
+     * Displays the details of a specific order.
+     * 
+     * @param branchID The ID of the branch to which the staff user belongs.
+     */
     private static void viewOrderDetails(int branchID) {
         ChangePage.changePage();
         orderView = new OrderDetailsView();
@@ -179,6 +197,11 @@ public class StaffController {
         return;
     }
 
+    /**
+     * Processes a pending order.
+     * 
+     * @param branchID The ID of the branch to which the staff user belongs.
+     */
     private static void processOrder(int branchID) {
         ChangePage.changePage();
         System.out.print("Enter order ID: ");
@@ -219,6 +242,12 @@ public class StaffController {
         }
     }
 
+    /**
+     * Changes the password of the staff user.
+     * 
+     * @param user The staff user whose password is to be changed.
+     * @throws PageBackException if an error occurs and allows for return to previous page.
+     */
     private static void changePassword(User user) throws PageBackException {
         ChangePage.changePage();
         System.out.println("Enter old password:");

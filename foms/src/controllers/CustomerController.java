@@ -21,13 +21,26 @@ import views.BranchMenuItemView;
 import views.OrderDetailsView;
 import views.OrderStatusView;
 
+/**
+ * The CustomerController class handles all customer interactions with the system,
+ * providing options to check order status, make new orders, and manage carts.
+ */
 public class CustomerController {
     private static final Scanner sc = new Scanner(System.in);
     protected static final ICustomerService customerService = new CustomerService();
     protected static IBranchMenuItemView branchMenuItemView;
     protected static IOrderView orderView;
+
+    /**
+     * Constructs a new CustomerController.
+     */
     public CustomerController() {
     }
+
+    /**
+     * Displays the main customer interaction page for a specific branch.
+     * @param branchID The ID of the branch.
+     */
     public static void customerMainPage(int branchID) {
         ChangePage.changePage();
         int choice;
@@ -74,6 +87,12 @@ public class CustomerController {
 
     }
 
+    /**
+     * Allows the customer to check the status of an existing order.
+     * If the order is ready, the customer can choose to collect the order.
+     * 
+     * @param branchID The ID of the branch where the order was placed.
+     */
     private static void checkOrderStatus(int branchID){
         ChangePage.changePage();
         System.out.println("Please enter your Order ID: ");
@@ -144,6 +163,12 @@ public class CustomerController {
             }
         }
     }
+
+    /**
+     * Handles the process of placing a new order.
+     * 
+     * @param branchID The ID of the branch where the order will be placed.
+     */
     private static void customerOrderPage(int branchID){
         ChangePage.changePage();
         OrderType orderType = null;
@@ -188,6 +213,13 @@ public class CustomerController {
         return;
     }
 
+    /**
+     * Manages the cart operations such as adding, removing, and editing items.
+     * 
+     * @param branchID The ID of the branch.
+     * @param orderType The type of the order (Dine-In or Takeaway).
+     * @param cart The cart object containing order items.
+     */
     private static void manageCart(int branchID, OrderType orderType, Cart cart){
         Boolean exit = false;
         do {
@@ -254,6 +286,13 @@ public class CustomerController {
         } while (exit == false);
         
     }
+
+    /**
+     * Adds an item to the customer's cart.
+     * 
+     * @param cart The cart to add items to.
+     * @param branchID The ID of the branch.
+     */
     private static void addItemToCart(Cart cart, int branchID){
         ChangePage.changePage();
         List<BranchMenuItem> branchMenuItems = customerService.getBranchMenuItemList(branchID);
@@ -337,6 +376,13 @@ public class CustomerController {
         System.out.println("Press <enter> to continue.");
         sc.nextLine();
     }
+
+    /**
+     * Edits an item in the customer's cart.
+     * 
+     * @param cart The cart containing the item to edit.
+     * @param branchID The ID of the branch.
+     */
     private static void editCart(Cart cart, int branchID){
         ChangePage.changePage();
         if(cart.getOrderItems().isEmpty()){
@@ -394,6 +440,13 @@ public class CustomerController {
         System.out.println("Press <enter> to continue.");
         sc.nextLine();
     }
+
+     /**
+     * Removes an item from the customer's cart.
+     * 
+     * @param cart The cart from which the item will be removed.
+     * @param branchID The ID of the branch.
+     */
     private static void removeItemFromCart(Cart cart, int branchID){
         ChangePage.changePage();
         if(cart.getOrderItems().isEmpty()){
@@ -425,6 +478,15 @@ public class CustomerController {
         sc.nextLine();
     }
 
+
+     /**
+     * Processes checkout of the cart, handling payment and order finalization.
+     * 
+     * @param branchID The ID of the branch.
+     * @param orderType The type of the order (Dine-In or Takeaway).
+     * @param cart The cart to be checked out.
+     * @return A Boolean indicating if the checkout was successful.
+     */
     private static Boolean checkoutCart(int branchID, OrderType orderType, Cart cart){
         orderView = new OrderDetailsView();
         ChangePage.changePage();
@@ -501,6 +563,12 @@ public class CustomerController {
         }
     }
 
+    /**
+     * Cancels the entire order and clears the cart.
+     * 
+     * @param cart The cart whose order is to be cancelled.
+     * @param branchID The ID of the branch.
+     */
     private static void cancelOrder(Cart cart, int branchID){
         ChangePage.changePage();
         for (OrderItem item : cart.getOrderItems()) {
@@ -511,6 +579,11 @@ public class CustomerController {
         cart.getOrderItems().clear();
         System.out.println("Order cancelled successfully.");
     }
+
+    /**
+     * Displays the items in the customer's cart.
+     * @param cart The cart to display.
+     */
     private static void displayCart(Cart cart){
         ChangePage.changePage();
         if(cart.getOrderItems().isEmpty()){
@@ -523,6 +596,12 @@ public class CustomerController {
         System.out.println("Press <enter> to continue.");
         sc.nextLine();
     }
+
+    /**
+     * Processes payment using a credit or debit card.
+     * 
+     * @return A PaymentMethod instance if successful, null otherwise.
+     */
     private static PaymentMethod cardPaymentProcess(){
         List<PaymentMethod> paymentMethods = customerService.getPaymentMethods("Credit/Debit Card");
         System.out.println("Please select your card: ");
@@ -583,6 +662,12 @@ public class CustomerController {
         }
         return paymentMethod;
     }
+
+    /**
+     * Processes payment through online payment methods.
+     * 
+     * @return A PaymentMethod instance if successful, null otherwise.
+     */
     private static PaymentMethod onlinePaymentProcess(){
         List<PaymentMethod> paymentMethods = customerService.getPaymentMethods("Online Payment");
         System.out.println("Please select your payment method:");

@@ -4,16 +4,20 @@ import services.LoginService;
 import models.Account;
 import models.User;
 import java.util.Scanner;
-
 import utils.exceptions.AccountNotFoundException;
 import utils.exceptions.PageBackException;
 import utils.exceptions.PasswordMismatchException;
 import utils.exceptions.PasswordValidationException;
 
+/**
+ * Handles user authentication and post-login redirection based on user role.
+ */
 public class LoginController {
     private static final Scanner scanner = new Scanner(System.in);
 
-
+    /**
+     * Initiates the login process. Continuously prompts for user credentials until login succeeds or the user decides to exit.
+     */
     public static void login() {
         while (true) {
             System.out.println("Please enter your login ID:");
@@ -22,7 +26,6 @@ public class LoginController {
             String password = scanner.nextLine();
 
             LoginService loginService = new LoginService();
-            ;
 
             if (loginService.login(loginID, password)) {
                 Account account = loginService.getAccount(loginID);
@@ -37,8 +40,14 @@ public class LoginController {
         }
     }
 
+    /**
+     * Handles actions to be taken immediately after successful login, such as
+     * prompting for password change if the default password is detected or redirecting
+     * the user based on their role.
+     *
+     * @param account The account of the user who has just logged in.
+     */
     private static void handlePostLogin(Account account) {
-        
         LoginService loginService = new LoginService();
 
         if (account.getPassword().equals("password")) {  // Example of a default password check
@@ -50,10 +59,13 @@ public class LoginController {
         }
     }
 
+    /**
+     * Facilitates changing of a user's password.
+     *
+     * @param account The user's account for which the password is to be changed.
+     */
     protected static void changePassword(Account account) {
-
         LoginService loginService = new LoginService();
-
         System.out.println("Enter new password:");
         String newPassword = scanner.nextLine();
 
@@ -73,9 +85,11 @@ public class LoginController {
         }
     }
 
-
-
-
+    /**
+     * Redirects the user to the appropriate controller based on their role.
+     * 
+     * @param user The user to be redirected.
+     */
     private static void redirect(User user) {
         try {
             switch (user.getRole()) {

@@ -7,11 +7,24 @@ import models.Branch;
 import utils.ChangePage;
 import services.WelcomeService;
 
+/**
+ * Prints the welcome screen and user role selection for the Fastfood ordering and management System (FOMS).
+ * Allows users to choose between different roles (Customer, Staff) or to exit the application.
+ */
 public class Welcome {
 
     private static WelcomeService welcomeService = new WelcomeService();
     private static Scanner sc = new Scanner(System.in);
 
+    /**
+     * Provides an interactive welcome screen for the Fastfood ordering and management System (FOMS).
+     * It prompts users to choose between different roles (Customer, Staff) or to exit the application.
+     * Depending on the user's choice, it directs them to the appropriate controller for further actions.
+     * This method uses a loop to continuously display the menu until the user decides to exit. It handles
+     * invalid input gracefully by prompting the user to try again.
+     *
+     * @throws Exception Throws an exception if there are issues during the execution, such as input/output errors.
+     */
     public static void welcome() throws Exception {
         int choice;
 		int flag = 0;

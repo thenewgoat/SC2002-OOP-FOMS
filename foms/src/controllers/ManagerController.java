@@ -26,6 +26,11 @@ import views.BranchMenuItemView;
 import views.BranchUserView;
 import views.OrderDetailsView;
 
+
+/**
+ * Controller class for managing the user interface for branch managers.
+ * This includes handling of orders, staff management, and menu management.
+ */
 public class ManagerController {
 
     private static final Scanner sc = new Scanner(System.in);
@@ -38,6 +43,11 @@ public class ManagerController {
 
     protected static IBranchMenuItemView branchMenuItemView;
 
+    /**
+     * Starts the manager interface for the given user.
+     * 
+     * @param user The user who logs in and is verified as a branch manager.
+     */
     public static void start(User user) {
         BranchUser branchUser = (BranchUser) user;
         int branchID = branchUser.getBranchID();
@@ -104,6 +114,12 @@ public class ManagerController {
         } while (exit == false);
     }
 
+
+    /**
+     * Displays a list of pending orders for the given branch.
+     * 
+     * @param branchID The ID of the branch whose pending orders are to be displayed.
+     */
     private static void displayPendingOrders(int branchID) {
         ChangePage.changePage();
         Boolean flag = true;
@@ -136,6 +152,12 @@ public class ManagerController {
         }
     }
 
+
+    /**
+     * Displays the details of a specific order.
+     * 
+     * @param branchID The ID of the branch where the order was placed.
+     */
     private static void viewOrderDetails(int branchID) {
         ChangePage.changePage();
         orderView = new OrderDetailsView();
@@ -176,6 +198,12 @@ public class ManagerController {
         return;
     }
 
+
+    /**
+     * Processes the specified order by updating its status.
+     * 
+     * @param branchID The ID of the branch where the order was placed.
+     */
     private static void processOrder(int branchID) {
         ChangePage.changePage();
         System.out.print("Enter order ID: ");
@@ -216,6 +244,12 @@ public class ManagerController {
         }
     }
 
+    /**
+     * Handles the change of password for a user.
+     * 
+     * @param user The user whose password is to be changed.
+     * @throws PageBackException if there is an error and allows returning to the previous page.
+     */
     private static void changePassword(User user) throws PageBackException {
         ChangePage.changePage();
         System.out.println("Enter old password:");
@@ -234,9 +268,13 @@ public class ManagerController {
             throw new PageBackException();
         }
         return;
-        
     }
 
+    /**
+     * Displays a list of staff members working in a specific branch.
+     * 
+     * @param branchID The ID of the branch whose staff list is to be displayed.
+     */
     private static void displayStaffList(int branchID) {
         ChangePage.changePage();
         List<BranchUser> users = managerService.getStaffList(branchID);
@@ -264,9 +302,13 @@ public class ManagerController {
             sc.nextLine();
             return;
         }
-        
     }
 
+    /**
+     * Manages the menu items of a branch.
+     * 
+     * @param branchID The ID of the branch whose menu is managed.
+     */
     private static void manageMenu(int branchID) {
         Boolean exit = false;
         do {
@@ -324,6 +366,11 @@ public class ManagerController {
         return;
     }
 
+    /**
+     * Adds a new item to the menu of a branch.
+     * 
+     * @param branchID The ID of the branch where the item is to be added.
+     */
     private static void addItemToMenu(int branchID) {
         ChangePage.changePage();
         List<BranchMenuItem> items = managerService.getBranchMenuItemList(branchID);
@@ -410,6 +457,11 @@ public class ManagerController {
         managerService.addBranchMenuItem(item);
     }
 
+    /**
+     * Views the entire menu of a branch.
+     * 
+     * @param branchID The ID of the branch whose menu is to be viewed.
+     */
     private static void viewMenu(int branchID){
         ChangePage.changePage();
         List<BranchMenuItem> items = managerService.getBranchMenuItemList(branchID);
@@ -424,6 +476,11 @@ public class ManagerController {
         return;
     }
 
+    /**
+     * Removes an item from the menu of a branch.
+     * 
+     * @param branchID The ID of the branch from which the item is to be removed.
+     */
     private static void removeItemFromMenu(int branchID) {
         ChangePage.changePage();
         List<BranchMenuItem> items = managerService.getBranchMenuItemList(branchID);
@@ -450,6 +507,11 @@ public class ManagerController {
         return;
     }
 
+    /**
+     * Edits the price of a menu item in a branch.
+     * 
+     * @param branchID The ID of the branch where the menu item price is to be edited.
+     */
     private static void editItemPrice(int branchID) {
         ChangePage.changePage();
         List<BranchMenuItem> items = managerService.getBranchMenuItemList(branchID);
@@ -495,6 +557,13 @@ public class ManagerController {
         return;
     }
 
+    /**
+     * Edits the availability of a specific menu item in the branch. This method prompts the manager to
+     * specify which item's availability needs to be updated, and then allows them to enter the new availability value.
+     * It checks for valid numeric input and ensures that the availability is not negative.
+     *
+     * @param branchID The ID of the branch where the menu item's availability is to be edited.
+     */
     private static void editItemAvailability(int branchID) {
         ChangePage.changePage();
         List<BranchMenuItem> items = managerService.getBranchMenuItemList(branchID);
@@ -540,6 +609,12 @@ public class ManagerController {
         return;
     }
 
+    /**
+     * Edits the description of a specific menu item in the branch. This method prompts the manager to
+     * specify which item's description needs to be updated, and then allows them to enter the new description value.
+     *
+     * @param branchID The ID of the branch where the menu item's description is to be edited.
+     */
     private static void editItemDescription(int branchID) {
         ChangePage.changePage();
         List<BranchMenuItem> items = managerService.getBranchMenuItemList(branchID);
