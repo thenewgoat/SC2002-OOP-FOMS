@@ -60,7 +60,7 @@ https://github.com/Sai-Ajay/SC2002-OOP-FOMS-2.0.git
 
 7. Select the src folder from the project directory and click OK
 
-8. Now you can run the project by right-clicking on FypmsApp.java in the src/main folder and selecting Run As > Java Application
+8. Now you can run the project by right-clicking on FomsApp.java in the src/main folder and selecting Run As > Java Application
 
 That's it! You should now have the project up and running in Eclipse.
 
