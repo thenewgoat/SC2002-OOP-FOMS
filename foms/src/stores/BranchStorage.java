@@ -12,7 +12,13 @@ import services.SerialDataService;
  * It implements the Storage interface. All methods and fields are static.
  */
 public class BranchStorage {
+    /**
+     * A map that stores branches with their corresponding IDs.
+     */
     private static HashMap<Integer, Branch> branches = new HashMap<>();
+    /**
+     * The path to the serialized data file for storing branch information.
+     */
     private static final String branchDataPath = "foms/data/branches.ser";
 
     // Static initializer to load the data when the class is first loaded

@@ -12,7 +12,13 @@ import java.util.HashMap;
  * All methods and fields are static.
  */
 public class PasswordStorage {
+    /**
+     * The path to the password data file.
+     */
     private static final String passwordDataPath = "foms/data/passwords.ser";
+    /**
+     * A HashMap that stores user accounts.
+     */
     private static HashMap<String, Account> accounts = new HashMap<>();
 
     // Static initializer to load the stored accounts from the file

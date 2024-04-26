@@ -15,8 +15,17 @@ import services.SerialDataService;
  * categories of menu items. All methods and fields are static.
  */
 public class BranchMenuItemStorage {
+    /**
+     * A HashMap that stores branch menu items.
+     */
     private static HashMap<Integer, BranchMenuItem> branchMenuItems = new HashMap<>();
+    /**
+     * The list of categories for branch menu items.
+     */
     private static List<String> categories = new ArrayList<>();
+    /**
+     * The path to the serialized data file for storing branch menu item information.
+     */
     private static final String menuFilename = "foms/data/menu.ser";
 
     // Static initializer to load the data when the class is first loaded

@@ -11,7 +11,13 @@ import services.SerialDataService;
  * All methods and fields are static.
  */
 public class PaymentMethodStorage {
+    /**
+     * The file path where the payment method data is stored.
+     */
     private static final String paymentMethodDataPath = "foms/data/paymentMethods.ser";
+    /**
+     * A HashMap that stores payment methods.
+     */
     private static HashMap<String, PaymentMethod> paymentMethods = new HashMap<>();
 
     // Static initializer to load the payment methods when the class is first loaded

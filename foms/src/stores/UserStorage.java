@@ -13,7 +13,13 @@ import services.SerialDataService;
  * All methods and fields are static.
  */
 public class UserStorage {
+    /**
+     * A HashMap that stores User objects.
+     */
     private static HashMap<String, User> users = new HashMap<>();
+    /**
+     * The filename of the serialized user data file.
+     */
     private static final String userFilename = "foms/data/users.ser";
 
     // Static initializer to load the stored data when the class is first used

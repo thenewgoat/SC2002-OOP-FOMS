@@ -11,7 +11,13 @@ import services.SerialDataService;
  */
 public class OrderStorage {
 
+    /**
+     * The path to the serialized order data file.
+     */
     private static final String orderDataPath = "foms/data/orders.ser";
+    /**
+     * A HashMap that stores orders.
+     */
     private static HashMap<Integer, Order> orders = new HashMap<>();
 
     // Static initializer to load the orders when the class is first loaded

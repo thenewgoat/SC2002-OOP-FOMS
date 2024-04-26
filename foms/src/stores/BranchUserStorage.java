@@ -14,7 +14,13 @@ import services.SerialDataService;
  */
 public class BranchUserStorage {
 
+    /**
+     * A HashMap that stores branch users.
+     */
     private static HashMap<String, BranchUser> branchUsers = new HashMap<>();
+    /**
+     * The filename of the serialized branch user data.
+     */
     private static final String userFilename = "foms/data/branchUsers.ser";
 
     // Static initializer to load the data when the class is first loaded
